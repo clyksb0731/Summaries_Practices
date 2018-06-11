@@ -22,6 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
             })
             
+            let _ = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+            
         } else {
             let _ = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
         }
