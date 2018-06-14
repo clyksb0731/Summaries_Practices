@@ -10,27 +10,45 @@ import UIKit
 import UserNotifications
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
+        // Notification authorization.
         if #available(iOS 10.0, *) {
-            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge], completionHandler: { (granted, error) in
-                
-            })
+            let center = UNUserNotificationCenter.current()
+            // center.requestAuthorization(options: [.alert])
+            // center.requestAuthorization(options: [.alert, .sound])
+            center.requestAuthorization(options: [.alert, .sound, .badge]) { (granted, error) in
+                if granted {
+                    print("We have permission")
+                } else {
+                    print("Permision denied")
+                }
+            }
             
-            let _ = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+            let content = UNMutableNotificationContent()
+            content.title = "Hello!"
+            content.body = "I am a local notification"
+            content.sound = UNNotificationSound.default()
+            
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)
+            let request = UNNotificationRequest(identifier: "MyNotification", content: content, trigger: trigger)
+            
+            center.add(request, withCompletionHandler: nil)
             
         } else {
-            let _ = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+            // TODO: add the previous version's syntax here.
         }
-        
-        let _ = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
                 
         return true
+    }
+    
+    // MARK: - User Notification Delegates
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        print("Received local notification \(notification)")
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
