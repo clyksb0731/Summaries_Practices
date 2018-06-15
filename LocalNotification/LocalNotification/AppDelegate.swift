@@ -21,23 +21,46 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             let center = UNUserNotificationCenter.current()
             // center.requestAuthorization(options: [.alert])
             // center.requestAuthorization(options: [.alert, .sound])
-            center.requestAuthorization(options: [.alert, .sound, .badge]) { (granted, error) in
-                if granted {
-                    print("We have permission")
-                } else {
-                    print("Permision denied")
+//            center.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
+//                if granted {
+////                    center.delegate = self
+//                    print("We have permission")
+//                } else {
+//                    print("Permision denied")
+//                }
+//            }
+            
+            center.getNotificationSettings { (setting) in
+                if setting.authorizationStatus == .authorized {
+                    print("Already authorized")
+                    if setting.badgeSetting == .enabled {
+                        print("Badge is enable")
+                    } else if setting.badgeSetting == .notSupported {
+                        print("Badge is not supported")
+                    }
+                    
+                } else if setting.authorizationStatus == .denied {
+                    print("Denied")
+                } else if setting.authorizationStatus == .notDetermined {
+                    center.requestAuthorization(options: [.alert, .badge], completionHandler: { granted, error in
+                        if granted {
+                            print("The second granted one is accepted")
+                        }
+                    })
                 }
             }
             
-            let content = UNMutableNotificationContent()
-            content.title = "Hello!"
-            content.body = "I am a local notification"
-            content.sound = UNNotificationSound.default()
             
-            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)
-            let request = UNNotificationRequest(identifier: "MyNotification", content: content, trigger: trigger)
             
-            center.add(request, withCompletionHandler: nil)
+//            let content = UNMutableNotificationContent()
+//            content.title = "Hello!"
+//            content.body = "I am a local notification"
+//            content.sound = UNNotificationSound.default()
+//
+//            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)
+//            let request = UNNotificationRequest(identifier: "MyNotification", content: content, trigger: trigger)
+//
+//            center.add(request, withCompletionHandler: nil)
             
         } else {
             // TODO: add the previous version's syntax here.
