@@ -10,15 +10,24 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    var calendarView: UICollectionView = UICollectionView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.calendarView.delegate = self
-        self.calendarView.dataSource = self
+        var date = Date()
+        var dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second, .quarter, .timeZone, .era, .weekday], from: date)
         
+        print(dateComponents.year)
+        print(dateComponents.month)
+        print(dateComponents.day)
+        print(dateComponents.hour)
+        print(dateComponents.minute)
+        print(dateComponents.second)
+        print(dateComponents.timeZone)
+        print(dateComponents.era)
         
+        print(Calendar.current.component(.era, from: Date(timeIntervalSince1970: -409968000 - 432000)))
+        print(Calendar.current.dateComponents(in: .autoupdatingCurrent, from: Date()))
     }
 
     override func didReceiveMemoryWarning() {
@@ -26,14 +35,3 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 }
-
-extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return UICollectionViewCell()
-    }
-}
-

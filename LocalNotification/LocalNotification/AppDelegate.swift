@@ -37,6 +37,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         print("Badge is enable")
                     } else if setting.badgeSetting == .notSupported {
                         print("Badge is not supported")
+                    } else if setting.badgeSetting == .disabled {
+                        print("Bage is disable")
                     }
                     
                 } else if setting.authorizationStatus == .denied {

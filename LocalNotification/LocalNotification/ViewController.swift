@@ -12,7 +12,11 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        var date = Date(timeIntervalSinceNow: 60)
+//        date += Date(timeIntervalSinceNow: 1000)
+        var tmpDate = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second, ], from: date)
+        print(date)
+        print(tmpDate.year)
     }
 
     override func didReceiveMemoryWarning() {
