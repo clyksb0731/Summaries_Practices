@@ -10,16 +10,45 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    var datePicker: UIDatePicker?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        self.datePicker = self.createDatePicker()
+        self.datePicker?.addTarget(self, action: #selector(printDate(_:)), for: .valueChanged)
+        self.view.addSubview(datePicker!)
+        self.setLayoutOfDatePicker(view: self.datePicker!)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
+    
+    func createDatePicker() -> UIDatePicker {
+        let datePicker = UIDatePicker()
+        datePicker.datePickerMode = .dateAndTime
+        datePicker.locale = Locale(identifier: "ko_Ko")
+        
+        datePicker.translatesAutoresizingMaskIntoConstraints = false
+        
+        return datePicker
+    }
+    
+    func setLayoutOfDatePicker(view: UIView) {
+        guard let datePicker = view as? UIDatePicker else { return }
+        let safeGuide = self.view.safeAreaLayoutGuide
+        
+        safeGuide.topAnchor.constraint(equalTo: datePicker.topAnchor, constant: -100).isActive = true
+        safeGuide.leadingAnchor.constraint(equalTo: datePicker.leadingAnchor, constant: -30).isActive = true
+        safeGuide.trailingAnchor.constraint(equalTo: datePicker.trailingAnchor, constant: 30).isActive = true
+        safeGuide.bottomAnchor.constraint(equalTo: datePicker.bottomAnchor, constant: 100).isActive = true
+    }
+    
+    @objc func printDate(_ sender: UIDatePicker) {
+        print(sender.date.addingTimeInterval(9*3600))
+        print(Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: sender.date))
+    }
 }
 
