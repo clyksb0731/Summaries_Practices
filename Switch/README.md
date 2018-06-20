@@ -1,6 +1,6 @@
 `Swift` `UIKit`
 
-# UISwitch
+# Switch
 
 fixed size: 31 X 51 (가로 X 세로)
 > 디자인 할 때는 강제로 사이즈를 변경 할 수 있을지라도 구동 시에는 고정 사이즈로 돌아간다.
@@ -74,7 +74,7 @@ sw2.isOn = false
 
 // to get bool value from isOn property
 if sw1.isOn && sw2.isOn {
-            self.sw1.setOn(false, animated: true)
-            self.sw2.setOn(false, animated: false)
+    self.sw1.setOn(false, animated: true)
+    self.sw2.setOn(false, animated: false)
 }
 ```
