@@ -37,4 +37,44 @@ safeGuide.leadingAnchor.constraint(equalTo: sw2.leadingAnchor, constant: (-375+5
 ```
 
 ## Event Handling
+1. Generate event  
+스위치를 터치함으로써 On -> Off (혹은 Off -> On) 로 변경 할 수 있다. `UIControlEvents`의 값은 .valueChanged이다.  
+```swift
+// in a method to be run
+sw2.addTarget(self, action: #selector(reactForSW(_:)), for: .valueChanged)
 
+// Target method in the different method
+@objc func reactForSW(_ sender: UISwitch) {
+        if sender.isOn {
+            print("On")
+            print(sender)
+        } else {
+            print("Off")
+            print(sender)
+        }
+    }
+```
+
+2. Set state On / Off  
+스위치 상태를 On 혹은 Off로 변경 하는 메소드.
+```swift
+// Switch On
+sw2.setOn(true, animated: true)
+
+// Switch Off
+sw2.setOn(false, animated: true)
+```
+
+3. State  
+스위치 상태를 On 혹은 Off로 변경할 수 있고 그 상태를 얻을 수 있는 속성으로서 애니메이션 효과를 넣을 수는 없다.
+```swift
+// set the state of switches to On or Off
+sw1.isOn = true
+sw2.isOn = false
+
+// to get bool value from isOn property
+if sw1.isOn && sw2.isOn {
+            self.sw1.setOn(false, animated: true)
+            self.sw2.setOn(false, animated: false)
+}
+```
