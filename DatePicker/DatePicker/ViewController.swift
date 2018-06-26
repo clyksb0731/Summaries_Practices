@@ -47,8 +47,16 @@ class ViewController: UIViewController {
     }
     
     @objc func printDate(_ sender: UIDatePicker) {
+        print("Date added timeinterval")
         print(sender.date.addingTimeInterval(9*3600))
-        print(Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: sender.date))
+        print("DateComponents selected")
+        print(Calendar.current.dateComponents([.year, .month, .day, .weekday, .hour, .minute, .second], from: sender.date))
+        print("Calendar.Component selected")
+        print(Calendar.current.component(.weekday, from: sender.date))
+        print("Calendar::")
+        print(Calendar.current)
+        // creation of date component object
+        let tmpDateComponents = DateComponents(hour: 5, minute: 2, weekday: 2)
+        print(tmpDateComponents)
     }
 }
-
