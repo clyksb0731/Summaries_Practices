@@ -27,8 +27,8 @@ center.requestAuthorization(options: [.alert, .sound, .badge]) {
     }
 }
 ```
-> 네 가지의 notification 종류 `UNAuthorizationOptions.alert`, `.sound`, `.badge`, `.carPlay` 옵션이 있고 위 code와 같이 UNAuthorizationOptions의 배열 요소로서 사용되어 권한을 획득한다.  
-.alert은 배너 알림의 추가, .sound는 사운드 알림 추가, .badge는 배지 알림 추가, .carPlay는 CarPlay 환경에서 알림을 표시하는 옵션이다. 없는 옵션 요소는 설정앱에서 스위치를 볼 수 없다.
+> 1. 네 가지의 notification 종류 `UNAuthorizationOptions.alert`, `.sound`, `.badge`, `.carPlay` 옵션이 있고 위 code와 같이 UNAuthorizationOptions의 배열 요소로서 사용되어 권한을 획득한다.  
+> 2. .alert은 배너 알림의 추가, .sound는 사운드 알림 추가, .badge는 배지 알림 추가, .carPlay는 CarPlay 환경에서 알림을 표시하는 옵션이다. 없는 옵션 요소는 설정앱에서 스위치를 볼 수 없다.
 
 ## Notification Setting  
 - `UNUserNotificationCenter` instance의 getNotificationSettings(completionHandler:) 메소드를 호출하여 Notification Settings 접근한다.  
@@ -82,9 +82,9 @@ let request = UNNotificationRequest(indetifier: "requestID", content: content, t
 2. Calendar  
     날짜 및 시간에 대한 트리거로서 date component object를 이용한다.  
     ```swift
-    // 현재로부터 일정 초 지난 후의 일정
+    // The specific generated date the designated seconds since now.
     let date = Date(timeIntervalSinceNow: 3600)
-    // Acquire year, month, day, hour, minute, second as date component
+    // Acquire year, month, day, hour, minute, second as date component from the specific date
     let triggerDate = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date)
     // Use date component as a trigger
     let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
@@ -124,8 +124,111 @@ let category = UNNotificationCategory(identifier: "categoryID", actions: [snooze
 center.setNotificationCategories([category])
 ```
 > 생성된 Notification Action / Notification Category를 특정 알림에 적용하려면 그 알림(`UNMutableNotificationContent`의 instance)의 categoryIdentifier 속성에 Notification Category identifier를 저장한다.  
-`UNTextInputNotificationAction`을 사용하여 text input action을 생성 할 수 있다. **_👉🏻 need to be updated more this section_**
+`UNTextInputNotificationAction`을 사용하여 text input action을 생성 할 수 있다.  
+**_👉🏻 need to be updated more this section_**
 
-## The Notification Delegate
+## The Notification Delegate  
+- 알림의 액션을 선택하거나 앱이 실행 중일 때 알림을 처리하는 delegate.  
+- 앱 구동이 끝나기 전에 delegate object를 `UNUserNotificationCenter` shared instance에 할당해야 한다.  
+- 아래와 같은 두개의 optional method를 구현 할 수 있다.
+    1. func userNotificationCenter(_:didReceive:withCompletionHandler:)  
+    알림이 왔을 때 사용자에 의해 선택된 액션을 처리 할 때 사용하는 메소드.
+    2. func userNotificationCenter(_:willPresent:withCompletionHandler:)  
+    앱이 구동 중일 때 도착한 알림을 처리하는 메소드.  
+    ```swift
+    /* 1-1. userNotificationCenter(_:didReceive:withCompletionHandler:) */
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        // Get the meeting ID from the original notification.
+        let userInfo = response.notification.request.content.userInfo
+        
+        if response.notification.request.content.categoryIdentifier == "MEETING_INVITATION" {
+            // Retrieve the meeting details.
+            let meetingID = userInfo["MEETING_ID"] as! String
+            let userID = userInfo["USER_ID"] as! String
+            
+            switch response.actionIdentifier {
+            case "ACCEPT_ACTION":
+                sharedMeetingManager.acceptMeeting(user: userID, meetingID: meetingID)
 
-## Managing Pending and Delivered Notification
+            case "DECLINE_ACTION":
+                sharedMeetingManager.declineMeeting(user: userID, meetingID: meetingID)
+            
+            case UNNotificationDefaultActionIdentifier, UNNotificationDismissActionIdentifier:
+                // Queue meeting-related notifications for later
+                //  if the user does not act.
+                sharedMeetingManager.queueMeetingForDelivery(user: userID, meetingID: meetingID)
+            
+            default:
+                break
+            }
+        } else {
+            // Handle other notification types...
+        }
+        
+        // Always call the completion handler when done.
+        completionHandler()
+    }
+
+    /* 1-2. userNotificationCenter(_:didReceive:withCompletionHandler:) */
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        // Determine the user action
+        switch response.actionIdentifier {
+        case UNNotificationDismissActionIdentifier:
+            print("Dismiss Action")
+        case UNNotificationDefaultActionIdentifier:
+            print("Default")
+        case "Snooze":
+            print("Snooze")
+        case "Delete":
+            print("Delete")  
+        default:
+            print("Unknown action")
+        }
+        completionHandler()
+    }
+
+    /* 2. userNotificationCenter(_:willPresent:withCompletionHandler:) */
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void {
+        if notification.request.content.categoryIdentifier == "MEETING_INVITATION" {
+            // Retrieve the meeting details.
+            let meetingID = notification.request.content.userInfo["MEETING_ID"] as! String
+            let userID = notification.request.content.userInfo["USER_ID"] as! String
+            
+            // Add the meeting to the queue.
+            sharedMeetingManager.queueMeetingForDelivery(user: userID, meetingID: meetingID)
+            
+            // Play a sound to let the user know about the invitation.
+            completionHandler(.sound)
+            return
+        } else {
+            // Handle other notification types...
+        }
+                
+        // Don't alert the user for other types.
+        completionHandler(UNNotificationPresentationOptions(rawValue: 0))
+    }
+    ```
+    > - userNotificationCenter(_:didReceive:withCompletionHandler:)일 때 매개변수 response에는 original notification과 Notification Action의 identifier가 포함된다. (textual response도 가능하다.)
+    >   - 또한 사용자의 반응에 대한 처리를(구현) 끝낼 때는 반드시 completionHandler() 메소드를 호출한다.
+    > * userNotificationCenter(_:willPresent:withCompletionHandler:)일 때 매개변수 notification에는 original notification이 포함된다.
+    >   * 또한 항상 completionHandler(_: UNNotificationPresentationOptions)을 호출해야 하는데 이 클로져를 통해서 사용자에게 notification에 대해 알릴 수 있다. 가능한 값은 .badge, .sound, .alert 혹은 이 값들의 list다. [.badge, .sound]
+    >   * 아무것도 알리지 않으려고 할 때는 `completionHandler(UNNotificationPresentationOptions(rawValue: 0))` 구문을 사용한다.
+
+## Managing Pending and Delivered Notification  
+아직 나타나지 않았거나 notification center에 이미 나타난 알림들을 관리한다.
+1. Pending Notification Requests  
+    1. getPendingNotificationRequests(completionHandler:)  
+    아직 나타나지 않은 알림의 Notification Request들을 불러와서 클로져로 넘겨 처리한다.
+    2. removePendingNotificationRequests(withIdentifiers:)  
+    아직 나타나지 않은 알림을 취소(unschedule)한다. 매개변수 identifiers는 Notification Request의 identifier들을 받는다. 이미 나타났거나 나타났고 반복되지 않는 알림은 무시된다.
+    3. removeAllPendingNotificationRequests()  
+    모든 나타나지 않은 알림이 취소된다.
+
+2. Delivered Notifications  
+    1. getDeliveredNotifications(completionHandler:)  
+    notification center에 나타난 알림들을 불러와서 클로져에 넘겨 처리한다.
+    2. removeDeliveredNotifications(withIdentifiers:)  
+    Notification Request의 identifier를 이용하여 notification center에 나타난 알림을 없앤다. 매개변수 identifiers는 NSString의 배열로 이뤄진다. 만일 이미 notification center에서 지워진 알림의 Notification Request idetifier가 사용된다면 무시된다.
+    3. removeAllDeliveredNotifications()  
+    notification center에 나타난 모든 알림을 없앤다.
+
