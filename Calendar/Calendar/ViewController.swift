@@ -28,6 +28,10 @@ class ViewController: UIViewController {
         
         print(Calendar.current.component(.era, from: Date(timeIntervalSince1970: -409968000 - 432000)))
         print(Calendar.current.dateComponents(in: .autoupdatingCurrent, from: Date()))
+        
+        // Creation of date component directly
+        let tmpDateComponents = DateComponents(hour: 5, minute: 2, weekday: 2)
+        print(tmpDateComponents)
     }
 
     override func didReceiveMemoryWarning() {
