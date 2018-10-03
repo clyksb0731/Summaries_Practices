@@ -10,11 +10,38 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    var chatTable: UITableView!
+    var chatButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
     }
+    
+    /// Create Views
+    func createViews() {
+        self.chatTable = UITableView()
+        self.chatTable.delegate = self
+        self.chatTable.dataSource = self
+        
+        self.chatButton = UIButton()
+    }
+    
+    /// Set Layout
+    func setViews() {
+        
+    }
+}
 
-
+extension ViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        <#code#>
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        <#code#>
+    }
+    
+    
 }
 
