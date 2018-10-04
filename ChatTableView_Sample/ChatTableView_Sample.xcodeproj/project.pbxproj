@@ -13,6 +13,7 @@
 		CA35FEF52165045C007DAFD2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA35FEF42165045C007DAFD2 /* Assets.xcassets */; };
 		CA35FEF82165045C007DAFD2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA35FEF62165045C007DAFD2 /* LaunchScreen.storyboard */; };
 		CAF857DE2165A5AE00575712 /* ChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF857DD2165A5AE00575712 /* ChatCell.swift */; };
+		CAF857E42165F07700575712 /* ChatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAF857E22165F07700575712 /* ChatCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		CA35FEF72165045C007DAFD2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CA35FEF92165045C007DAFD2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CAF857DD2165A5AE00575712 /* ChatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCell.swift; sourceTree = "<group>"; };
+		CAF857E22165F07700575712 /* ChatCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 				CA35FEED2165045A007DAFD2 /* AppDelegate.swift */,
 				CA35FEEF2165045A007DAFD2 /* ViewController.swift */,
 				CAF857DD2165A5AE00575712 /* ChatCell.swift */,
+				CAF857E22165F07700575712 /* ChatCell.xib */,
 				CA35FEF12165045A007DAFD2 /* Main.storyboard */,
 				CA35FEF42165045C007DAFD2 /* Assets.xcassets */,
 				CA35FEF62165045C007DAFD2 /* LaunchScreen.storyboard */,
@@ -126,6 +129,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA35FEF82165045C007DAFD2 /* LaunchScreen.storyboard in Resources */,
+				CAF857E42165F07700575712 /* ChatCell.xib in Resources */,
 				CA35FEF52165045C007DAFD2 /* Assets.xcassets in Resources */,
 				CA35FEF32165045A007DAFD2 /* Main.storyboard in Resources */,
 			);

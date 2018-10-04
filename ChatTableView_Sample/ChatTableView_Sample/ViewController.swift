@@ -65,8 +65,14 @@ class ViewController: UIViewController {
         let chatTable: UITableView = UITableView()
         chatTable.delegate = self
         chatTable.dataSource = self
+        
+        // For programmatically created cell
         chatTable.register(ChatCell.self, forCellReuseIdentifier: "MyCell")
-        chatTable.separatorStyle = .none
+        
+        // For xib file load to use cell
+//        chatTable.register(UINib(nibName: "ChatCell", bundle: nil), forCellReuseIdentifier: "MyCell")
+        chatTable.separatorStyle = .singleLine
+        chatTable.separatorColor = UIColor.red
         chatTable.layer.borderWidth = 1
         chatTable.layer.borderColor = UIColor.gray.cgColor
         
@@ -98,6 +104,7 @@ class ViewController: UIViewController {
         chatButton.titleLabel?.font = UIFont.systemFont(ofSize: 12)
         chatButton.setTitleColor(UIColor.black, for: .normal)
         chatButton.setTitleColor(UIColor.gray, for: .highlighted)
+        chatButton.backgroundColor = .yellow
         chatButton.addTarget(self, action: #selector(clickButton(_:)), for: .touchUpInside)
         
         chatButton.translatesAutoresizingMaskIntoConstraints = false
@@ -129,8 +136,13 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         return 4
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 44
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "MyCell", for: indexPath) as! ChatCell
+        print(indexPath.row)
         return cell
     }
     
