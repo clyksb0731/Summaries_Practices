@@ -20,8 +20,9 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        createViews()
-        setViews()
+        self.createViews()
+        self.setViews()
+        self.registerKeyboardEvent()
     }
     
     /// Create Views
@@ -68,10 +69,11 @@ class ViewController: UIViewController {
         
         // For programmatically created cell
         chatTable.register(ChatCell.self, forCellReuseIdentifier: "MyCell")
+        chatTable.register(AnotherChatCell.self, forCellReuseIdentifier: "YourCell")
         
         // For xib file load to use cell
 //        chatTable.register(UINib(nibName: "ChatCell", bundle: nil), forCellReuseIdentifier: "MyCell")
-        chatTable.separatorStyle = .singleLine
+        chatTable.separatorStyle = .none
         chatTable.separatorColor = UIColor.red
         chatTable.layer.borderWidth = 1
         chatTable.layer.borderColor = UIColor.gray.cgColor
@@ -89,8 +91,8 @@ class ViewController: UIViewController {
         chatTextField.layer.cornerRadius = 10
         chatTextField.clipsToBounds = true
         
-        // TODO: - Why not touchUpInside?
-        chatTextField.addTarget(self, action: #selector(touchTextField(_:)), for: .touchDown)
+        // TODO: - Why not touchUpInside? -> NotificationCenter!!
+//        chatTextField.addTarget(self, action: #selector(touchTextField(_:)), for: .touchUpInside)
         
         chatTextField.translatesAutoresizingMaskIntoConstraints = false
         
@@ -113,6 +115,33 @@ class ViewController: UIViewController {
     }
 }
 
+// MARK: - Keyboard NotificationCenter
+extension ViewController {
+    func registerKeyboardEvent() {
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc func keyboardWillShow(notification: Notification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y == 0 {
+                self.view.frame.origin.y -= keyboardSize.height
+                print("keyboard show")
+            }
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: Notification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y != 0 {
+                self.view.frame.origin.y += keyboardSize.height
+                print("keyboard hide")
+            }
+        }
+    }
+}
+
+// MARK: - A package of objc Functions
 extension ViewController {
     @objc func touchTextField(_ sender: UITextField) {
         self.chatTextFieldBottom?.constant = -300
@@ -126,6 +155,7 @@ extension ViewController {
     }
 }
 
+// MARK: - Table View Delegate and Data Source
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -133,21 +163,29 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return 25
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 44
     }
     
+    // A reuse sample for two cells
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "MyCell", for: indexPath) as! ChatCell
-        print(indexPath.row)
+        var cell: UITableViewCell!
+        
+        if indexPath.row % 2 == 0 {
+            cell = tableView.dequeueReusableCell(withIdentifier: "MyCell", for: indexPath) as! ChatCell
+        } else {
+            cell = tableView.dequeueReusableCell(withIdentifier: "YourCell", for: indexPath) as! AnotherChatCell
+        }
+        
         return cell
     }
     
 }
 
+// MARK: - TextField Delegate
 extension ViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
