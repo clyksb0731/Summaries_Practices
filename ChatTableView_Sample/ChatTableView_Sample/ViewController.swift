@@ -17,11 +17,15 @@ class ViewController: UIViewController {
     var chatTextFieldBottom: NSLayoutConstraint?
     var chatButtonBottom: NSLayoutConstraint?
     
+    var chatTableTop: NSLayoutConstraint?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.createViews()
         self.setViews()
+        
+        // Register keyboard event
         self.registerKeyboardEvent()
     }
     
@@ -37,13 +41,14 @@ class ViewController: UIViewController {
         self.view.addSubview(self.chatButton)
     }
     
-    /// Set Layout
+    //MARK: - Set Layout
     func setViews() {
         let safeGuide: UILayoutGuide = self.view.safeAreaLayoutGuide
         let marginGuide: UILayoutGuide = self.view.layoutMarginsGuide
         
         // Chat Table Layout
-        self.chatTable.topAnchor.constraint(equalTo: safeGuide.topAnchor).isActive = true
+        self.chatTableTop = self.chatTable.topAnchor.constraint(equalTo: safeGuide.topAnchor)
+        chatTableTop?.isActive = true
         self.chatTable.bottomAnchor.constraint(equalTo: self.chatTextField.topAnchor).isActive = true
         self.chatTable.leadingAnchor.constraint(equalTo: safeGuide.leadingAnchor).isActive = true
         self.chatTable.trailingAnchor.constraint(equalTo: safeGuide.trailingAnchor).isActive = true
@@ -62,6 +67,7 @@ class ViewController: UIViewController {
         self.chatButton.trailingAnchor.constraint(equalTo: safeGuide.trailingAnchor).isActive = true
     }
     
+    // MARK: - Creation of objects
     func createChatTable() -> UITableView {
         let chatTable: UITableView = UITableView()
         chatTable.delegate = self
@@ -74,7 +80,7 @@ class ViewController: UIViewController {
         // For xib file load to use cell
 //        chatTable.register(UINib(nibName: "ChatCell", bundle: nil), forCellReuseIdentifier: "MyCell")
         chatTable.separatorStyle = .none
-        chatTable.separatorColor = UIColor.red
+//        chatTable.separatorColor = UIColor.red
         chatTable.layer.borderWidth = 1
         chatTable.layer.borderColor = UIColor.gray.cgColor
         
@@ -85,10 +91,13 @@ class ViewController: UIViewController {
     
     func createChatTextField() -> UITextField {
         let chatTextField: UITextField = UITextField()
+        
+        // No benifit for padding inside TextField
+        // chatTextField.layoutMargins = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
         chatTextField.delegate = self
         chatTextField.layer.borderWidth = 1
         chatTextField.layer.borderColor = UIColor.black.cgColor
-        chatTextField.layer.cornerRadius = 10
+        chatTextField.layer.cornerRadius = 5
         chatTextField.clipsToBounds = true
         
         // TODO: - Why not touchUpInside? -> NotificationCenter!!
@@ -124,19 +133,27 @@ extension ViewController {
     
     @objc func keyboardWillShow(notification: Notification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            if self.view.frame.origin.y == 0 {
-                self.view.frame.origin.y -= keyboardSize.height
-                print("keyboard show")
+            if self.chatTextFieldBottom?.constant == 0 {
+                self.chatTextFieldBottom?.constant -= keyboardSize.height
+                self.chatButtonBottom?.constant -= keyboardSize.height
             }
+            
+//            if self.view.frame.origin.y == 0 {
+//                self.view.frame.origin.y -= keyboardSize.height
+//            }
         }
     }
     
     @objc func keyboardWillHide(notification: Notification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            if self.view.frame.origin.y != 0 {
-                self.view.frame.origin.y += keyboardSize.height
-                print("keyboard hide")
+            if self.chatTextFieldBottom?.constant != 0 {
+                self.chatTextFieldBottom?.constant += keyboardSize.height
+                self.chatButtonBottom?.constant += keyboardSize.height
             }
+            
+//            if self.view.frame.origin.y != 0 {
+//                self.view.frame.origin.y += keyboardSize.height
+//            }
         }
     }
 }
