@@ -24,6 +24,7 @@ class ViewController: UIViewController {
         self.scrollView = UIScrollView()
         self.scrollView.backgroundColor = .yellow
         self.scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: 1500)
+        self.scrollView.bounces = false
         self.scrollView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.scrollView)
         
