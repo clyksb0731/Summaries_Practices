@@ -13,20 +13,31 @@ class ViewController: UIViewController {
     var chatTable: UITableView!
     var chatTextField: UITextField!
     var chatButton: UIButton!
+    var tmpButton: UIButton!
     
     var chatTextFieldBottom: NSLayoutConstraint?
     var chatButtonBottom: NSLayoutConstraint?
-    
+    var tmpButtonBottom: NSLayoutConstraint?
     var chatTableTop: NSLayoutConstraint?
+    
+    var MAX: Int = 100
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.createViews()
         self.setViews()
+//        self.scrollToBottom()
         
         // Register keyboard event
         self.registerKeyboardEvent()
+    }
+    
+    // *** 키보드 이동 후 스크롤 이동은 viewDidLayoutSubviews에 맞춘다.
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        self.scrollToBottom()
     }
     
     /// Create Views
@@ -36,6 +47,16 @@ class ViewController: UIViewController {
         
         self.chatTextField = createChatTextField()
         self.view.addSubview(self.chatTextField)
+        
+        self.tmpButton = UIButton()
+        self.tmpButton.setTitle("-R-", for: .normal)
+        self.tmpButton.setTitle("=r=", for: .highlighted)
+        self.tmpButton.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        self.tmpButton.setTitleColor(.black, for: .normal)
+        self.tmpButton.setTitleColor(.gray, for: .highlighted)
+        self.tmpButton.addTarget(self, action: #selector(clickTmpButton(_:)), for: .touchUpInside)
+        self.tmpButton.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(self.tmpButton)
         
         self.chatButton = createChatButton()
         self.view.addSubview(self.chatButton)
@@ -54,11 +75,19 @@ class ViewController: UIViewController {
         self.chatTable.trailingAnchor.constraint(equalTo: safeGuide.trailingAnchor).isActive = true
         
         self.chatTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        self.chatTextField.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        self.chatTextField.widthAnchor.constraint(equalToConstant: 200).isActive = true
         chatTextFieldBottom =  self.chatTextField.bottomAnchor.constraint(equalTo: safeGuide.bottomAnchor)
         chatTextFieldBottom?.isActive = true
         self.chatTextField.leadingAnchor.constraint(equalTo: safeGuide.leadingAnchor).isActive = true
-        self.chatTextField.trailingAnchor.constraint(equalTo: self.chatButton.leadingAnchor).isActive = true
+        self.chatTextField.trailingAnchor.constraint(equalTo: self.tmpButton.leadingAnchor).isActive = true
+        
+        self.tmpButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        self.tmpButton.widthAnchor.constraint(equalToConstant: 70).isActive = true
+        self.tmpButton.topAnchor.constraint(equalTo: self.chatTable.bottomAnchor).isActive = true
+        tmpButtonBottom = self.tmpButton.bottomAnchor.constraint(equalTo: safeGuide.bottomAnchor)
+        tmpButtonBottom?.isActive = true
+        self.tmpButton.trailingAnchor.constraint(equalTo: self.chatButton.leadingAnchor).isActive = true
+        
         
         self.chatButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         self.chatButton.topAnchor.constraint(equalTo: self.chatTable.bottomAnchor).isActive = true
@@ -122,53 +151,110 @@ class ViewController: UIViewController {
         
         return chatButton
     }
+    
+    // MARK: Scroll to bottom
+    // keyboard
+    func scrollToBottom() {
+        let indexPath = IndexPath(row: self.MAX - 1, section: 1 - 1)
+        self.chatTable.scrollToRow(at: indexPath, at: .bottom, animated: true)
+    }
+    
+    func scrollToBottomAfterReload() {
+        //        self.chatTable.reloadData() // TableView의 데이터 reload의 시점을 모르기 때문에 시점이 확실히 뒤인 같은 main.async에 넣는다.
+        DispatchQueue.main.async {
+            let indexPath = IndexPath(row: self.MAX - 1, section: 1 - 1)
+            self.chatTable.scrollToRow(at: indexPath, at: .bottom, animated: true)
+            //        self.chatTable.scrollToNearestSelectedRow(at: .bottom, animated: true)
+        }
+    }
+    
+    func scrollToMiddle() {
+        let selectedRows = self.chatTable.indexPathsForSelectedRows
+        if let selectedRow = selectedRows?.first {
+            self.chatTable.scrollToRow(at: selectedRow, at: .middle, animated: true)
+        }
+    }
 }
 
 // MARK: - Keyboard NotificationCenter
 extension ViewController {
     func registerKeyboardEvent() {
-        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
-    @objc func keyboardWillShow(notification: Notification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            if self.chatTextFieldBottom?.constant == 0 {
-                self.chatTextFieldBottom?.constant -= keyboardSize.height
-                self.chatButtonBottom?.constant -= keyboardSize.height
-            }
-            
-//            if self.view.frame.origin.y == 0 {
-//                self.view.frame.origin.y -= keyboardSize.height
-//            }
-        }
-    }
-    
-    @objc func keyboardWillHide(notification: Notification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            if self.chatTextFieldBottom?.constant != 0 {
-                self.chatTextFieldBottom?.constant += keyboardSize.height
-                self.chatButtonBottom?.constant += keyboardSize.height
-            }
-            
-//            if self.view.frame.origin.y != 0 {
-//                self.view.frame.origin.y += keyboardSize.height
-//            }
-        }
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 }
 
 // MARK: - A package of objc Functions
 extension ViewController {
-    @objc func touchTextField(_ sender: UITextField) {
-        self.chatTextFieldBottom?.constant = -300
-        self.chatButtonBottom?.constant = -300
-    }
+//    @objc func touchTextField(_ sender: UITextField) {
+//        self.chatTextFieldBottom?.constant = -300
+//        self.chatButtonBottom?.constant = -300
+//    }
     
     @objc func clickButton(_ sender: UIButton) {
         self.chatTextFieldBottom?.constant = 0
         self.chatButtonBottom?.constant = 0
+        self.tmpButtonBottom?.constant = 0
         self.chatTextField.resignFirstResponder()
+//        self.scrollToBottom()
+    }
+    
+    @objc func clickTmpButton(_ sender: UIButton) {
+//        self.scrollToBottom()
+    }
+    
+    @objc func keyboardWillShow(notification: Notification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            
+            if self.chatTextFieldBottom?.constant == 0 {
+                 // - view 높이와 safe Area 차이 만큼 빼기 (아이폰 X 이상부터 문제됨)
+                self.chatTextFieldBottom?.constant -= keyboardSize.height
+                self.chatButtonBottom?.constant -= keyboardSize.height
+                self.tmpButtonBottom?.constant -= keyboardSize.height
+            }
+            
+//            self.scrollToMiddle()
+            
+//            if self.view.frame.origin.y == 0 {
+//                self.view.frame.origin.y -= keyboardSize.height
+//            }
+        }
+//        self.scrollToBottomAfterReload()
+
+//        self.scrollToBottom()
+//        DispatchQueue.main.async {
+//            for _ in 1...100000 {
+//                print(" ")
+//            }
+//            self.scrollToBottomAfterReload()
+//        }
+    }
+    
+    @objc func keyboardWillHide(notification: Notification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            
+            if self.chatTextFieldBottom?.constant != 0 {
+                // - view 높이와 safe Area 차이 만큼 빼기 (아이폰 X 이상부터 문제됨)
+                self.chatTextFieldBottom?.constant += keyboardSize.height
+                self.chatButtonBottom?.constant += keyboardSize.height
+                self.tmpButtonBottom?.constant += keyboardSize.height
+            }
+            
+//            self.scrollToMiddle()
+            
+//            if self.view.frame.origin.y != 0 {
+//                self.view.frame.origin.y += keyboardSize.height
+//            }
+        }
+        
+        // 키보드가 올라오고 내려옴에 따라 테이블 뷰의 맨 마지막 행을 보이려 했으나, Notification Center post 시점과 scroll to bottom 시점이 다른 쓰레드에서 시행되는 것 같음, 이벤트 버튼으로 처리하면 원하는대로 나타남, 보통 채팅 창
+//        self.scrollToBottom()
+//        DispatchQueue.main.async {
+//            for _ in 1...100000 {
+//                print(" ")
+//            }
+//            self.scrollToBottomAfterReload()
+//        }
     }
 }
 
@@ -180,7 +266,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 25
+        return self.MAX
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -209,6 +295,7 @@ extension ViewController: UITextFieldDelegate {
         
         self.chatTextFieldBottom?.constant = 0
         self.chatButtonBottom?.constant = 0
+//        self.scrollToBottom()
         
         return true
     }
