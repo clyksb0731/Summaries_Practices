@@ -205,12 +205,14 @@ extension ViewController {
     
     @objc func keyboardWillShow(notification: Notification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            let window = UIApplication.shared.keyWindow
+            let bottomPadding = window?.safeAreaInsets.bottom
             
             if self.chatTextFieldBottom?.constant == 0 {
                  // - view 높이와 safe Area 차이 만큼 빼기 (아이폰 X 이상부터 문제됨)
-                self.chatTextFieldBottom?.constant -= keyboardSize.height
-                self.chatButtonBottom?.constant -= keyboardSize.height
-                self.tmpButtonBottom?.constant -= keyboardSize.height
+                self.chatTextFieldBottom?.constant -= keyboardSize.height - (bottomPadding ?? 0)
+                self.chatButtonBottom?.constant -= keyboardSize.height - (bottomPadding ?? 0)
+                self.tmpButtonBottom?.constant -= keyboardSize.height - (bottomPadding ?? 0)
             }
             
 //            self.scrollToMiddle()
