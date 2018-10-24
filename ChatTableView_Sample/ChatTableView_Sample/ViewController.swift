@@ -37,7 +37,7 @@ class ViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        self.scrollToBottom()
+//        self.scrollToBottom()
     }
     
     /// Create Views
@@ -205,58 +205,62 @@ extension ViewController {
     
     @objc func keyboardWillShow(notification: Notification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            
+            // MARK: - notification을 통해 얻는 keyboard animation duration
+            let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as! Double
+            
             let window = UIApplication.shared.keyWindow
             let bottomPadding = window?.safeAreaInsets.bottom
             
+            // 키보드를 통하지않고 safeAreaLayoutGuide를 통해서도 padding 부분을 구할 수 있을까? 밑에껀 일단 아님.
+//            let bottomPadding: CGFloat? = self.view.safeAreaLayoutGuide.layoutFrame.size.height
+            
             if self.chatTextFieldBottom?.constant == 0 {
                  // - view 높이와 safe Area 차이 만큼 빼기 (아이폰 X 이상부터 문제됨)
-                self.chatTextFieldBottom?.constant -= keyboardSize.height - (bottomPadding ?? 0)
-                self.chatButtonBottom?.constant -= keyboardSize.height - (bottomPadding ?? 0)
-                self.tmpButtonBottom?.constant -= keyboardSize.height - (bottomPadding ?? 0)
+                self.chatTextFieldBottom?.constant -= (keyboardSize.height - (bottomPadding ?? 0))
+                self.chatButtonBottom?.constant -= (keyboardSize.height - (bottomPadding ?? 0))
+                self.tmpButtonBottom?.constant -= (keyboardSize.height - (bottomPadding ?? 0))
+                
+                UIView.animate(withDuration: duration) {
+                    self.view.layoutIfNeeded()
+                }
             }
             
-//            self.scrollToMiddle()
+
             
+            // 아래와 같은 코드는 view 자체를 올려서 접근 할 수 없는 문제가 있음
 //            if self.view.frame.origin.y == 0 {
 //                self.view.frame.origin.y -= keyboardSize.height
 //            }
         }
-//        self.scrollToBottomAfterReload()
-
-//        self.scrollToBottom()
-//        DispatchQueue.main.async {
-//            for _ in 1...100000 {
-//                print(" ")
-//            }
-//            self.scrollToBottomAfterReload()
-//        }
     }
     
     @objc func keyboardWillHide(notification: Notification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             
+            // MARK: - notification을 통해 얻는 keyboard animation duration
+            let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as! Double
+            
+            let window = UIApplication.shared.keyWindow
+            let bottomPadding = window?.safeAreaInsets.bottom
+            
+            
             if self.chatTextFieldBottom?.constant != 0 {
                 // - view 높이와 safe Area 차이 만큼 빼기 (아이폰 X 이상부터 문제됨)
-                self.chatTextFieldBottom?.constant += keyboardSize.height
-                self.chatButtonBottom?.constant += keyboardSize.height
-                self.tmpButtonBottom?.constant += keyboardSize.height
+                self.chatTextFieldBottom?.constant += keyboardSize.height + (bottomPadding ?? 0)
+                self.chatButtonBottom?.constant += keyboardSize.height + (bottomPadding ?? 0)
+                self.tmpButtonBottom?.constant += keyboardSize.height + (bottomPadding ?? 0)
             }
             
-//            self.scrollToMiddle()
+            UIView.animate(withDuration: duration) {
+                self.view.layoutIfNeeded()
+            }
             
+            // 아래와 같은 코드는 view 자체를 올려서 접근 할 수 없는 문제가 있음
 //            if self.view.frame.origin.y != 0 {
 //                self.view.frame.origin.y += keyboardSize.height
 //            }
         }
-        
-        // 키보드가 올라오고 내려옴에 따라 테이블 뷰의 맨 마지막 행을 보이려 했으나, Notification Center post 시점과 scroll to bottom 시점이 다른 쓰레드에서 시행되는 것 같음, 이벤트 버튼으로 처리하면 원하는대로 나타남, 보통 채팅 창
-//        self.scrollToBottom()
-//        DispatchQueue.main.async {
-//            for _ in 1...100000 {
-//                print(" ")
-//            }
-//            self.scrollToBottomAfterReload()
-//        }
     }
 }
 
