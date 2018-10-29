@@ -37,8 +37,8 @@ class TableViewCell: UITableViewCell {
         self.sequence.textColor = .black
         self.sequence.textAlignment = .center
         self.sequence.font = UIFont.systemFont(ofSize: 20)
-        //        self.sequence.layer.borderColor = UIColor.black.cgColor
-        //        self.sequence.layer.borderWidth = 1
+        // self.sequence.layer.borderColor = UIColor.black.cgColor
+        // self.sequence.layer.borderWidth = 1
         
         self.sequence.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(self.sequence)
@@ -48,8 +48,8 @@ class TableViewCell: UITableViewCell {
         self.viewControllerName.textColor = .black
         self.viewControllerName.textAlignment = .center
         self.viewControllerName.font = UIFont.systemFont(ofSize: 20)
-        //        self.viewControllerName.layer.borderColor = UIColor.black.cgColor
-        //        self.viewControllerName.layer.borderWidth = 1
+        // self.viewControllerName.layer.borderColor = UIColor.black.cgColor
+        // self.viewControllerName.layer.borderWidth = 1
         
         self.viewControllerName.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(self.viewControllerName)
