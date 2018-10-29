@@ -70,17 +70,17 @@ class TableViewCell: UITableViewCell {
         self.viewControllerName.bottomAnchor.constraint(equalTo: self.marginGuide.bottomAnchor).isActive = true
         
         /// Safe Area to test
-        //        // Layout of view controllers' sequence
-        //        self.sequence.widthAnchor.constraint(equalTo: self.safeGuide.widthAnchor, multiplier: 0.2).isActive = true
-        //        self.sequence.leadingAnchor.constraint(equalTo: self.safeGuide.leadingAnchor).isActive = true
-        //        self.sequence.topAnchor.constraint(equalTo: self.safeGuide.topAnchor).isActive = true
-        //        self.sequence.bottomAnchor.constraint(equalTo: self.marginGuide.bottomAnchor).isActive = true
+        // Layout of view controllers' sequence
+        // self.sequence.widthAnchor.constraint(equalTo: self.safeGuide.widthAnchor, multiplier: 0.2).isActive = true
+        // self.sequence.leadingAnchor.constraint(equalTo: self.safeGuide.leadingAnchor).isActive = true
+        // self.sequence.topAnchor.constraint(equalTo: self.safeGuide.topAnchor).isActive = true
+        // self.sequence.bottomAnchor.constraint(equalTo: self.marginGuide.bottomAnchor).isActive = true
         //
-        //        // Layout of view controllers' name
-        //        self.viewControllerName.widthAnchor.constraint(equalTo: self.safeGuide.widthAnchor, multiplier: 0.5).isActive = true
-        //        self.viewControllerName.trailingAnchor.constraint(equalTo: self.safeGuide.trailingAnchor).isActive = true
-        //        self.viewControllerName.topAnchor.constraint(equalTo: self.safeGuide.topAnchor).isActive = true
-        //        self.viewControllerName.bottomAnchor.constraint(equalTo: self.safeGuide.bottomAnchor).isActive = true
+        // Layout of view controllers' name
+        // self.viewControllerName.widthAnchor.constraint(equalTo: self.safeGuide.widthAnchor, multiplier: 0.5).isActive = true
+        // self.viewControllerName.trailingAnchor.constraint(equalTo: self.safeGuide.trailingAnchor).isActive = true
+        // self.viewControllerName.topAnchor.constraint(equalTo: self.safeGuide.topAnchor).isActive = true
+        // self.viewControllerName.bottomAnchor.constraint(equalTo: self.safeGuide.bottomAnchor).isActive = true
     }
     
     override func awakeFromNib() {
