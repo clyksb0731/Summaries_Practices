@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  LocalNotification
 //
-//  Created by 최용석 on 2018. 6. 3..
+//  Created by 최용석 on 2018. 11. 1..
 //  Copyright © 2018년 clyksb0731. All rights reserved.
 //
 
