@@ -29,6 +29,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let _ = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
         }
         
+        UNUserNotificationCenter.current().delegate = self
+        
         return true
     }
     
@@ -76,7 +78,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
+    
+    
 
 
+}
+
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        print("didReceive Response")
+        
+        completionHandler()
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        print("WillPresent Notification")
+        
+        completionHandler(.alert)
+    }
 }
 
