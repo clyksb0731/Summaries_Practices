@@ -85,16 +85,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        print("didReceive Response")
-        
-        completionHandler()
-    }
-    
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         print("WillPresent Notification")
         
         completionHandler(.alert)
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        print("didReceive Response")
+        
+        let userInfo = response.notification.request.content.userInfo
+        print("Push notification received: \(userInfo)")
+        if let tmpMsg = userInfo as? [String : Any] {
+            if let deepMsg = tmpMsg["aps"] as? [String : Any] {
+                if let finalMsg = deepMsg["alert"] as? [String : String] {
+                    print("BODY: ", finalMsg["body"])
+                    print("TITLE: ", finalMsg["title"])
+                }
+                print("BADGE: ", deepMsg["badge"] as? Int)
+            }
+        }
+        
+        completionHandler()
     }
 }
 
