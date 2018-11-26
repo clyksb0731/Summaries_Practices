@@ -106,6 +106,8 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             }
         }
         
+        UIApplication.shared.applicationIconBadgeNumber += 1
+        
         completionHandler()
     }
 }
