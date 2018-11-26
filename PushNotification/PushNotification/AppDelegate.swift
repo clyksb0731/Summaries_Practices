@@ -19,7 +19,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if #available(iOS 10.0, *) {
             UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge], completionHandler: { (granted, error) in
-                application.registerForRemoteNotifications()
+                
+                DispatchQueue.main.async {
+                    application.registerForRemoteNotifications()
+                }
             })
             
         } else {
@@ -41,6 +44,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         print("Push notification received: \(userInfo)")
+        if let tmpMsg = userInfo as? [String : Any] {
+            if let deepMsg = tmpMsg["aps"] as? [String : Any] {
+                if let finalMsg = deepMsg["alert"] as? [String : String] {
+                    print("BODY: ", finalMsg["body"])
+                    print("TITLE: ", finalMsg["title"])
+                }
+                print("BADGE: ", deepMsg["badge"] as? Int)
+            }
+        }
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
