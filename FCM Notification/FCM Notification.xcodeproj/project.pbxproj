@@ -7,16 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CA1C311921AD02890059742B /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C311821AD02890059742B /* Models.swift */; };
 		CAF580F321ACCCCA00168504 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF580F221ACCCCA00168504 /* AppDelegate.swift */; };
 		CAF580F521ACCCCA00168504 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF580F421ACCCCA00168504 /* ViewController.swift */; };
 		CAF580F821ACCCCA00168504 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CAF580F621ACCCCA00168504 /* Main.storyboard */; };
 		CAF580FA21ACCCCB00168504 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CAF580F921ACCCCB00168504 /* Assets.xcassets */; };
 		CAF580FD21ACCCCB00168504 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CAF580FB21ACCCCB00168504 /* LaunchScreen.storyboard */; };
+		CAF5810621ACDA0E00168504 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CAF5810521ACDA0E00168504 /* GoogleService-Info.plist */; };
 		D9A9FF119BE5DD1E97355775 /* Pods_FCM_Notification.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4A8C8CDFA9DDFFDB9CD7684 /* Pods_FCM_Notification.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		A2F029F389B7B0E368BD015B /* Pods-FCM Notification.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FCM Notification.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FCM Notification/Pods-FCM Notification.debug.xcconfig"; sourceTree = "<group>"; };
+		CA1C311821AD02890059742B /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		CAF580EF21ACCCCA00168504 /* FCM Notification.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FCM Notification.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAF580F221ACCCCA00168504 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CAF580F421ACCCCA00168504 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -25,6 +28,7 @@
 		CAF580FC21ACCCCB00168504 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CAF580FE21ACCCCB00168504 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CAF5810421ACCE2B00168504 /* FCM Notification.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "FCM Notification.entitlements"; sourceTree = "<group>"; };
+		CAF5810521ACDA0E00168504 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D2841AF77CE8C4EEADE62158 /* Pods-FCM Notification.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FCM Notification.release.xcconfig"; path = "Pods/Target Support Files/Pods-FCM Notification/Pods-FCM Notification.release.xcconfig"; sourceTree = "<group>"; };
 		D4A8C8CDFA9DDFFDB9CD7684 /* Pods_FCM_Notification.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FCM_Notification.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -78,6 +82,8 @@
 				CAF580F921ACCCCB00168504 /* Assets.xcassets */,
 				CAF580FB21ACCCCB00168504 /* LaunchScreen.storyboard */,
 				CAF580FE21ACCCCB00168504 /* Info.plist */,
+				CAF5810521ACDA0E00168504 /* GoogleService-Info.plist */,
+				CA1C311821AD02890059742B /* Models.swift */,
 			);
 			path = "FCM Notification";
 			sourceTree = "<group>";
@@ -159,6 +165,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CAF580FD21ACCCCB00168504 /* LaunchScreen.storyboard in Resources */,
+				CAF5810621ACDA0E00168504 /* GoogleService-Info.plist in Resources */,
 				CAF580FA21ACCCCB00168504 /* Assets.xcassets in Resources */,
 				CAF580F821ACCCCA00168504 /* Main.storyboard in Resources */,
 			);
@@ -222,6 +229,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA1C311921AD02890059742B /* Models.swift in Sources */,
 				CAF580F521ACCCCA00168504 /* ViewController.swift in Sources */,
 				CAF580F321ACCCCA00168504 /* AppDelegate.swift in Sources */,
 			);
@@ -374,6 +382,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = X947N5A32A;
 				INFOPLIST_FILE = "FCM Notification/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -394,6 +403,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = X947N5A32A;
 				INFOPLIST_FILE = "FCM Notification/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
