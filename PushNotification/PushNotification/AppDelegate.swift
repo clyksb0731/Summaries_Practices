@@ -20,9 +20,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if #available(iOS 10.0, *) {
             UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge], completionHandler: { (granted, error) in
                 
-                DispatchQueue.main.async {
-                    application.registerForRemoteNotifications()
-                }
             })
             
         } else {
@@ -30,6 +27,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         UNUserNotificationCenter.current().delegate = self
+        self.setUNCategories()
+        
+        application.registerForRemoteNotifications()
         
         return true
     }
@@ -45,7 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        print("Push notification received: \(userInfo)")
+        print("Background: \(userInfo)")
         if let tmpMsg = userInfo as? [String : Any] {
             if let deepMsg = tmpMsg["aps"] as? [String : Any] {
                 if let finalMsg = deepMsg["alert"] as? [String : String] {
@@ -55,6 +55,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print("BADGE: ", deepMsg["badge"] as? Int)
             }
         }
+        
+        completionHandler(.newData)
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
@@ -85,28 +87,76 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        print("WillPresent Notification")
+    func setUNCategories() {
+        let firstAction = UNNotificationAction(identifier: "first", title: "Foreground", options: [.foreground])
+        let secondAction = UNNotificationAction(identifier: "second", title: "Destructive", options: [.destructive])
+        let category = UNNotificationCategory(identifier: "category", actions: [firstAction, secondAction], intentIdentifiers: [], options: [])
         
-        completionHandler(.alert)
+        let oneAction = UNNotificationAction(identifier: "one", title: "One", options: [.foreground])
+        let twoAction = UNNotificationAction(identifier: "two", title: "Two", options: [.foreground])
+        let threeAction = UNNotificationAction(identifier: "three", title: "Three", options: [.destructive])
+        let numbers = UNNotificationCategory(identifier: "number", actions: [oneAction, twoAction, threeAction], intentIdentifiers: [], options: [])
+        
+        UNUserNotificationCenter.current().setNotificationCategories([category, numbers])
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        
+        let userInfo = notification.request.content.userInfo
+        
+        print("willPresent Notification: \(userInfo)")
+        
+        completionHandler([.alert, .sound])
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        print("didReceive Response")
         
         let userInfo = response.notification.request.content.userInfo
-        print("Push notification received: \(userInfo)")
-        if let tmpMsg = userInfo as? [String : Any] {
-            if let deepMsg = tmpMsg["aps"] as? [String : Any] {
-                if let finalMsg = deepMsg["alert"] as? [String : String] {
-                    print("BODY: ", finalMsg["body"])
-                    print("TITLE: ", finalMsg["title"])
-                }
-                print("BADGE: ", deepMsg["badge"] as? Int)
+        
+        switch response.notification.request.content.categoryIdentifier {
+        case "category":
+            switch response.actionIdentifier {
+            case "first":
+                print("did FIRST in category category")
+                print("didReceive Response: \(userInfo)")
+                UIApplication.shared.applicationIconBadgeNumber = 0
+            case "second":
+                print("did SECOND in category category")
+                UIApplication.shared.applicationIconBadgeNumber += 1
+            default:
+                print("Default Tapped in category category")
             }
+        case "number":
+            switch response.actionIdentifier {
+            case "one":
+                print("did ONE in number category")
+                print("didReceive Response: \(userInfo)")
+                UIApplication.shared.applicationIconBadgeNumber = 0
+            case "two":
+                print("did TWO in number category")
+                print("didReceive Response: \(userInfo)")
+                UIApplication.shared.applicationIconBadgeNumber = 0
+            case "three":
+                print("did THREE in number category")
+                UIApplication.shared.applicationIconBadgeNumber += 1
+            default:
+                print("Default Tapped in number category")
+            }
+        default:
+            print("no category")
         }
         
-        UIApplication.shared.applicationIconBadgeNumber += 1
+        
+//        if let tmpMsg = userInfo as? [String : Any] {
+//            if let deepMsg = tmpMsg["aps"] as? [String : Any] {
+//                if let finalMsg = deepMsg["alert"] as? [String : String] {
+//                    print("BODY: ", finalMsg["body"])
+//                    print("TITLE: ", finalMsg["title"])
+//                }
+//                print("BADGE: ", deepMsg["badge"] as? Int)
+//            }
+//        }
+        
         
         completionHandler()
     }
