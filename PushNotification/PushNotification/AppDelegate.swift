@@ -46,17 +46,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         print("Background: \(userInfo)")
-        if let tmpMsg = userInfo as? [String : Any] {
-            if let deepMsg = tmpMsg["aps"] as? [String : Any] {
-                if let finalMsg = deepMsg["alert"] as? [String : String] {
-                    print("BODY: ", finalMsg["body"])
-                    print("TITLE: ", finalMsg["title"])
-                }
-                print("BADGE: ", deepMsg["badge"] as? Int)
-            }
-        }
         
-        completionHandler(.newData)
+        var topVC = self.getTopVC(with: self.window?.rootViewController)
+        let tmpVC = UIViewController()
+        tmpVC.view.backgroundColor = .yellow
+        
+        topVC?.present(tmpVC, animated: true)
+        
+
+        
+//        if let tmpMsg = userInfo as? [String : Any] {
+//            if let deepMsg = tmpMsg["aps"] as? [String : Any] {
+//                if let finalMsg = deepMsg["alert"] as? [String : String] {
+//                    print("BODY: ", finalMsg["body"])
+//                    print("TITLE: ", finalMsg["title"])
+//                }
+//                print("BADGE: ", deepMsg["badge"] as? Int)
+//            }
+//        }
+        
+        completionHandler(.noData)
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
@@ -81,7 +90,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
-    
+    func getTopVC(with vc: UIViewController?) -> UIViewController? {
+        guard var topVC = vc else { return nil }
+        
+        while true {
+            if let top = topVC.presentedViewController {
+                topVC = top
+            } else if let top = topVC.navigationController?.visibleViewController {
+                topVC = top
+            } else if let top = topVC.tabBarController?.selectedViewController {
+                topVC = top
+            } else {
+                break
+            }
+        }
+        return topVC
+    }
 
 
 }
@@ -105,6 +129,12 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         let userInfo = notification.request.content.userInfo
         
         print("willPresent Notification: \(userInfo)")
+        
+        var topVC = self.getTopVC(with: self.window?.rootViewController)
+        let tmpVC = UIViewController()
+        tmpVC.view.backgroundColor = .yellow
+        
+        topVC?.present(tmpVC, animated: true)
         
         completionHandler([.alert, .sound])
     }
@@ -145,6 +175,13 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         default:
             print("no category")
         }
+        
+        
+        var topVC = self.getTopVC(with: self.window?.rootViewController)
+        let tmpVC = UIViewController()
+        tmpVC.view.backgroundColor = .yellow
+        
+        topVC?.present(tmpVC, animated: true)
         
         
 //        if let tmpMsg = userInfo as? [String : Any] {
