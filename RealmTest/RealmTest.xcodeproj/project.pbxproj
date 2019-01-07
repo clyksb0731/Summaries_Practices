@@ -13,6 +13,7 @@
 		CA135A6321AF42BA001D7BF2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA135A6121AF42BA001D7BF2 /* Main.storyboard */; };
 		CA135A6521AF42BC001D7BF2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA135A6421AF42BC001D7BF2 /* Assets.xcassets */; };
 		CA135A6821AF42BC001D7BF2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA135A6621AF42BC001D7BF2 /* LaunchScreen.storyboard */; };
+		CAC41EF521AF53580017EE7A /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC41EF421AF53580017EE7A /* Model.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 		CA135A6421AF42BC001D7BF2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CA135A6721AF42BC001D7BF2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CA135A6921AF42BC001D7BF2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CAC41EF421AF53580017EE7A /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		D2D380398CC109DCE496D1F5 /* Pods-RealmTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealmTest.release.xcconfig"; path = "Pods/Target Support Files/Pods-RealmTest/Pods-RealmTest.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -60,6 +62,7 @@
 		CA135A5121AF42BA001D7BF2 = {
 			isa = PBXGroup;
 			children = (
+				CAC41EF421AF53580017EE7A /* Model.swift */,
 				CA135A5C21AF42BA001D7BF2 /* RealmTest */,
 				CA135A5B21AF42BA001D7BF2 /* Products */,
 				A795C29C333F0032E8D23A9D /* Pods */,
@@ -210,6 +213,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CAC41EF521AF53580017EE7A /* Model.swift in Sources */,
 				CA135A6021AF42BA001D7BF2 /* ViewController.swift in Sources */,
 				CA135A5E21AF42BA001D7BF2 /* AppDelegate.swift in Sources */,
 			);
