@@ -53,6 +53,7 @@ class ViewController: UIViewController {
     var label2: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
+        label.lineBreakMode = .byCharWrapping
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
@@ -65,7 +66,7 @@ class ViewController: UIViewController {
         self.setLayout()
         
         self.label.text = "abcdefghijklmnopqr"
-        self.label2.text = "adlkgjalkjglajlgj"
+        self.label2.text = "adlkgj alkjglad asdfafa dfadfadfa fdfadf adfdafa dfdaf adafa fadfa dfafd afadf adfa dfad fjlgj"
     }
     
     func setSubViews() {
@@ -97,9 +98,9 @@ class ViewController: UIViewController {
         //////////////////////////////////////////////
         
         NSLayoutConstraint.activate([self.subView2.topAnchor.constraint(equalTo: self.subView.topAnchor, constant: 100),
-                                     self.subView2.heightAnchor.constraint(equalToConstant: 20),
-                                     self.subView2.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
-                                     self.subView2.widthAnchor.constraint(greaterThanOrEqualToConstant: 100)])
+                                     self.subView2.heightAnchor.constraint(greaterThanOrEqualToConstant: 20),
+                                     self.subView2.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+                                     self.subView2.trailingAnchor.constraint(lessThanOrEqualTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -50)])
         
         NSLayoutConstraint.activate([self.previousView2.centerYAnchor.constraint(equalTo: self.subView2.centerYAnchor),
                                      self.previousView2.heightAnchor.constraint(equalToConstant: 18),
@@ -107,9 +108,9 @@ class ViewController: UIViewController {
                                      self.previousView2.widthAnchor.constraint(equalToConstant: 18)])
         
         NSLayoutConstraint.activate([self.label2.topAnchor.constraint(equalTo: self.subView2.topAnchor, constant: 1),
-                                     self.label2.heightAnchor.constraint(equalToConstant: 18),
+                                     self.label2.bottomAnchor.constraint(equalTo: self.subView2.bottomAnchor, constant: -1),
                                      self.label2.leadingAnchor.constraint(equalTo: self.previousView2.trailingAnchor, constant: 5),
-                                     self.label2.trailingAnchor.constraint(equalTo: self.subView2.trailingAnchor, constant: -10)])
+                                     self.label2.trailingAnchor.constraint(equalTo: self.subView2.trailingAnchor, constant: -5)])
     }
 }
 
