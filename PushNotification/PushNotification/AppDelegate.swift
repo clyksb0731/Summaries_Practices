@@ -47,7 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         print("Background: \(userInfo)")
         
-        var topVC = self.getTopVC(with: self.window?.rootViewController)
+        let topVC = self.getTopVC(with: self.window?.rootViewController)
         let tmpVC = UIViewController()
         tmpVC.view.backgroundColor = .yellow
         
@@ -55,17 +55,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
 
         
-//        if let tmpMsg = userInfo as? [String : Any] {
-//            if let deepMsg = tmpMsg["aps"] as? [String : Any] {
-//                if let finalMsg = deepMsg["alert"] as? [String : String] {
-//                    print("BODY: ", finalMsg["body"])
-//                    print("TITLE: ", finalMsg["title"])
-//                }
-//                print("BADGE: ", deepMsg["badge"] as? Int)
-//            }
-//        }
+        if let tmpMsg = userInfo as? [String : Any] {
+            if let deepMsg = tmpMsg["aps"] as? [String : Any] {
+                if let finalMsg = deepMsg["alert"] as? [String : String] {
+                    print("BODY: ", finalMsg["body"])
+                    print("TITLE: ", finalMsg["title"])
+                }
+                print("BADGE: ", deepMsg["badge"] as? Int)
+            }
+        }
         
-        completionHandler(.noData)
+        completionHandler(.newData)
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
@@ -105,6 +105,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         return topVC
+    }
+    
+    func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        print("Fetch Performed ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ")
     }
 
 

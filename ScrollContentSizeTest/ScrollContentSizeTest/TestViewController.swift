@@ -50,9 +50,11 @@ class TestViewController: UIViewController {
     }()
     
     func setLayout() {
-        let safeArea = UILayoutGuide()
+        var safeArea = UILayoutGuide()
         self.view.addLayoutGuide(safeArea)
         safeArea.identifier = "safeArea"
+        
+        safeArea = self.view.safeAreaLayoutGuide
         
         NSLayoutConstraint.activate([safeArea.topAnchor.constraint(equalTo: self.view.topAnchor, constant: UIApplication.shared.statusBarFrame.height + (self.navigationController?.navigationBar.frame.height)!),
                                      safeArea.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
@@ -60,7 +62,7 @@ class TestViewController: UIViewController {
                                      safeArea.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)])
         
         NSLayoutConstraint.activate([self.scrollView.topAnchor.constraint(equalTo: safeArea.topAnchor),
-                                     self.scrollView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor),
+                                     self.scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
                                      self.scrollView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
                                      self.scrollView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor)])
         
@@ -69,8 +71,8 @@ class TestViewController: UIViewController {
                                      self.contentView.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor),
                                      self.contentView.widthAnchor.constraint(equalToConstant: self.scrollView.contentSize.width)])
         
-        NSLayoutConstraint.activate([self.boxView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 0),
-                                     self.boxView.heightAnchor.constraint(equalToConstant: 35),
+        NSLayoutConstraint.activate([self.boxView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 700),
+                                     self.boxView.heightAnchor.constraint(equalToConstant: 60),
                                      self.boxView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 0),
                                      self.boxView.widthAnchor.constraint(equalToConstant: 50)])
     }
