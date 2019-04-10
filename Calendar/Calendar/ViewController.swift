@@ -14,24 +14,23 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        var date = Date()
+        let date = Date()
+        
         var dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second, .quarter, .timeZone, .era, .weekday], from: date)
         
-        print(dateComponents.year)
-        print(dateComponents.month)
-        print(dateComponents.day)
-        print(dateComponents.hour)
-        print(dateComponents.minute)
-        print(dateComponents.second)
-        print(dateComponents.timeZone)
-        print(dateComponents.era)
+        print("\(dateComponents.month!)월, \(dateComponents.day!)일, \(dateComponents.hour!)시, \(dateComponents.minute!)분")
+        print("Locale: ", Locale.current.regionCode!)
         
-        print(Calendar.current.component(.era, from: Date(timeIntervalSince1970: -409968000 - 432000)))
-        print(Calendar.current.dateComponents(in: .autoupdatingCurrent, from: Date()))
+        let dateComponent = DateComponents(calendar: Calendar.current, year: 2009, month: 8, day: 10)
+        print("Tmp Date:::::: ", dateComponent.date!)
         
-        // Creation of date component directly
-        let tmpDateComponents = DateComponents(hour: 5, minute: 2, weekday: 2)
-        print(tmpDateComponents)
+//        let tmpGDate = DateGenerator(date: Date())
+//        tmpGDate.tmpPrintDateComponent()
+//
+//        let tmpGTDate = DateGenerator(date: Date(timeInterval: -86400 * 180, since: Date()))
+//        tmpGTDate.tmpPrintDateComponent()
+        
+        print("TimeZone: ", TimeZone.current)
     }
 
     override func didReceiveMemoryWarning() {
