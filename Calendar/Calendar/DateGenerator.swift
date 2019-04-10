@@ -24,9 +24,25 @@ class DateGenerator {
         self.date = date
     }
     
+    /*
+     서력 기원 연수가 4로 나누어떨어지는 해는 윤년으로 한다. (1992년, 1996년, 2004년, 2008년, 2012년, 2016년, 2020년, 2024년, 2028년 ...)
+     서력 기원 연수가 4, 100으로 나누어떨어지는 해는 평년으로 한다. (1900년, 2100년, 2200년, 2300년, 2500년...)
+     서력 기원 연수가 4, 100, 400으로 나누어떨어지는 해는 윤년으로 둔다. (1600년, 2000년, 2400년...)
+     */
+    
+    // FIXME: Should be changed to be correct.
     var isLeapYear: Bool {
-        // FIXME: Need to condition for leap year
-        return true
+        if let year = self.getYear() {
+            if year % 4 == 0 {
+                if year % 100 == 0 {
+                    if year % 400 == 0 {
+                        
+                    }
+                }
+            }
+        }
+        
+        return false
     }
     
     func getYear() -> Int? {
