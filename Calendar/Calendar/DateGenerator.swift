@@ -53,6 +53,16 @@ class DateGenerator {
         }
     }
     
+    func backword(days: Int) -> DateGenerator {
+        self.date = Date(timeInterval: -1 * (Double(days) * self.dayInterval), since: self.date)
+        
+        return self
+    }
+    
+    func getDate() -> Date {
+        return self.date
+    }
+    
     func getYear() -> Int? {
         return Calendar.current.dateComponents(in: TimeZone.current, from: self.date).year
     }
@@ -63,6 +73,10 @@ class DateGenerator {
     
     func getDay() -> Int? {
         return Calendar.current.dateComponents(in: TimeZone.current, from: self.date).year
+    }
+    
+    func getDate(backward days: Int) -> Date {
+        return Date(timeInterval: -1 * (Double(days) * self.dayInterval), since: self.date)
     }
     
     func getYear(backward days: Int) -> Int? {
