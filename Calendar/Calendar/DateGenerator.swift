@@ -10,7 +10,7 @@ import Foundation
 
 class DateGenerator {
     
-    private let dayInterval: Double = 86400 // seconds a day
+    private let dayInterval: Double = 86400 // seconds for a day
     
     private var date: Date = Date()
     

@@ -10,6 +10,12 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    var calendarView: UICollectionView = {
+        let calendarView = UICollectionView()
+        calendarView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return calendarView
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
