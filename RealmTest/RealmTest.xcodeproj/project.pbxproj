@@ -62,7 +62,6 @@
 		CA135A5121AF42BA001D7BF2 = {
 			isa = PBXGroup;
 			children = (
-				CAC41EF421AF53580017EE7A /* Model.swift */,
 				CA135A5C21AF42BA001D7BF2 /* RealmTest */,
 				CA135A5B21AF42BA001D7BF2 /* Products */,
 				A795C29C333F0032E8D23A9D /* Pods */,
@@ -83,6 +82,7 @@
 			children = (
 				CA135A5D21AF42BA001D7BF2 /* AppDelegate.swift */,
 				CA135A5F21AF42BA001D7BF2 /* ViewController.swift */,
+				CAC41EF421AF53580017EE7A /* Model.swift */,
 				CA135A6121AF42BA001D7BF2 /* Main.storyboard */,
 				CA135A6421AF42BC001D7BF2 /* Assets.xcassets */,
 				CA135A6621AF42BC001D7BF2 /* LaunchScreen.storyboard */,
@@ -168,7 +168,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-RealmTest/Pods-RealmTest-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-RealmTest/Pods-RealmTest-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 			);
@@ -181,7 +181,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RealmTest/Pods-RealmTest-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RealmTest/Pods-RealmTest-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		B5FFD9C657744FCB52CC03E9 /* [CP] Check Pods Manifest.lock */ = {

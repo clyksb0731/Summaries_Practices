@@ -12,7 +12,15 @@ import RealmSwift
 class Temp: Object {
     @objc dynamic var one: String = ""
     @objc dynamic var two: String = ""
-    @objc dynamic var three: String = {
-       return "\(self.one)\(self.two)"
+    
+    convenience init (one: String, two: String) {
+        self.init()
+        
+        self.one = one
+        self.two = two
+    }
+    
+    override static func primaryKey() -> String {
+        return "one"
     }
 }
