@@ -8,13 +8,37 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+enum TempType {
+    case up
+    case down
+}
 
+class ViewController: UIViewController {
+    
+    @IBOutlet weak var receivedLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        self.setNotification()
     }
-
-
+    
+    func setNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(expressData(_:)), name: Notification.Name("receivedData"), object: nil)
+    }
+    
+    @objc func expressData(_ notification: Notification) {
+        if let data = notification.userInfo as? [String:TempType] {
+            if let type = data["data"] {
+                switch type {
+                case .up:
+                    self.receivedLabel.text = "Up"
+                    
+                case .down:
+                    self.receivedLabel.text = "Down"
+                }
+            }
+        }
+    }
 }
 
