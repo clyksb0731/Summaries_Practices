@@ -77,7 +77,7 @@ extension ViewController {
 // MARK: Extension for collection view delegate and data source
 extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return 100
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -89,6 +89,8 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         label.text = String(indexPath.row)
         cell.contentView.addSubview(label) // FIXME: Continuously adding.
         cell.contentView.backgroundColor = .yellow
+        cell.contentView.layer.borderColor = UIColor.black.cgColor
+        cell.contentView.layer.borderWidth = 1
         return cell
     }
 }
@@ -96,8 +98,12 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
 extension ViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let width = (UIScreen.main.bounds.width - 10) / 2
+        let width = (UIScreen.main.bounds.width) / 10
         return CGSize(width: width, height: width)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
