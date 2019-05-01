@@ -214,10 +214,10 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
         var itemSize: CGSize!
         
         if indexPath.item % 7 == 0  || indexPath.item % 7 == 6 {
-            itemSize = CGSize(width: (UIScreen.main.bounds.width) / 16 * 3, height: (UIScreen.main.bounds.width) / 8)
+            itemSize = CGSize(width: (collectionView.bounds.width) / 16 * 3, height: (collectionView.bounds.width) / 8)
             
         } else {
-           itemSize = CGSize(width: (UIScreen.main.bounds.width) / 8, height: (UIScreen.main.bounds.width) / 8)
+           itemSize = CGSize(width: (collectionView.bounds.width) / 8, height: (collectionView.bounds.width) / 8)
         }
         
         return itemSize
