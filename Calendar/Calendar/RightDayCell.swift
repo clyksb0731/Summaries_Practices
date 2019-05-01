@@ -1,14 +1,14 @@
 //
-//  DayCell.swift
+//  RightDayCell.swift
 //  Calendar
 //
-//  Created by 최용석 on 01/05/2019.
+//  Created by 최용석 on 02/05/2019.
 //  Copyright © 2019 clyksb0731. All rights reserved.
 //
 
 import UIKit
 
-class DayCell: UICollectionViewCell {
+class RightDayCell: UICollectionViewCell {
     
     var leftView: UIView = {
         let view = UIView()
@@ -140,7 +140,7 @@ class DayCell: UICollectionViewCell {
 }
 
 // MARK: - Extension for methods added additionally
-extension DayCell {
+extension RightDayCell {
     func setTargets() {
         self.dayButton.addTarget(self, action: #selector(itemButton(_:)), for: .touchUpInside)
     }
@@ -162,28 +162,28 @@ extension DayCell {
             self.leftView.centerYAnchor.constraint(equalTo: safeArea.centerYAnchor),
             self.leftView.heightAnchor.constraint(equalTo: safeArea.heightAnchor, multiplier: 0.6),
             self.leftView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
-            self.leftView.trailingAnchor.constraint(equalTo: safeArea.centerXAnchor)
+            self.leftView.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 2/3)
             ])
         
         NSLayoutConstraint.activate([
             self.rightView.centerYAnchor.constraint(equalTo: safeArea.centerYAnchor),
             self.rightView.heightAnchor.constraint(equalTo: safeArea.heightAnchor, multiplier: 0.6),
-            self.rightView.leadingAnchor.constraint(equalTo: safeArea.centerXAnchor),
+            self.rightView.leadingAnchor.constraint(equalTo: self.leftView.trailingAnchor),
             self.rightView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor)
             ])
         
         NSLayoutConstraint.activate([
             self.circleView.centerYAnchor.constraint(equalTo: safeArea.centerYAnchor),
             self.circleView.heightAnchor.constraint(equalTo: safeArea.heightAnchor, multiplier: 0.7),
-            self.circleView.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
+            self.circleView.centerXAnchor.constraint(equalTo: self.leftView.centerXAnchor),
             self.circleView.widthAnchor.constraint(equalTo: safeArea.heightAnchor, multiplier: 0.7)
             ])
         
         NSLayoutConstraint.activate([
             self.dayLabel.topAnchor.constraint(equalTo: safeArea.topAnchor),
             self.dayLabel.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor),
-            self.dayLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
-            self.dayLabel.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor)
+            self.dayLabel.centerXAnchor.constraint(equalTo: self.leftView.centerXAnchor),
+            self.dayLabel.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 2/3)
             ])
         
         NSLayoutConstraint.activate([
@@ -216,7 +216,7 @@ extension DayCell {
 }
 
 // MARK: - Extension for objc methods added additionally
-extension DayCell {
+extension RightDayCell {
     @objc func itemButton(_ sender: UIButton) {
         NotificationCenter.default.post(name: NSNotification.Name("determinePeriod"), object: nil, userInfo: ["date":self.date!])
     }

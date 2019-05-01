@@ -21,6 +21,10 @@ class CoreMethods {
         }
     }
     
+    func getDate(year: Int, month: Int, day: Int) -> Date? {
+        return DateComponents(calendar: Calendar.current, year: year, month: month, day: day).date
+    }
+    
 }
 
 extension UIColor {
