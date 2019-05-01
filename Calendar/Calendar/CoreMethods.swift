@@ -8,6 +8,15 @@
 
 import UIKit
 
+enum DayType {
+    case aloneSelected
+    case start
+    case `continue`
+    case end
+    case normal
+    case notAvailable
+}
+
 class CoreMethods {
     static let shared: CoreMethods = CoreMethods()
     
@@ -23,6 +32,38 @@ class CoreMethods {
     
     func getDate(year: Int, month: Int, day: Int) -> Date? {
         return DateComponents(calendar: Calendar.current, year: year, month: month, day: day).date
+    }
+    
+    func determine(dates: [Date], year: Int, month: Int, day: Int) -> DayType {
+        var dayType: DayType!
+        if dates.isEmpty {
+            dayType = .normal
+            
+        } else if dates.count == 1 {
+            if self.getDate(year: year, month: month, day: day) == dates[0] {
+                dayType = .aloneSelected
+                
+            } else {
+                dayType = .normal
+            }
+            
+        } else if dates.count == 2 {
+            if self.getDate(year: year, month: month, day: day) == dates[0] {
+                dayType = .start
+                
+            } else if self.getDate(year: year, month: month, day: day) == dates[1] {
+                dayType = .end
+                
+            } else if self.getDate(year: year, month: month, day: day)! > dates[0] &&
+                self.getDate(year: year, month: month, day: day)! < dates[1] {
+                dayType = .continue
+                
+            } else {
+                dayType = .normal
+            }
+        }
+        
+        return dayType
     }
     
 }

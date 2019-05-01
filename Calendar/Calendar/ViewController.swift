@@ -98,27 +98,29 @@ extension ViewController {
         if let userInfo = notification.userInfo as? [String:Date],
             let date = userInfo["date"] {
             
-//            if self.selectedDates.count < 2 {
-//                self.selectedDates.append(date)
-//
-//            } else {
-//                self.selectedDates = []
-//                self.selectedDates.append(date)
-//            }
+            if self.selectedDates.count < 2 {
+                self.selectedDates.append(date)
+
+            } else {
+                self.selectedDates = []
+                self.selectedDates.append(date)
+            }
+            
+            self.selectedDates = self.selectedDates.sorted {$0 < $1}
             
             self.calendarView.reloadData()
             
-            let formatter = DateFormatter()
-            formatter.locale = Locale(identifier:"ko_KR")
-            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-            let date2 = formatter.date(from: formatter.string(from: date))
-            let date3 = formatter.string(from: date)
-
-            print("Date::::::::::::::: ", date)
-            print("Date2:::::::::::::: ", date2)
-            print("Date3:::::::::::::: ", date3)
-
-            print(Date())
+//            let formatter = DateFormatter()
+//            formatter.locale = Locale(identifier:"ko_KR")
+//            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+//            let date2 = formatter.date(from: formatter.string(from: date))
+//            let date3 = formatter.string(from: date)
+//
+//            print("Date::::::::::::::: ", date)
+//            print("Date2:::::::::::::: ", date2)
+//            print("Date3:::::::::::::: ", date3)
+//
+//            print(Date())
         }
     }
     
@@ -141,32 +143,28 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         var item: UICollectionViewCell!
         
+        let year = self.basicDate[indexPath.section].year
+        let month = self.basicDate[indexPath.section].month
         let weekday = self.basicDate[indexPath.section].weekday
+        let day = indexPath.item - (weekday - 2)
+        
         if weekday - indexPath.item < 2 {
             if indexPath.item % 7 == 0 {
                 let leftItem = collectionView.dequeueReusableCell(withReuseIdentifier: "leftDayCell", for: indexPath) as! LeftDayCell
-                leftItem.setItem(year: self.basicDate[indexPath.section].year,
-                                 month: self.basicDate[indexPath.section].month,
-                                 day: indexPath.item - (weekday - 2),
-                                 dayType: .start)
+                
+                leftItem.setItem(year: year, month: month, day: day, dates: self.selectedDates)
                 
                 item = leftItem
                 
             } else if indexPath.item % 7 == 6 {
                 let rightItem = collectionView.dequeueReusableCell(withReuseIdentifier: "rightDayCell", for: indexPath) as! RightDayCell
-                rightItem.setItem(year: self.basicDate[indexPath.section].year,
-                                  month: self.basicDate[indexPath.section].month,
-                                  day: indexPath.item - (weekday - 2),
-                                  dayType: .end)
+                rightItem.setItem(year: year, month: month, day: day, dates: self.selectedDates)
                 
                 item = rightItem
                 
             } else {
                 let normalItem = collectionView.dequeueReusableCell(withReuseIdentifier: "dayCell", for: indexPath) as! DayCell
-                normalItem.setItem(year: self.basicDate[indexPath.section].year,
-                                   month: self.basicDate[indexPath.section].month,
-                                   day: indexPath.item - (weekday - 2),
-                                   dayType: .continue)
+                normalItem.setItem(year: year, month: month, day: day, dates: self.selectedDates)
                 
                 item = normalItem
             }
@@ -174,19 +172,19 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         } else {
             if indexPath.item % 7 == 0 {
                 let leftItem = collectionView.dequeueReusableCell(withReuseIdentifier: "leftDayCell", for: indexPath) as! LeftDayCell
-                leftItem.setItem(year: nil, month: nil, day: nil, dayType: nil)
+                leftItem.setItem(year: nil, month: nil, day: nil, dates: nil)
                 
                 item = leftItem
                 
             } else if indexPath.item % 7 == 6 {
                 let rightItem = collectionView.dequeueReusableCell(withReuseIdentifier: "rightDayCell", for: indexPath) as! RightDayCell
-                rightItem.setItem(year: nil, month: nil, day: nil, dayType: nil)
+                rightItem.setItem(year: nil, month: nil, day: nil, dates: nil)
                 
                 item = rightItem
                 
             } else {
                 let normalItem = collectionView.dequeueReusableCell(withReuseIdentifier: "dayCell", for: indexPath) as! DayCell
-                normalItem.setItem(year: nil, month: nil, day: nil, dayType: nil)
+                normalItem.setItem(year: nil, month: nil, day: nil, dates: nil)
                 
                 item = normalItem
                 

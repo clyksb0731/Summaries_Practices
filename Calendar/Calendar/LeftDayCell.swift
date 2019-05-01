@@ -71,15 +71,6 @@ class LeftDayCell: UICollectionViewCell {
         }
     }
     
-    enum DayType {
-        case aloneSelected
-        case start
-        case `continue`
-        case end
-        case normal
-        case notAvailable
-    }
-    
     var selectedDayType: DayType = .normal {
         willSet {
             switch newValue {
@@ -197,15 +188,15 @@ extension LeftDayCell {
     func setItem(year: Int?,
                  month: Int?,
                  day: Int?,
-                 dayType: DayType?) {
+                 dates: [Date]?) {
         
         if let year = year,
             let month = month,
             let day = day,
-            let dayType = dayType {
+            let dates = dates {
             self.dayLabel.text = String(day)
             self.date = CoreMethods.shared.getDate(year: year, month: month, day: day)
-            self.selectedDayType = dayType
+            self.selectedDayType = CoreMethods.shared.determine(dates: dates, year: year, month: month, day: day)
             
         } else {
             self.dayLabel.text = nil
