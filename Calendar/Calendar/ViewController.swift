@@ -27,7 +27,9 @@ class ViewController: UIViewController {
     
     var selectedDates: [Date] = []
     
-    var basicDate: [(year: Int, month: Int, days: Int, weekday: Int)] = [(2019, 3, 31, 6), (2019, 4, 30, 2), (2019, 5, 31, 4)]
+//    var basicDate: [(year: Int, month: Int, days: Int, weekday: Int)] = [(2019, 3, 31, 6), (2019, 4, 30, 2), (2019, 5, 31, 4)]
+    var basicDate: [(year: Int, month: Int, days: Int, weekday: Int)] = []
+    
     let addingDate: [(year: Int, month: Int, days: Int, weekday: Int)] = [(2019, 2, 28, 6)]
 
     override func viewDidLoad() {
@@ -35,10 +37,14 @@ class ViewController: UIViewController {
         
         self.view.backgroundColor = .white
         
+        self.setDates()
         self.setDelegates()
         self.setNotifications()
         self.view.addSubview(self.calendarView)
         self.setLayout()
+        self.setViewFoundation()
+        
+        self.testMethod()
     }
 
     override func didReceiveMemoryWarning() {
@@ -59,7 +65,7 @@ extension ViewController {
         print("Locale: ", Locale.current.regionCode!)
         
         let dateComponent = DateComponents(calendar: Calendar.current, year: 2009, month: 8, day: 10)
-        print("Tmp Date:::::: ", dateComponent.date!)
+        print("Weekday:::::: ", Calendar.current.dateComponents(in: TimeZone.current, from: dateComponent.date!).weekday)
         
         //        let tmpGDate = DateGenerator(date: Date())
         //        tmpGDate.tmpPrintDateComponent()
@@ -68,6 +74,13 @@ extension ViewController {
         //        tmpGTDate.tmpPrintDateComponent()
         
         print("TimeZone: ", TimeZone.current)
+    }
+    
+    // MARK: Set view foundation
+    func setViewFoundation() {
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addList(_:)))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addAnotherList(_:)))
+        self.navigationItem.title = "Calendar"
     }
     
     // MARK: Set delegate
@@ -90,6 +103,25 @@ extension ViewController {
     func setNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(determinePeriod(_:)), name: NSNotification.Name(rawValue: "determinePeriod"), object: nil)
     }
+    
+    // MARK: Set dates
+    func setDates() {
+        self.basicDate = []
+        if let currentYearMonth: (year: Int, month: Int) = CoreMethods.shared.getYearMonthOf() {
+            var year = currentYearMonth.year
+            var month = currentYearMonth.month
+            
+            for _ in 0..<12 {
+                self.basicDate.insert((year: year,
+                                       month: month,
+                                       days: CoreMethods.shared.getEndDay(year: year, month: month),
+                                       weekday: CoreMethods.shared.getWeekday(year: year, month: month, day: 1)!), at: 0)
+                
+                year = CoreMethods.shared.previousYearMonth(year: year, month: month).year
+                month = CoreMethods.shared.previousYearMonth(year: year, month: month).month
+            }
+        }
+    }
 }
 
 // MARK: Extension for objc methods added additionally
@@ -107,6 +139,7 @@ extension ViewController {
             }
             
             self.selectedDates = self.selectedDates.sorted {$0 < $1}
+            print("Selected Period::::::::: ", self.selectedDates)
             
             self.calendarView.reloadData()
             
@@ -124,8 +157,18 @@ extension ViewController {
         }
     }
     
-    @objc func tmp(_ sender: UIButton) {
+    @objc func addList(_ sender: UIBarButtonItem) {
+        self.basicDate = self.addingDate + self.basicDate
+        
         self.calendarView.reloadData()
+        
+        DispatchQueue.main.async {
+            self.calendarView.contentOffset.y += (5 * self.calendarView.bounds.width / 8 + 57 + 40)
+        }
+    }
+    
+    @objc func addAnotherList(_ sender: UIBarButtonItem) {
+
     }
         
 }

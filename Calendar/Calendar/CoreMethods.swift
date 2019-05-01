@@ -34,38 +34,113 @@ class CoreMethods {
         return DateComponents(calendar: Calendar.current, year: year, month: month, day: day).date
     }
     
+    func getYearMonthOf(_ date: Date = Date()) -> (year: Int, month: Int)? {
+        let dateComponent = Calendar.current.dateComponents(in: TimeZone.current, from: date)
+        if let year = dateComponent.year,
+            let month = dateComponent.month {
+            
+            return (year: year, month: month)
+            
+        } else {
+            return nil
+        }
+    }
+    
+    func getWeekday(year: Int, month: Int, day: Int) -> Int? {
+        if let date = self.getDate(year: year, month: month, day: day),
+            let weekday = Calendar.current.dateComponents(in: TimeZone.current, from: date).weekday {
+            
+            return weekday
+            
+        } else {
+            return nil
+        }
+    }
+    
+    func getEndDay(year: Int, month: Int) -> Int {
+        if month == 1 ||
+            month == 3 ||
+            month == 5 ||
+            month == 7 ||
+            month == 8 ||
+            month == 10 ||
+            month == 12 {
+            
+            return 31
+            
+        } else if month == 4 ||
+            month == 6 ||
+            month == 9 ||
+            month == 11 {
+            
+            return 30
+            
+        } else {
+            if year % 4 == 0 {
+                if year % 100 == 0 {
+                    if year % 400 == 0 {
+                        return 29
+                        
+                    } else {
+                        return 28
+                    }
+                    
+                } else {
+                    return 29
+                }
+                
+            } else {
+                return 28
+            }
+        }
+    }
+    
+    func previousYearMonth(year: Int, month: Int) -> (year: Int, month: Int) {
+        if month == 1 {
+            return (year: year - 1, month: 12)
+            
+        } else {
+            return (year: year, month: month - 1)
+        }
+    }
+    
     func determine(dates: [Date], year: Int, month: Int, day: Int) -> DayType {
         var dayType: DayType!
-        if dates.isEmpty {
-            dayType = .normal
+        if self.getDate(year: year, month: month, day: day)! > Date() {
+            dayType = .notAvailable
             
-        } else if dates.count == 1 {
-            if self.getDate(year: year, month: month, day: day) == dates[0] {
-                dayType = .aloneSelected
-                
-            } else {
+        } else {
+            if dates.isEmpty {
                 dayType = .normal
-            }
-            
-        } else if dates.count == 2 {
-            if self.getDate(year: year, month: month, day: day) == dates[0] {
-                dayType = .start
                 
-            } else if self.getDate(year: year, month: month, day: day) == dates[1] {
-                dayType = .end
+            } else if dates.count == 1 {
+                if self.getDate(year: year, month: month, day: day) == dates[0] {
+                    dayType = .aloneSelected
+                    
+                } else {
+                    dayType = .normal
+                }
                 
-            } else if self.getDate(year: year, month: month, day: day)! > dates[0] &&
-                self.getDate(year: year, month: month, day: day)! < dates[1] {
-                dayType = .continue
-                
-            } else {
-                dayType = .normal
+            } else if dates.count == 2 {
+                if self.getDate(year: year, month: month, day: day) == dates[0] {
+                    dayType = .start
+                    
+                } else if self.getDate(year: year, month: month, day: day) == dates[1] {
+                    dayType = .end
+                    
+                } else if self.getDate(year: year, month: month, day: day)! > dates[0] &&
+                    self.getDate(year: year, month: month, day: day)! < dates[1] {
+                    dayType = .continue
+                    
+                } else {
+                    dayType = .normal
+                }
             }
         }
         
         return dayType
     }
-    
+
 }
 
 extension UIColor {

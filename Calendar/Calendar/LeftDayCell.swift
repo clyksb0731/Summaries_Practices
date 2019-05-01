@@ -153,7 +153,7 @@ extension LeftDayCell {
             self.leftView.centerYAnchor.constraint(equalTo: safeArea.centerYAnchor),
             self.leftView.heightAnchor.constraint(equalTo: safeArea.heightAnchor, multiplier: 0.6),
             self.leftView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
-            self.leftView.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 1/3)
+            self.leftView.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 2/3)
             ])
         
         NSLayoutConstraint.activate([
@@ -166,14 +166,14 @@ extension LeftDayCell {
         NSLayoutConstraint.activate([
             self.circleView.centerYAnchor.constraint(equalTo: safeArea.centerYAnchor),
             self.circleView.heightAnchor.constraint(equalTo: safeArea.heightAnchor, multiplier: 0.7),
-            self.circleView.centerXAnchor.constraint(equalTo: self.rightView.centerXAnchor),
+            self.circleView.centerXAnchor.constraint(equalTo: self.rightView.leadingAnchor),
             self.circleView.widthAnchor.constraint(equalTo: safeArea.heightAnchor, multiplier: 0.7)
             ])
         
         NSLayoutConstraint.activate([
             self.dayLabel.topAnchor.constraint(equalTo: safeArea.topAnchor),
             self.dayLabel.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor),
-            self.dayLabel.centerXAnchor.constraint(equalTo: self.rightView.centerXAnchor),
+            self.dayLabel.centerXAnchor.constraint(equalTo: self.rightView.leadingAnchor),
             self.dayLabel.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 2/3)
             ])
         
