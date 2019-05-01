@@ -56,24 +56,36 @@ class ViewController: UIViewController {
 // MARK: Extension for methods added additionally
 extension ViewController {
     func testMethod() {
-        let date = Date()
-        let date2 = Date(timeInterval: -86400, since: date)
+        let date1 = CoreMethods.shared.getDate(year: 2018, month: 7, day: 1)!
+        let date2 = CoreMethods.shared.getDate(year: 2019, month: 3, day: 1)!
         
-        var dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second, .quarter, .timeZone, .era, .weekday], from: date2)
+        self.selectedDates = [date1, date2] // initial value to test
         
-        print("\(dateComponents.month!)월, \(dateComponents.day!)일, \(dateComponents.hour!)시, \(dateComponents.minute!)분", "\(dateComponents.weekday)weekday")
-        print("Locale: ", Locale.current.regionCode!)
+        self.calendarView.reloadData()
         
-        let dateComponent = DateComponents(calendar: Calendar.current, year: 2009, month: 8, day: 10)
-        print("Weekday:::::: ", Calendar.current.dateComponents(in: TimeZone.current, from: dateComponent.date!).weekday)
+        DispatchQueue.main.async {
+            print(self.getContentHeight())
+            self.calendarView.contentOffset.y = self.getContentHeight() - 734
+        }
         
-        //        let tmpGDate = DateGenerator(date: Date())
-        //        tmpGDate.tmpPrintDateComponent()
-        //
-        //        let tmpGTDate = DateGenerator(date: Date(timeInterval: -86400 * 180, since: Date()))
-        //        tmpGTDate.tmpPrintDateComponent()
-        
-        print("TimeZone: ", TimeZone.current)
+//        let date = Date()
+//        let date2 = Date(timeInterval: -86400, since: date)
+//
+//        var dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second, .quarter, .timeZone, .era, .weekday], from: date2)
+//
+//        print("\(dateComponents.month!)월, \(dateComponents.day!)일, \(dateComponents.hour!)시, \(dateComponents.minute!)분", "\(dateComponents.weekday)weekday")
+//        print("Locale: ", Locale.current.regionCode!)
+//
+//        let dateComponent = DateComponents(calendar: Calendar.current, year: 2009, month: 8, day: 10)
+//        print("Weekday:::::: ", Calendar.current.dateComponents(in: TimeZone.current, from: dateComponent.date!).weekday)
+//
+//        //        let tmpGDate = DateGenerator(date: Date())
+//        //        tmpGDate.tmpPrintDateComponent()
+//        //
+//        //        let tmpGTDate = DateGenerator(date: Date(timeInterval: -86400 * 180, since: Date()))
+//        //        tmpGTDate.tmpPrintDateComponent()
+//
+//        print("TimeZone: ", TimeZone.current)
     }
     
     // MARK: Set view foundation
@@ -102,6 +114,19 @@ extension ViewController {
     // MARK: Set targets
     func setNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(determinePeriod(_:)), name: NSNotification.Name(rawValue: "determinePeriod"), object: nil)
+    }
+    
+    // MARK: Get content size height
+    func getContentHeight() -> CGFloat {
+        var height: CGFloat = 0
+        for index in 0..<self.basicDate.count {
+            let dayLine = CGFloat(self.basicDate[index].days + self.basicDate[index].weekday - 1) / CGFloat(7)
+            let daysHeight = dayLine.rounded(.up) * self.calendarView.bounds.width / 8
+            
+            height += (57 + daysHeight + 40)
+        }
+        
+        return height
     }
     
     // MARK: Set dates
@@ -157,6 +182,7 @@ extension ViewController {
         }
     }
     
+    // Temporay *******
     @objc func addList(_ sender: UIBarButtonItem) {
         self.basicDate = self.addingDate + self.basicDate
         
