@@ -27,22 +27,47 @@ class DayCell: UICollectionViewCell {
         
         self.contentView.backgroundColor = .white
         self.contentView.addSubview(self.dayLabel)
-        self.setLayout()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setLayout() {
+    enum Position {
+        case left
+        case middle
+        case right
+    }
+    
+    func setLayout(_ position: Position) {
         let safeArea = self.contentView.safeAreaLayoutGuide
         
-        NSLayoutConstraint.activate([
-            self.dayLabel.topAnchor.constraint(equalTo: safeArea.topAnchor),
-            self.dayLabel.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor),
-            self.dayLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
-            self.dayLabel.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor)
-            ])
+        switch position {
+        case .left:
+            NSLayoutConstraint.activate([
+                self.dayLabel.topAnchor.constraint(equalTo: safeArea.topAnchor),
+                self.dayLabel.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor),
+                self.dayLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: self.contentView.bounds.width / 3),
+                self.dayLabel.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor)
+                ])
+            
+        case .middle:
+            NSLayoutConstraint.activate([
+                self.dayLabel.topAnchor.constraint(equalTo: safeArea.topAnchor),
+                self.dayLabel.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor),
+                self.dayLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
+                self.dayLabel.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor)
+                ])
+            
+        case .right:
+            NSLayoutConstraint.activate([
+                self.dayLabel.topAnchor.constraint(equalTo: safeArea.topAnchor),
+                self.dayLabel.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor),
+                self.dayLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
+                self.dayLabel.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -(self.contentView.bounds.width / 3))
+                ])
+            
+        }
     }
     
     func setDayLabel(_ day: Int) {

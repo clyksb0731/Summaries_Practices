@@ -92,16 +92,26 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "dayCell", for: indexPath) as! DayCell
+        let item = collectionView.dequeueReusableCell(withReuseIdentifier: "dayCell", for: indexPath) as! DayCell
         let weekday = self.basicDate[indexPath.section].weekday
         if weekday - indexPath.item < 2 {
-            cell.setDayLabel(indexPath.item - (weekday - 2))
-            cell.setDate(year: self.basicDate[indexPath.section].year,
+            item.setDayLabel(indexPath.item - (weekday - 2))
+            item.setDate(year: self.basicDate[indexPath.section].year,
                          month: self.basicDate[indexPath.section].month,
                          day: indexPath.item - (weekday - 2))
+            
+            if indexPath.item % 7 == 0 {
+                item.setLayout(.left)
+                
+            } else if indexPath.item % 7 == 6 {
+                item.setLayout(.right)
+                
+            } else {
+                item.setLayout(.middle)
+            }
         }
         
-        return cell
+        return item
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -118,9 +128,17 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
 extension ViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        // Autolayout width?????????????????????????????/
-        let width = (UIScreen.main.bounds.width) / 7
-        return CGSize(width: width, height: width)
+        // Autolayout width????????????????????????????
+        var itemSize: CGSize!
+        
+        if indexPath.item % 7 == 0  || indexPath.item % 7 == 6 {
+            itemSize = CGSize(width: (UIScreen.main.bounds.width) / 16 * 3, height: (UIScreen.main.bounds.width) / 8)
+            
+        } else {
+           itemSize = CGSize(width: (UIScreen.main.bounds.width) / 8, height: (UIScreen.main.bounds.width) / 8)
+        }
+        
+        return itemSize
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
@@ -133,6 +151,6 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 3
+        return 0
     }
 }
