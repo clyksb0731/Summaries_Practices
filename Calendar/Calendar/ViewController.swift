@@ -14,14 +14,20 @@ class ViewController: UIViewController {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = UICollectionView.ScrollDirection.vertical
         let calendarView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
-        calendarView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        calendarView.register(DayCell.self, forCellWithReuseIdentifier: "dayCell")
+        calendarView.backgroundColor = .white
         calendarView.translatesAutoresizingMaskIntoConstraints = false
 
         return calendarView
     }()
+    
+    let basicDate: [(year: Int, month: Int, days: Int, weekday: Int)] = [(2019, 3, 31, 6), (2019, 4, 30, 2), (2019, 5, 31, 4)]
+    let addingDate: [(year: Int, month: Int, days: Int, weekday: Int)] = [(2019, 2, 28, 6)]
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.view.backgroundColor = .white
         
         self.view.addSubview(self.calendarView)
         self.setLayout()
@@ -76,29 +82,37 @@ extension ViewController {
 
 // MARK: Extension for collection view delegate and data source
 extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 100
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return self.basicDate.count
     }
-
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.basicDate[section].days + self.basicDate[section].weekday - 1
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-        let label = UILabel(frame: cell.contentView.frame)
-        label.textColor = .black
-        label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
-        label.text = String(indexPath.row)
-        cell.contentView.addSubview(label) // FIXME: Continuously adding.
-        cell.contentView.backgroundColor = .yellow
-        cell.contentView.layer.borderColor = UIColor.black.cgColor
-        cell.contentView.layer.borderWidth = 1
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "dayCell", for: indexPath) as! DayCell
+        let weekday = self.basicDate[indexPath.section].weekday
+        if weekday - indexPath.item < 2 {
+            cell.setDayLabel(indexPath.item - (weekday - 2))
+            cell.setDate(year: self.basicDate[indexPath.section].year,
+                         month: self.basicDate[indexPath.section].month,
+                         day: indexPath.item - (weekday - 2))
+        }
+        
         return cell
     }
+    
+//    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+//        <#code#>
+//    }
+    
 }
 
 extension ViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let width = (UIScreen.main.bounds.width) / 10
+        let width = (UIScreen.main.bounds.width) / 7
         return CGSize(width: width, height: width)
     }
     
