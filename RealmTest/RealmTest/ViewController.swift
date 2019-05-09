@@ -30,7 +30,7 @@ class ViewController: UIViewController {
         
         let tmp = Temp(one: "1", two: "2")
         try? realm?.write {
-            realm?.add(tmp)
+            realm?.add(tmp, update: true)
         }
         
         print(Realm.Configuration.defaultConfiguration.fileURL)
