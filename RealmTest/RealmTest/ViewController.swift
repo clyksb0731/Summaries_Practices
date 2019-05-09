@@ -15,13 +15,25 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        // Handling Errors Using Do - Catch
         do {
             let realm = try Realm()
             let tmps = realm.objects(Temp.self)
-            
+
         } catch let error as NSError {
             print(error.localizedDescription)
         }
+        
+        // Converting Errors to Optional Values
+        let realm = try? Realm()
+        let tmps = realm?.objects(Temp.self)
+        
+        let tmp = Temp(one: "1", two: "2")
+        try? realm?.write {
+            realm?.add(tmp)
+        }
+        
+        print(Realm.Configuration.defaultConfiguration.fileURL)
     }
 
 
