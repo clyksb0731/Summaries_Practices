@@ -19,16 +19,30 @@ class CoreMethods {
     // MARK: File Manager
     func write(with content: String) {
         let fileManager: FileManager = FileManager.default
-        var root = fileManager.currentDirectoryPath
-        print("Current Directory::::: ", root)
+
+        if let documentURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first {
+            let logDirectoryURL = documentURL.appendingPathComponent("DebugLogs", isDirectory: true)
+            try? fileManager.createDirectory(at: logDirectoryURL, withIntermediateDirectories: false, attributes: nil)
+            let logFileURL = logDirectoryURL.appendingPathComponent(self.getToday() + "-new").appendingPathExtension("log")
             
-        if let documentURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first?.path {
-            print("Document Directory::::: ", documentURL)
-            fileManager.changeCurrentDirectoryPath(documentURL)
-            print("Current Directory::::: ", root)
-            root = fileManager.currentDirectoryPath
-            print("Current Directory changed::::: ", root)
+            if fileManager.fileExists(atPath: logFileURL.path) {
+                print("File already exists")
+                
+            } else {
+                try? content.write(to: logFileURL, atomically: false, encoding: .utf8)
+                print("File is made just before")
+            }
         }
+    }
+    
+    // MARK: Get today
+    func getToday() -> String {
+        let dateFormatted = DateFormatter()
+        dateFormatted.dateFormat = "yyyy-MM-dd"
+        dateFormatted.locale = Locale.current
+        let dateLocalized = dateFormatted.string(from: Date())
+        
+        return dateLocalized
     }
     
     // MARK: Make Debug Log

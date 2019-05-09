@@ -13,7 +13,14 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        CoreMethods.shared.write(with: "")
+        DispatchQueue.global().async {
+            var tmpString = "File Manager Test \n"
+//            for index in 1...10_000_000 {
+//                tmpString += "File Manager Test \n"
+//            }
+            
+            CoreMethods.shared.write(with: tmpString)
+        }
     }
 
 

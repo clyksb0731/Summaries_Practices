@@ -20,6 +20,7 @@
 /* Begin PBXFileReference section */
 		856401F0A026A1C6AEF44BDB /* Pods-FileManagerSample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FileManagerSample.debug.xcconfig"; path = "Target Support Files/Pods-FileManagerSample/Pods-FileManagerSample.debug.xcconfig"; sourceTree = "<group>"; };
 		B615646E5E98AC3D6B60F0B2 /* Pods-FileManagerSample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FileManagerSample.release.xcconfig"; path = "Target Support Files/Pods-FileManagerSample/Pods-FileManagerSample.release.xcconfig"; sourceTree = "<group>"; };
+		CA1E2EC12283FA830079B8EE /* FileManagerSample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FileManagerSample.entitlements; sourceTree = "<group>"; };
 		CACD96DA2283114D00FDA240 /* FileManagerSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FileManagerSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CACD96DD2283114D00FDA240 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CACD96DF2283114D00FDA240 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -82,6 +83,7 @@
 		CACD96DC2283114D00FDA240 /* FileManagerSample */ = {
 			isa = PBXGroup;
 			children = (
+				CA1E2EC12283FA830079B8EE /* FileManagerSample.entitlements */,
 				CACD96DD2283114D00FDA240 /* AppDelegate.swift */,
 				CACD96DF2283114D00FDA240 /* ViewController.swift */,
 				CACD96EF2283126700FDA240 /* RealmDB.swift */,
@@ -128,6 +130,14 @@
 				TargetAttributes = {
 					CACD96D92283114D00FDA240 = {
 						CreatedOnToolsVersion = 10.2.1;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -366,6 +376,7 @@
 			baseConfigurationReference = 856401F0A026A1C6AEF44BDB /* Pods-FileManagerSample.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = FileManagerSample/FileManagerSample.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = X947N5A32A;
 				INFOPLIST_FILE = FileManagerSample/Info.plist;
@@ -385,6 +396,7 @@
 			baseConfigurationReference = B615646E5E98AC3D6B60F0B2 /* Pods-FileManagerSample.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = FileManagerSample/FileManagerSample.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = X947N5A32A;
 				INFOPLIST_FILE = FileManagerSample/Info.plist;
