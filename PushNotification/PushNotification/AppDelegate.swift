@@ -14,17 +14,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        if #available(iOS 10.0, *) {
-            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge], completionHandler: { (granted, error) in
-                
-            })
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge], completionHandler: { (granted, error) in
             
-        } else {
-            let _ = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
-        }
+        })
         
         UNUserNotificationCenter.current().delegate = self
         self.setUNCategories()
@@ -47,7 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         print("Background: \(userInfo)")
         
-        let topVC = self.getTopVC(with: self.window?.rootViewController)
+        let topVC = self.getTopVC(self.window?.rootViewController)
         let tmpVC = UIViewController()
         tmpVC.view.backgroundColor = .yellow
         
@@ -90,20 +84,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
-    func getTopVC(with vc: UIViewController?) -> UIViewController? {
-        guard var topVC = vc else { return nil }
-        
+    // MARK: Get Top ViewController
+    func getTopVC(_ windowRootVC: UIViewController?) -> UIViewController? {
+        var topVC = windowRootVC
         while true {
-            if let top = topVC.presentedViewController {
+            if let top = topVC?.presentedViewController {
                 topVC = top
-            } else if let top = topVC.navigationController?.visibleViewController {
+            } else if let base = topVC as? UINavigationController, let top = base.visibleViewController {
                 topVC = top
-            } else if let top = topVC.tabBarController?.selectedViewController {
+            } else if let base = topVC as? UITabBarController, let top = base.selectedViewController {
                 topVC = top
             } else {
                 break
             }
         }
+        
         return topVC
     }
     
@@ -134,7 +129,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         
         print("willPresent Notification: \(userInfo)")
         
-        var topVC = self.getTopVC(with: self.window?.rootViewController)
+        var topVC = self.getTopVC(self.window?.rootViewController)
         let tmpVC = UIViewController()
         tmpVC.view.backgroundColor = .yellow
         
@@ -181,7 +176,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         }
         
         
-        var topVC = self.getTopVC(with: self.window?.rootViewController)
+        var topVC = self.getTopVC(self.window?.rootViewController)
         let tmpVC = UIViewController()
         tmpVC.view.backgroundColor = .yellow
         
