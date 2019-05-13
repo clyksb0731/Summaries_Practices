@@ -46,7 +46,15 @@ class ViewController: UIViewController {
         
         locationManager.delegate = self
         
-        locationManager.requestAlwaysAuthorization()
+        locationManager.allowsBackgroundLocationUpdates = true
+        
+        locationManager.pausesLocationUpdatesAutomatically = false
+        
+        // Status will not be changed with the follwing syntax and it must has both Privacy - Location When In Use Usage Description and Privacy - Location Always and When In Use Usage Description
+//        locationManager.requestAlwaysAuthorization()
+        
+        // Status will be influenced due to the following syntax with plist's Privacy - Location When In Use Usage Description
+        locationManager.requestWhenInUseAuthorization()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -56,7 +64,7 @@ class ViewController: UIViewController {
     
     func setLayout() {
         NSLayoutConstraint.activate([
-            self.latitudeLabel.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+            self.latitudeLabel.centerYAnchor.constraint(equalTo: self.view.centerYAnchor, constant: -100),
             self.latitudeLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 100)])
         
         NSLayoutConstraint.activate([
@@ -68,6 +76,8 @@ class ViewController: UIViewController {
 extension ViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         print(self.locationManager.location?.coordinate)
+        
+        manager.startUpdatingLocation()
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
