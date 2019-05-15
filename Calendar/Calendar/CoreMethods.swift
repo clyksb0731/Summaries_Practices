@@ -95,6 +95,11 @@ class CoreMethods {
         }
     }
     
+    // FIXME: Modify and apply and complete DateGenrator
+    func getEndDay(date: Date, month: Int) -> Int? {
+        return Calendar.current.range(of: .day, in: .month, for: date)?.count
+    }
+    
     func previousYearMonth(year: Int, month: Int) -> (year: Int, month: Int) {
         if month == 1 {
             return (year: year - 1, month: 12)
