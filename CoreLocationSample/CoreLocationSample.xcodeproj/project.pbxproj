@@ -13,6 +13,7 @@
 		CA84B40922895C0A00865741 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA84B40822895C0A00865741 /* Assets.xcassets */; };
 		CA84B40C22895C0A00865741 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA84B40A22895C0A00865741 /* LaunchScreen.storyboard */; };
 		CA84B41422895EB400865741 /* ReferenceValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA84B41322895EB400865741 /* ReferenceValue.swift */; };
+		CAAC49B82295F40000D5E533 /* NextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAAC49B72295F40000D5E533 /* NextViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		CA84B40B22895C0A00865741 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CA84B40D22895C0A00865741 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CA84B41322895EB400865741 /* ReferenceValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferenceValue.swift; sourceTree = "<group>"; };
+		CAAC49B72295F40000D5E533 /* NextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 			children = (
 				CA84B40122895C0800865741 /* AppDelegate.swift */,
 				CA84B40322895C0800865741 /* ViewController.swift */,
+				CAAC49B72295F40000D5E533 /* NextViewController.swift */,
 				CA84B41322895EB400865741 /* ReferenceValue.swift */,
 				CA84B40522895C0800865741 /* Main.storyboard */,
 				CA84B40822895C0A00865741 /* Assets.xcassets */,
@@ -144,6 +147,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA84B41422895EB400865741 /* ReferenceValue.swift in Sources */,
+				CAAC49B82295F40000D5E533 /* NextViewController.swift in Sources */,
 				CA84B40422895C0800865741 /* ViewController.swift in Sources */,
 				CA84B40222895C0800865741 /* AppDelegate.swift in Sources */,
 			);
