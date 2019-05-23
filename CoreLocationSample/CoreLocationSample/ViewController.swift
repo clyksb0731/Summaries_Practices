@@ -40,6 +40,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.setViewFoundation()
         self.view.addSubview(self.latitudeLabel)
         self.view.addSubview(self.longitudeLabel)
         self.setLayout()
@@ -64,6 +65,19 @@ class ViewController: UIViewController {
         locationManager.requestLocation()
     }
     
+    func setViewFoundation() {
+        self.view.backgroundColor = .white
+        self.navigationController?.navigationBar.isHidden = false
+        self.navigationController?.navigationBar.isTranslucent = false
+        self.navigationController?.navigationBar.barTintColor = UIColor.getRGB(65, 189, 219)
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white,
+                                                                        .font:UIFont.systemFont(ofSize: 18, weight: .medium)]
+        self.navigationItem.title = "Main View"
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(rightBarButton(_:)))
+        self.navigationItem.leftBarButtonItem?.tintColor = UIColor.white
+
+    }
+    
     func setLayout() {
         NSLayoutConstraint.activate([
             self.latitudeLabel.centerYAnchor.constraint(equalTo: self.view.centerYAnchor, constant: -100),
@@ -73,13 +87,21 @@ class ViewController: UIViewController {
             self.longitudeLabel.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
             self.longitudeLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -100)])
     }
+    
+    @objc func rightBarButton(_ sender: UIBarButtonItem) {
+        self.locationManager.stopUpdatingLocation()
+        
+        let nextVC = NextViewController()
+        self.navigationController?.pushViewController(nextVC, animated: true)
+    }
 }
 
 extension ViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        print(self.locationManager.location?.coordinate)
         
-//        manager.startUpdatingLocation()
+        if status == .authorizedAlways || status == .authorizedWhenInUse {
+            manager.startUpdatingLocation()
+        }
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -92,6 +114,12 @@ extension ViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Error:: ", error.localizedDescription)
+    }
+}
+
+extension UIColor {
+    static func getRGB(_ red: CGFloat, _ green: CGFloat, _ blue: CGFloat, _ alpha: CGFloat = 1) -> UIColor {
+        return UIColor(red: red, green: green, blue: blue, alpha: alpha)
     }
 }
 
