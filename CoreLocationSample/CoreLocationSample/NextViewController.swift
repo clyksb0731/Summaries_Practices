@@ -67,6 +67,7 @@ class NextViewController: UIViewController {
         self.locationManager.delegate = self
         
         self.setViewFoundation()
+        self.setNotificationCenters()
         self.setSubviews()
         self.setLayouts()
     }
@@ -89,6 +90,10 @@ extension NextViewController {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(rightBarButton(_:)))
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor.white
         
+    }
+    
+    func setNotificationCenters() {
+        NotificationCenter.default.addObserver(self, selector: #selector(updateMainLocationInformation(_:)), name: NSNotification.Name(rawValue: "updateMainLocation"), object: nil)
     }
     
     func setSubviews() {
@@ -121,6 +126,13 @@ extension NextViewController {
             CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
             
             self.locationManager.startUpdatingLocation()
+        }
+    }
+    
+    @objc func updateMainLocationInformation(_ notification: Notification) {        
+        if let userInfo = notification.userInfo as? [String:[String:CLLocationDegrees]] {
+            self.mainLatitudeLabel.text = String(userInfo["values"]!["latitude"]!)
+            self.mainLongitudeLabel.text = String(userInfo["values"]!["longitude"]!)
         }
     }
 }

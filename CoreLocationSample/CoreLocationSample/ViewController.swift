@@ -89,7 +89,7 @@ class ViewController: UIViewController {
     }
     
     @objc func rightBarButton(_ sender: UIBarButtonItem) {
-        self.locationManager.stopUpdatingLocation()
+//        self.locationManager.stopUpdatingLocation()
         
         let nextVC = NextViewController()
         self.navigationController?.pushViewController(nextVC, animated: true)
@@ -109,6 +109,8 @@ extension ViewController: CLLocationManagerDelegate {
         if let lastLocation = locations.last {
             self.latitudeLabel.text = String(lastLocation.coordinate.latitude)
             self.longitudeLabel.text = String(lastLocation.coordinate.longitude)
+            
+            NotificationCenter.default.post(name: NSNotification.Name("updateMainLocation"), object: nil, userInfo: ["values":["latitude":lastLocation.coordinate.latitude, "longitude":lastLocation.coordinate.longitude]])
         }
     }
     
