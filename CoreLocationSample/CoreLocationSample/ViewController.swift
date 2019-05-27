@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+import Contacts
 
 class ViewController: UIViewController {
 
@@ -119,37 +120,62 @@ extension ViewController: CLLocationManagerDelegate {
                 var placeMark: CLPlacemark!
                 placeMark = placemarks?[0]
                 
-                // Address dictionary
-//                print(placeMark)
+                print("place mark:: ", placeMark)
                 
                 // Location name
-                if let locationName = placeMark.name {
-                    print("name: ", locationName)
+                if let location = placeMark.location {
+                    print("Location: ", location)
+                }
+                
+                // Location name
+                if let region = placeMark.region {
+                    print("Region: ", region)
+                }
+                
+                // Location name
+                if let isoCountryCode = placeMark.isoCountryCode {
+                    print("ISO country code: ", isoCountryCode)
+                }
+                
+                // Location name
+                if let postalAddress = placeMark.postalAddress {
+                    print("Mailing Address: ", CNPostalAddressFormatter.string(from: postalAddress, style: .mailingAddress))
+                    print("Postal address: ", postalAddress)
+                }
+                
+                // Location name
+                if let state = placeMark.administrativeArea {
+                    print("State: ", state)
+                }
+                
+                // Location name
+                if let subState = placeMark.subAdministrativeArea {
+                    print("Sub state: ", subState)
+                }
+                
+                // Location name
+                if let name = placeMark.name {
+                    print("Name: ", name)
                 }
                 
                 // Street address
                 if let street = placeMark.thoroughfare {
-                    print("street: ", street)
+                    print("Street: ", street)
                 }
                 
                 // City
                 if let city = placeMark.locality {
-                    print("city: ", city)
-                }
-                
-                // inlandWater
-                if let a = placeMark.inlandWater {
-                    print("inlandWater: ", a)
+                    print("City: ", city)
                 }
                 
                 // subLocality
-                if let a = placeMark.subLocality {
-                    print("sub locality: ", a)
+                if let subLocality = placeMark.subLocality {
+                    print("Sub locality: ", subLocality)
                 }
                 
                 // subThoroughfare
-                if let a = placeMark.subThoroughfare {
-                    print("sub thoroughfare: ", a)
+                if let subThoroughfare = placeMark.subThoroughfare {
+                    print("Sub thoroughfare: ", subThoroughfare)
                 }
                 
                 // Zip code
@@ -159,7 +185,7 @@ extension ViewController: CLLocationManagerDelegate {
                 
                 // Country
                 if let country = placeMark.country {
-                    print("country: ", country)
+                    print("Country: ", country)
                 }
                 
             })
