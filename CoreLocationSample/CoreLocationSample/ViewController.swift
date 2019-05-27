@@ -110,6 +110,63 @@ extension ViewController: CLLocationManagerDelegate {
             self.latitudeLabel.text = String(lastLocation.coordinate.latitude)
             self.longitudeLabel.text = String(lastLocation.coordinate.longitude)
             
+            let geoCoder = CLGeocoder()
+            let location = CLLocation(latitude: lastLocation.coordinate.latitude, longitude: lastLocation.coordinate.longitude)
+            
+            geoCoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, error) -> Void in
+                
+                // Place details
+                var placeMark: CLPlacemark!
+                placeMark = placemarks?[0]
+                
+                // Address dictionary
+//                print(placeMark)
+                
+                // Location name
+                if let locationName = placeMark.name {
+                    print("name: ", locationName)
+                }
+                
+                // Street address
+                if let street = placeMark.thoroughfare {
+                    print("street: ", street)
+                }
+                
+                // City
+                if let city = placeMark.locality {
+                    print("city: ", city)
+                }
+                
+                // inlandWater
+                if let a = placeMark.inlandWater {
+                    print("inlandWater: ", a)
+                }
+                
+                // subLocality
+                if let a = placeMark.subLocality {
+                    print("sub locality: ", a)
+                }
+                
+                // subThoroughfare
+                if let a = placeMark.subThoroughfare {
+                    print("sub thoroughfare: ", a)
+                }
+                
+                // Zip code
+                if let zip = placeMark.postalCode {
+                    print("postalcode: ", zip)
+                }
+                
+                // Country
+                if let country = placeMark.country {
+                    print("country: ", country)
+                }
+                
+            })
+            
+            
+            
+            
             NotificationCenter.default.post(name: NSNotification.Name("updateMainLocation"), object: nil, userInfo: ["values":["latitude":lastLocation.coordinate.latitude, "longitude":lastLocation.coordinate.longitude]])
         }
     }
