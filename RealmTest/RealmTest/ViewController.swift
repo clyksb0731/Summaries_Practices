@@ -18,7 +18,7 @@ class ViewController: UIViewController {
         // Handling Errors Using Do - Catch
         do {
             let realm = try Realm()
-            let tmps = realm.objects(Temp.self)
+            let _ = realm.objects(Temp.self)
 
         } catch let error as NSError {
             print(error.localizedDescription)
@@ -31,9 +31,10 @@ class ViewController: UIViewController {
         let tmp = Temp(one: "1", two: "2")
         try? realm?.write {
             realm?.add(tmp, update: true)
+            realm?.add(tmps!, update: true) // Save sequence | update sequence
         }
         
-        print(Realm.Configuration.defaultConfiguration.fileURL)
+        print((Realm.Configuration.defaultConfiguration.fileURL)!)
     }
 
 
