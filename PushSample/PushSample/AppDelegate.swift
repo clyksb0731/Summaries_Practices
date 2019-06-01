@@ -78,6 +78,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        self.getNotifications("applicationDidBecomeActive")
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
@@ -142,60 +143,68 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         
-        let userInfo = response.notification.request.content.userInfo
+        print("Before getNotification(_:)")
+        print(response.notification.request.content.userInfo)
         
-        switch response.notification.request.content.categoryIdentifier {
-        case "category":
-            switch response.actionIdentifier {
-            case "first":
-                print("did FIRST in category category")
-                print("didReceive Response: \(userInfo)")
-                UIApplication.shared.applicationIconBadgeNumber = 0
-            case "second":
-                print("did SECOND in category category")
-                UIApplication.shared.applicationIconBadgeNumber += 1
-            default:
-                print("Default Tapped in category category")
-            }
-        case "number":
-            switch response.actionIdentifier {
-            case "one":
-                print("did ONE in number category")
-                print("didReceive Response: \(userInfo)")
-                UIApplication.shared.applicationIconBadgeNumber = 0
-            case "two":
-                print("did TWO in number category")
-                print("didReceive Response: \(userInfo)")
-                UIApplication.shared.applicationIconBadgeNumber = 0
-            case "three":
-                print("did THREE in number category")
-                UIApplication.shared.applicationIconBadgeNumber += 1
-            default:
-                print("Default Tapped in number category")
-            }
-        default:
-            print("no category")
-        }
+        self.getNotifications("didReceie")
         
+        print("After getNotification(_:)")
+        print(response.notification.request.content.userInfo)
         
-        var topVC = self.getTopVC(self.window?.rootViewController)
-        let tmpVC = UIViewController()
-        tmpVC.view.backgroundColor = .yellow
-        
-        topVC?.present(tmpVC, animated: true)
-        
-        
-        //        if let tmpMsg = userInfo as? [String : Any] {
-        //            if let deepMsg = tmpMsg["aps"] as? [String : Any] {
-        //                if let finalMsg = deepMsg["alert"] as? [String : String] {
-        //                    print("BODY: ", finalMsg["body"])
-        //                    print("TITLE: ", finalMsg["title"])
-        //                }
-        //                print("BADGE: ", deepMsg["badge"] as? Int)
-        //            }
-        //        }
-        
-        
-        completionHandler()
+//        let userInfo = response.notification.request.content.userInfo
+//
+//        switch response.notification.request.content.categoryIdentifier {
+//        case "category":
+//            switch response.actionIdentifier {
+//            case "first":
+//                print("did FIRST in category category")
+//                print("didReceive Response: \(userInfo)")
+//                UIApplication.shared.applicationIconBadgeNumber = 0
+//            case "second":
+//                print("did SECOND in category category")
+//                UIApplication.shared.applicationIconBadgeNumber += 1
+//            default:
+//                print("Default Tapped in category category")
+//            }
+//        case "number":
+//            switch response.actionIdentifier {
+//            case "one":
+//                print("did ONE in number category")
+//                print("didReceive Response: \(userInfo)")
+//                UIApplication.shared.applicationIconBadgeNumber = 0
+//            case "two":
+//                print("did TWO in number category")
+//                print("didReceive Response: \(userInfo)")
+//                UIApplication.shared.applicationIconBadgeNumber = 0
+//            case "three":
+//                print("did THREE in number category")
+//                UIApplication.shared.applicationIconBadgeNumber += 1
+//            default:
+//                print("Default Tapped in number category")
+//            }
+//        default:
+//            print("no category")
+//        }
+//
+//
+//        var topVC = self.getTopVC(self.window?.rootViewController)
+//        let tmpVC = UIViewController()
+//        tmpVC.view.backgroundColor = .yellow
+//
+//        topVC?.present(tmpVC, animated: true)
+//
+//
+//        //        if let tmpMsg = userInfo as? [String : Any] {
+//        //            if let deepMsg = tmpMsg["aps"] as? [String : Any] {
+//        //                if let finalMsg = deepMsg["alert"] as? [String : String] {
+//        //                    print("BODY: ", finalMsg["body"])
+//        //                    print("TITLE: ", finalMsg["title"])
+//        //                }
+//        //                print("BADGE: ", deepMsg["badge"] as? Int)
+//        //            }
+//        //        }
+//
+//
+//        completionHandler()
     }
 }
