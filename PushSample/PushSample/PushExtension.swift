@@ -11,15 +11,20 @@ import UserNotifications
 
 extension AppDelegate {
     // MARK: Get notifications delivered and pending
-    func getNotifications(_ place: String) {
-        let notificationManger = UNUserNotificationCenter.current()
-        notificationManger.getDeliveredNotifications { (notifications) in
+    func getNotifications(_ center: UNUserNotificationCenter = UNUserNotificationCenter.current(),
+                          delete identifiers: [String]? = nil) {
+        
+        if let identifiers = identifiers {
+            center.removeDeliveredNotifications(withIdentifiers: identifiers)
+        }
+        
+        center.getDeliveredNotifications { (notifications) in
             for notification in notifications {
-                print("Where code is running at [\(place)]")
-                print(notification.request.content.userInfo)
+                // Need to determine thread
+                print(notification.request.content.userInfo) // Here to handle notifications
             }
             
-            notificationManger.removeAllDeliveredNotifications()
+            center.removeAllDeliveredNotifications()
         }
     }
 }

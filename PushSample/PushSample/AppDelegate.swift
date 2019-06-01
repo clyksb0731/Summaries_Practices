@@ -78,7 +78,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-        self.getNotifications("applicationDidBecomeActive")
+        self.getNotifications()
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
@@ -146,7 +146,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         print("Before getNotification(_:)")
         print(response.notification.request.content.userInfo)
         
-        self.getNotifications("didReceie")
+        self.getNotifications(delete: [response.notification.request.identifier])
         
         print("After getNotification(_:)")
         print(response.notification.request.content.userInfo)
@@ -205,6 +205,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 //        //        }
 //
 //
-//        completionHandler()
+        completionHandler()
     }
 }
