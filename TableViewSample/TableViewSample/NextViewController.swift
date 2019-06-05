@@ -39,6 +39,21 @@ class NextViewController: UIViewController {
     let texts: [String] = [
         "기존 버전관리 시스템과 같이 중앙 저장소를 통해 협업 가능 사용자는 변경된 내용을 개인 저장소에 저장(commit) 개인 저장소에 있는 변경된 내용을 중앙 저장소에 저장(Pushing)",
         "기존 버전관리 시스템과 같이 중앙 저장소를 통해 협업 가능 사용자는 변경된 내용을 개인 저장소에 저장(commit)",
+        "adlklajglkajkgjakjgkjgljajdlgjalkjglkajglajdlgjaldjglajlgjalkdgjakljgalkjdgljdgljdlgjlgjalsgjj",
+        "기존 버전관리 시스템과 같이 중앙 저장소를 통해 협업 가능 사용자는 변경된 내용을 개인 저장소에 저장(commit) 개인 저장소에 있는 변경된 내용을 중앙 저장소에 저장(Pushing)",
+        "기존 버전관리 시스템과 같이 중앙 저장소를 통해 협업 가능 사용자는 변경된 내용을 개인 저장소에 저장(commit)",
+        "adlklajglkajkgjakjgkjgljajdlgjalkjglkajglajdlgjaldjglajlgjalkdgjakljgalkjdgljdgljdlgjlgjalsgjj",
+        "기존 버전관리 시스템과 같이 중앙 저장소를 통해 협업 가능 사용자는 변경된 내용을 개인 저장소에 저장(commit) 개인 저장소에 있는 변경된 내용을 중앙 저장소에 저장(Pushing)",
+        "기존 버전관리 시스템과 같이 중앙 저장소를 통해 협업 가능 사용자는 변경된 내용을 개인 저장소에 저장(commit)",
+        "adlklajglkajkgjakjgkjgljajdlgjalkjglkajglajdlgjaldjglajlgjalkdgjakljgalkjdgljdgljdlgjlgjalsgjj",
+        "기존 버전관리 시스템과 같이 중앙 저장소를 통해 협업 가능 사용자는 변경된 내용을 개인 저장소에 저장(commit) 개인 저장소에 있는 변경된 내용을 중앙 저장소에 저장(Pushing)",
+        "기존 버전관리 시스템과 같이 중앙 저장소를 통해 협업 가능 사용자는 변경된 내용을 개인 저장소에 저장(commit)",
+        "adlklajglkajkgjakjgkjgljajdlgjalkjglkajglajdlgjaldjglajlgjalkdgjakljgalkjdgljdgljdlgjlgjalsgjj",
+        "기존 버전관리 시스템과 같이 중앙 저장소를 통해 협업 가능 사용자는 변경된 내용을 개인 저장소에 저장(commit) 개인 저장소에 있는 변경된 내용을 중앙 저장소에 저장(Pushing)",
+        "기존 버전관리 시스템과 같이 중앙 저장소를 통해 협업 가능 사용자는 변경된 내용을 개인 저장소에 저장(commit)",
+        "adlklajglkajkgjakjgkjgljajdlgjalkjglkajglajdlgjaldjglajlgjalkdgjakljgalkjdgljdgljdlgjlgjalsgjj",
+        "기존 버전관리 시스템과 같이 중앙 저장소를 통해 협업 가능 사용자는 변경된 내용을 개인 저장소에 저장(commit) 개인 저장소에 있는 변경된 내용을 중앙 저장소에 저장(Pushing)",
+        "기존 버전관리 시스템과 같이 중앙 저장소를 통해 협업 가능 사용자는 변경된 내용을 개인 저장소에 저장(commit)",
         "adlklajglkajkgjakjgkjgljajdlgjalkjglkajglajdlgjaldjglajlgjalkdgjakljgalkjdgljdgljdlgjlgjalsgjj"
     ]
     
@@ -123,6 +138,22 @@ extension NextViewController {
 
 // MARK: Extension for UITableViewDelegate and UITableViewDataSource
 extension NextViewController: UITableViewDelegate, UITableViewDataSource {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        print("scrolling")
+    }
+    
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        print("What ends?")
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        print("dragging end?")
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        print("decelerating end?")
+    }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
