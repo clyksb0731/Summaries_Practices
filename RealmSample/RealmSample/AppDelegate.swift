@@ -1,9 +1,9 @@
 //
 //  AppDelegate.swift
-//  RealmTest
+//  RealmSample
 //
-//  Created by 최용석 on 29/11/2018.
-//  Copyright © 2018 최용석. All rights reserved.
+//  Created by Yongseok Choi on 10/06/2019.
+//  Copyright © 2019 Yongseok Choi. All rights reserved.
 //
 
 import UIKit
