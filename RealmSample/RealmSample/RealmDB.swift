@@ -13,4 +13,5 @@ import RealmSwift
 class Table: Object {
     dynamic var name: String = ""
     dynamic var age: Int = 0
+    dynamic var home: String = ""
 }
