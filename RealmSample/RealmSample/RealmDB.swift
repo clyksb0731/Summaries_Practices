@@ -16,4 +16,5 @@ class Table: Object {
     dynamic var home: String = ""
     dynamic var tall: Double = 0.0
     dynamic var mass: Double = 0.0
+    dynamic var tmp: String = ""
 }
