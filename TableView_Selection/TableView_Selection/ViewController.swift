@@ -119,23 +119,27 @@ extension ViewController {
         if self.selectedHeaders.contains(sender.tag) {
             self.selectedHeaders.remove(sender.tag)
             
-//            self.selectionTable.beginUpdates()
-//            self.tmpCells[sender.tag] = []
-//            self.selectionTable.reloadSections([sender.tag], with: .automatic)
-//            self.selectionTable.endUpdates()
-            
+            // reload section
+            self.selectionTable.beginUpdates()
             self.tmpCells[sender.tag] = []
-            self.selectionTable.reloadData()
+            self.selectionTable.reloadSections([sender.tag], with: .automatic)
+            self.selectionTable.endUpdates()
+            
+            // reload data
+//            self.tmpCells[sender.tag] = []
+//            self.selectionTable.reloadData()
             
             
         } else {
-//            self.selectionTable.beginUpdates()
-//            self.tmpCells[sender.tag] = cells[sender.tag]
-//            self.selectionTable.reloadSections([sender.tag], with: .automatic)
-//            self.selectionTable.endUpdates()
-            
+            // reload section
+            self.selectionTable.beginUpdates()
             self.tmpCells[sender.tag] = cells[sender.tag]
-            self.selectionTable.reloadData()
+            self.selectionTable.reloadSections([sender.tag], with: .automatic)
+            self.selectionTable.endUpdates()
+            
+            // reload data
+//            self.tmpCells[sender.tag] = cells[sender.tag]
+//            self.selectionTable.reloadData()
             
             
             self.selectedHeaders.insert(sender.tag)

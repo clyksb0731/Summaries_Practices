@@ -78,11 +78,11 @@ extension SelectionHeader {
         let safeArea = self.contentView.safeAreaLayoutGuide
         
         NSLayoutConstraint.activate([
+            self.titleLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 20),
             self.titleLabel.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 10),
             self.titleLabel.bottomAnchor.constraint(equalTo: self.bottomLinveView.topAnchor, constant: -9),
             self.titleLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 10),
             self.titleLabel.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -10),
-            self.titleLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 20)
             ])
         
         NSLayoutConstraint.activate([
