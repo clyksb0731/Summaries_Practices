@@ -20,11 +20,16 @@ class ViewController: UIViewController {
         let serialQueue = DispatchQueue(label: "serialQueue")
         
         baseConcurrentQueue.async {
-            for index in 0..<1000 {
+            for _ in 0..<1000 {
 //                self.queue(on: serialQueue, value: index)
-                self.queue2(on: concurrentQueue)
-                self.queue3(on: serialQueue)
+//                self.queue2(on: concurrentQueue)
+//                self.queue3(on: serialQueue)
+                self.queue4(on: concurrentQueue)
             }
+        }
+        
+        for _ in 0..<1000 {
+            print("***** sync concurrent *****")
         }
         
     }
@@ -53,6 +58,18 @@ extension ViewController {
         on.async {
             for _ in 1...50{
                 self.memberArray[1] = "new one"
+            }
+            
+        }
+    }
+}
+
+// MARK: Test for sync async of thread
+extension ViewController {
+    func queue4(on: DispatchQueue) {
+        on.sync {
+            for _ in 1...50{
+                 print("On concurrent: ", self.memberArray[2])
             }
             
         }
