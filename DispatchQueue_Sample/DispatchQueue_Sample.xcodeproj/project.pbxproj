@@ -12,6 +12,7 @@
 		CAD4644522B3C7F300B89945 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CAD4644322B3C7F300B89945 /* Main.storyboard */; };
 		CAD4644722B3C7F300B89945 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CAD4644622B3C7F300B89945 /* Assets.xcassets */; };
 		CAD4644A22B3C7F300B89945 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CAD4644822B3C7F300B89945 /* LaunchScreen.storyboard */; };
+		CAD4645222B476B800B89945 /* ReferenceValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD4645122B476B800B89945 /* ReferenceValues.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		CAD4644622B3C7F300B89945 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CAD4644922B3C7F300B89945 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CAD4644B22B3C7F300B89945 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CAD4645122B476B800B89945 /* ReferenceValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferenceValues.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 			children = (
 				CAD4643F22B3C7F300B89945 /* AppDelegate.swift */,
 				CAD4644122B3C7F300B89945 /* ViewController.swift */,
+				CAD4645122B476B800B89945 /* ReferenceValues.swift */,
 				CAD4644322B3C7F300B89945 /* Main.storyboard */,
 				CAD4644622B3C7F300B89945 /* Assets.xcassets */,
 				CAD4644822B3C7F300B89945 /* LaunchScreen.storyboard */,
@@ -137,6 +140,7 @@
 			files = (
 				CAD4644222B3C7F300B89945 /* ViewController.swift in Sources */,
 				CAD4644022B3C7F300B89945 /* AppDelegate.swift in Sources */,
+				CAD4645222B476B800B89945 /* ReferenceValues.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
