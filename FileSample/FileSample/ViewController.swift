@@ -13,15 +13,25 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        DispatchQueue.global().async {
-            var tmpString = "File Manager Test \n"
-            //            for index in 1...10_000_000 {
-            //                tmpString += "File Manager Test \n"
-            //            }
-            
-            CoreMethods.shared.write(with: tmpString)
-        }
     }
+    
+    
+    
+    @IBAction func makeLog(_ sender: UIButton) {
+        for _ in 1...10 {
+            for _ in 1...100000 {
+                
+            }
+            
+            CoreMethods.shared.makeDebugLogIntoFile(.debug, "Touch button on view", requestID: ReferenceValues.reqID)
+        }
+//        CoreMethods.shared.makeDebugLogIntoFile(.debug, "Touch button on view", requestID: ReferenceValues.reqID)
+    }
+    
+}
+
+extension ViewController {
+    
     
     
 }

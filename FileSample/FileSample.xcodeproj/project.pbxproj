@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CA10BDB722B50CED00E5A4E2 /* ReferenceValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA10BDB622B50CED00E5A4E2 /* ReferenceValues.swift */; };
 		CAD624D922868FF6007A9F6C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD624D822868FF6007A9F6C /* AppDelegate.swift */; };
 		CAD624DB22868FF6007A9F6C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD624DA22868FF6007A9F6C /* ViewController.swift */; };
 		CAD624DE22868FF6007A9F6C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CAD624DC22868FF6007A9F6C /* Main.storyboard */; };
@@ -21,6 +22,7 @@
 		38094D4ACC73CC28B05CCDE4 /* Pods-FileSample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FileSample.debug.xcconfig"; path = "Target Support Files/Pods-FileSample/Pods-FileSample.debug.xcconfig"; sourceTree = "<group>"; };
 		A0317AFFD47687DA585E3FE3 /* Pods-FileSample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FileSample.release.xcconfig"; path = "Target Support Files/Pods-FileSample/Pods-FileSample.release.xcconfig"; sourceTree = "<group>"; };
 		B335499FBD7D5C8C927F1645 /* Pods_FileSample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FileSample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA10BDB622B50CED00E5A4E2 /* ReferenceValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferenceValues.swift; sourceTree = "<group>"; };
 		CAD624D522868FF6007A9F6C /* FileSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FileSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAD624D822868FF6007A9F6C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CAD624DA22868FF6007A9F6C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -85,6 +87,7 @@
 				CAD624D822868FF6007A9F6C /* AppDelegate.swift */,
 				CAD624DA22868FF6007A9F6C /* ViewController.swift */,
 				CAD624EA22869013007A9F6C /* CoreMethods.swift */,
+				CA10BDB622B50CED00E5A4E2 /* ReferenceValues.swift */,
 				CAD624EC22869092007A9F6C /* RealmDB.swift */,
 				CAD624DC22868FF6007A9F6C /* Main.storyboard */,
 				CAD624DF22868FF6007A9F6C /* Assets.xcassets */,
@@ -213,6 +216,7 @@
 				CAD624D922868FF6007A9F6C /* AppDelegate.swift in Sources */,
 				CAD624EB22869013007A9F6C /* CoreMethods.swift in Sources */,
 				CAD624ED22869092007A9F6C /* RealmDB.swift in Sources */,
+				CA10BDB722B50CED00E5A4E2 /* ReferenceValues.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
