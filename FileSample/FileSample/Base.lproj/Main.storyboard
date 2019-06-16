@@ -18,16 +18,28 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vdt-CD-KMa">
-                                <rect key="frame" x="176" y="462" width="62" height="35"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Make log"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vdt-CD-KMa">
+                                <rect key="frame" x="63" y="293" width="288" height="30"/>
+                                <state key="normal" title="Make log - Serial async [Concurrent sync]"/>
                                 <connections>
                                     <action selector="makeLog:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Vav-UQ-YsG"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yOa-Nh-M6C">
+                                <rect key="frame" x="128" y="504" width="159" height="30"/>
+                                <state key="normal" title="Make log - Serial async"/>
+                                <connections>
+                                    <action selector="makeTempDebug:" destination="BYZ-38-t0r" eventType="touchUpInside" id="660-WD-xlt"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="vdt-CD-KMa" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="67L-m5-Vlg"/>
+                            <constraint firstItem="yOa-Nh-M6C" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="Jw3-Xu-HV8"/>
+                            <constraint firstItem="vdt-CD-KMa" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="249" id="cqH-fF-i8s"/>
+                            <constraint firstItem="yOa-Nh-M6C" firstAttribute="top" secondItem="vdt-CD-KMa" secondAttribute="bottom" constant="181" id="rdV-YQ-DF9"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                 </viewController>

@@ -14,19 +14,31 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
     }
-    
-    
-    
+
     @IBAction func makeLog(_ sender: UIButton) {
-        for _ in 1...10 {
+        for _ in 1...100 {
             for _ in 1...100000 {
                 
             }
             
             CoreMethods.shared.makeDebugLogIntoFile(.debug, "Touch button on view", requestID: ReferenceValues.reqID)
         }
+        // without term, only by user.
 //        CoreMethods.shared.makeDebugLogIntoFile(.debug, "Touch button on view", requestID: ReferenceValues.reqID)
     }
+    
+    @IBAction func makeTempDebug(_ sender: UIButton) {
+        for _ in 1...100 {
+//            for _ in 1...100000 {
+//                
+//            }
+            
+            CoreMethods.shared.makeDebugLogTemporarily(.debug, "Touch button For temp on view", requestID: ReferenceValues.reqID)
+        }
+        // without term, only by user.
+//            CoreMethods.shared.makeDebugLogTemporarily(.debug, "Touch button For temp on view", requestID: ReferenceValues.reqID)
+    }
+    
     
 }
 

@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import Alamofire
 
 class CoreMethods {
     static let shared = CoreMethods()
@@ -75,22 +76,31 @@ class CoreMethods {
                     let logDirectoryURL = documentURL.appendingPathComponent("DebugLogs", isDirectory: true)
                     let logFileURL = logDirectoryURL.appendingPathComponent(logDateName).appendingPathExtension("txt")
                     
-                    if fileManager.fileExists(atPath: logFileURL.path) {
-                        if let fileHandle = FileHandle(forWritingAtPath: logFileURL.path) {
-                            if let logData = log.data(using: .utf8) {
-                                print("File Size: ", fileHandle.seekToEndOfFile())
-//                                fileHandle.waitForDataInBackgroundAndNotify()
-                                fileHandle.write(logData)
-                                fileHandle.closeFile()
-                                
-                                print(log)
+                    if fileManager.fileExists(atPath: logDirectoryURL.path) {
+                        if fileManager.fileExists(atPath: logFileURL.path) {
+                            if let fileHandle = FileHandle(forWritingAtPath: logFileURL.path) {
+                                if let logData = log.data(using: .utf8) {
+                                    print("File Size: ", fileHandle.seekToEndOfFile())
+                                    fileHandle.write(logData)
+                                    fileHandle.closeFile()
+                                    
+                                    print(log)
+                                    
+                                } else {
+                                    print("Log data converting error happens")
+                                }
                                 
                             } else {
-                                print("Data converting error")
+                                print("Failed to open file with FileHandle")
                             }
                             
                         } else {
-                            print("fail to write log")
+                            if fileManager.createFile(atPath: logFileURL.path, contents: log.data(using: .utf8), attributes: nil) {
+                                print(log)
+                                
+                            } else {
+                                print("Failed to be logged at creating file on existing directory")
+                            }
                         }
                         
                     } else {
@@ -99,7 +109,7 @@ class CoreMethods {
                                 print(log)
                                 
                             } else {
-                                print("Failed to be logged at creating file")
+                                print("Failed to be logged at creating file on created directory")
                             }
                             
                         } else {
@@ -108,8 +118,78 @@ class CoreMethods {
                     }
                     
                 } else {
-                    print("FileManager doesn't work")
+                    print("Failed to work with FileManager")
                 }
+            }
+        }
+    }
+    
+    // MARK: Temp make debug log
+    func makeDebugLogTemporarily(_ type: DebugType, _ action: String, _ description: String = "none", requestID: String = "none", _ file: String = #file, _ function: String = #function, _ lineOfCode: Int = #line, date: Date = Date()) {
+        
+        if ReferenceValues.logSerialQueue == nil {
+            ReferenceValues.logSerialQueue = DispatchQueue(label: "logSerialQueue")
+        }
+        
+        ReferenceValues.logSerialQueue.async {
+            let dateFormatted = DateFormatter()
+            dateFormatted.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
+            dateFormatted.locale = Locale.current
+            let dateLocalized = dateFormatted.string(from: date)
+            
+            let log: String = "[\(type.rawValue), Action: \(action), Description: \(description), Date: \(dateLocalized), TimeIntervalSince1970: \(date.timeIntervalSince1970 * 1_000)ms, File: \(file), Function: \(function), LineOfCode: \(lineOfCode), Request ID: \(requestID)]\n\n"
+            
+            let logDateName = "tmpDebugFile"
+            
+            let fileManager: FileManager = FileManager.default
+            
+            if let documentURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first {
+                let logDirectoryURL = documentURL.appendingPathComponent("DebugLogs", isDirectory: true)
+                let logFileURL = logDirectoryURL.appendingPathComponent(logDateName).appendingPathExtension("txt")
+                
+                if fileManager.fileExists(atPath: logDirectoryURL.path) {
+                    if fileManager.fileExists(atPath: logFileURL.path) {
+                        if let fileHandle = FileHandle(forWritingAtPath: logFileURL.path) {
+                            if let logData = log.data(using: .utf8) {
+                                print("File Size: ", fileHandle.seekToEndOfFile())
+                                fileHandle.write(logData)
+                                fileHandle.closeFile()
+                                
+                                print(log)
+                                
+                            } else {
+                                print("Log data converting error happens")
+                            }
+                            
+                        } else {
+                            print("Failed to open file with FileHandle")
+                        }
+                        
+                    } else {
+                        if fileManager.createFile(atPath: logFileURL.path, contents: log.data(using: .utf8), attributes: nil) {
+                            print(log)
+                            
+                        } else {
+                            print("Failed to be logged at creating file on existing directory")
+                        }
+                    }
+                    
+                } else {
+                    if let _ = try? fileManager.createDirectory(at: logDirectoryURL, withIntermediateDirectories: false, attributes: nil) {
+                        if fileManager.createFile(atPath: logFileURL.path, contents: log.data(using: .utf8), attributes: nil) {
+                            print(log)
+                            
+                        } else {
+                            print("Failed to be logged at creating file on created directory")
+                        }
+                        
+                    } else {
+                        print("Failed to be logged at creating directory")
+                    }
+                }
+                
+            } else {
+                print("Failed to work with FileManager")
             }
         }
     }
