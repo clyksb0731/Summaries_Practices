@@ -42,22 +42,37 @@ extension ViewController {
         dateFormatted.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
         dateFormatted.locale = Locale.current
         
-        // Using async which contains sync block can prevent freezing system.
+        // need to validate this more.
         serialQueue.async {
-            concurrentQueue.sync {
-                var date: Date!
-                while true {
-                    if self.timeFlag {
-                        break
-                    }
-                    
-                    date = Date()
-                    DispatchQueue.main.async {
-                        self.timeLabel.text = dateFormatted.string(from: date)
-                    }
+            var date: Date!
+            while true {
+                if self.timeFlag {
+                    break
+                }
+                
+                date = Date()
+                DispatchQueue.main.async {
+                    self.timeLabel.text = dateFormatted.string(from: date)
                 }
             }
         }
+        
+        // Using async which contains sync block can prevent freezing system. (but only while being connected to mac)
+//        serialQueue.async {
+//            concurrentQueue.sync {
+//                var date: Date!
+//                while true {
+//                    if self.timeFlag {
+//                        break
+//                    }
+//
+//                    date = Date()
+//                    DispatchQueue.main.async {
+//                        self.timeLabel.text = dateFormatted.string(from: date)
+//                    }
+//                }
+//            }
+//        }
         
         // sync mode can freeze system even though using concurrent
 //        concurrentQueue.async {
