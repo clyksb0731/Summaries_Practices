@@ -43,7 +43,7 @@ extension ViewController {
         dateFormatted.locale = Locale.current
         
         // need to validate this more.
-        serialQueue.async {
+        concurrentQueue.async {
             var date: Date!
             while true {
                 if self.timeFlag {
@@ -51,6 +51,7 @@ extension ViewController {
                 }
                 
                 date = Date()
+                for _ in 1...100000 { }
                 DispatchQueue.main.async {
                     self.timeLabel.text = dateFormatted.string(from: date)
                 }
