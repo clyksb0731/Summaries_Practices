@@ -43,37 +43,38 @@ extension ViewController {
         dateFormatted.locale = Locale.current
         
         // need to validate this more.
-        concurrentQueue.async {
-            var date: Date!
-            while true {
-                if self.timeFlag {
-                    break
-                }
-                
-                date = Date()
-                for _ in 1...100000 { }
-                DispatchQueue.main.async {
-                    self.timeLabel.text = dateFormatted.string(from: date)
-                }
-            }
-        }
-        
-        // Using async which contains sync block can prevent freezing system. (but only while being connected to mac)
-//        serialQueue.async {
-//            concurrentQueue.sync {
-//                var date: Date!
-//                while true {
-//                    if self.timeFlag {
-//                        break
-//                    }
+//        concurrentQueue.async {
+//            var date: Date!
+//            while true {
+//                if self.timeFlag {
+//                    break
+//                }
 //
-//                    date = Date()
-//                    DispatchQueue.main.async {
-//                        self.timeLabel.text = dateFormatted.string(from: date)
-//                    }
+//                date = Date()
+//                for _ in 1...100000 { }
+//                DispatchQueue.main.async {
+//                    self.timeLabel.text = dateFormatted.string(from: date)
 //                }
 //            }
 //        }
+        
+        // Using async which contains sync block can prevent freezing system. (but only while being connected to mac)
+        serialQueue.async {
+            concurrentQueue.sync {
+                var date: Date!
+                while true {
+                    if self.timeFlag {
+                        break
+                    }
+
+                    date = Date()
+                    for _ in 1...100000 { } // How to influence...?
+                    DispatchQueue.main.async {
+                        self.timeLabel.text = dateFormatted.string(from: date)
+                    }
+                }
+            }
+        }
         
         // sync mode can freeze system even though using concurrent
 //        concurrentQueue.async {
