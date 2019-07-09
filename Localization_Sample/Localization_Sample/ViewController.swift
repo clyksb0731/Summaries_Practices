@@ -10,9 +10,20 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    var count = 10
+    
+    var localizedLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        return label
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        // Dynamic localizable.
+        self.localizedLabel.text = String(format: NSLocalizedString("%d new one", comment: ""), self.count)
     }
 
 
