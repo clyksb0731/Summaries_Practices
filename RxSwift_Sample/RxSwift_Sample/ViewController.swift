@@ -22,6 +22,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func checkAsyncButton(_ sender: UIButton) {
+        // NotificationCenter's notifications observed work synchronously
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "asyncCheck"), object: nil)
         self.asyncCheckLabel.text = "Check Button touched"
     }
