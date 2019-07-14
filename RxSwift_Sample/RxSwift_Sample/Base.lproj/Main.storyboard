@@ -41,15 +41,25 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fyr-ly-wlb">
+                                <rect key="frame" x="191" y="514" width="32" height="30"/>
+                                <state key="normal" title="Stop"/>
+                                <connections>
+                                    <action selector="checkAsyncButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="h5D-ls-kDD"/>
+                                    <action selector="stopBinding:" destination="BYZ-38-t0r" eventType="touchUpInside" id="NqE-Tg-Ued"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="fTO-E0-Qix" firstAttribute="height" secondItem="G9x-5w-fWo" secondAttribute="height" id="1ss-Wg-PB8"/>
                             <constraint firstItem="G9x-5w-fWo" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="105" id="5Kd-kd-1KI"/>
                             <constraint firstItem="fTO-E0-Qix" firstAttribute="width" secondItem="G9x-5w-fWo" secondAttribute="width" id="DpH-tw-kfO"/>
+                            <constraint firstItem="fyr-ly-wlb" firstAttribute="top" secondItem="ImC-ne-spx" secondAttribute="bottom" constant="46" id="E9u-39-mz7"/>
                             <constraint firstItem="fTO-E0-Qix" firstAttribute="top" secondItem="G9x-5w-fWo" secondAttribute="bottom" constant="81" id="M8F-7I-VkY"/>
                             <constraint firstItem="fTO-E0-Qix" firstAttribute="trailing" secondItem="G9x-5w-fWo" secondAttribute="trailing" id="aAr-sj-RZi"/>
                             <constraint firstItem="ImC-ne-spx" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="chg-Vg-zNr"/>
+                            <constraint firstItem="fyr-ly-wlb" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="fQN-1r-aTR"/>
                             <constraint firstItem="ImC-ne-spx" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="kcZ-yf-t05"/>
                             <constraint firstItem="G9x-5w-fWo" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="s0G-Cc-rHP"/>
                             <constraint firstItem="fTO-E0-Qix" firstAttribute="leading" secondItem="G9x-5w-fWo" secondAttribute="leading" id="ucZ-eg-UXe"/>
