@@ -58,6 +58,7 @@
                     </view>
                     <connections>
                         <outlet property="asyncCheckLabel" destination="G9x-5w-fWo" id="5vC-hC-jsZ"/>
+                        <outlet property="checkButton" destination="ImC-ne-spx" id="kJs-CA-SNF"/>
                         <outlet property="notificationLabel" destination="fTO-E0-Qix" id="36H-gr-SWO"/>
                     </connections>
                 </viewController>
