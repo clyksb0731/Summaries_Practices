@@ -20,18 +20,22 @@ class ViewController: UIViewController {
     
     var disposeBag = DisposeBag()
     
-    var testObservable: Observable<String>?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
     }
     
     func bindUI() {
-       self.testStringObservable()
+        self.testStringObservable()
 //        .filter {$0 == "Two"}
         .bind(to: self.notificationLabel.rx.text)
-        .disposed(by: self.disposeBag)        
+        .disposed(by: self.disposeBag)
+        
+        self.testStringObservable()
+            .subscribe(onNext: { str in
+                print("Result: ", str)
+            })
+            .disposed(by: disposeBag)
     }
     
     func testStringObservable() -> Observable<String> {
