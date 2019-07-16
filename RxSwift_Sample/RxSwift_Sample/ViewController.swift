@@ -17,25 +17,18 @@ class ViewController: UIViewController {
     
     var tableView = UITableView()
     var cities = ["Seoul", "Daejeon"]
+    var viewModel: ViewModel!
     
     var disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.viewModel = ViewModel()
     }
     
     func bindUI() {
-        self.testStringObservable()
-//        .filter {$0 == "Two"}
-        .bind(to: self.notificationLabel.rx.text)
-        .disposed(by: self.disposeBag)
         
-        self.testStringObservable()
-            .subscribe(onNext: { str in
-                print("Result: ", str)
-            })
-            .disposed(by: disposeBag)
     }
     
     func testStringObservable() -> Observable<String> {

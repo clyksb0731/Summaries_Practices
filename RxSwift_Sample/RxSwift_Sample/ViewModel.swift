@@ -15,6 +15,7 @@ class ViewModel {
         case POST
     }
     
+    // MARK: Request API observable
     func requestAPI(url: URL, parameter: [String:Any], method: HTTPMethod) -> Observable<Data?> {
         return Observable.create({ (observer) -> Disposable in
             let defaultSession = URLSession(configuration: .default)
@@ -34,7 +35,7 @@ class ViewModel {
                     observer.onNext(data)
                 }
                 
-                observer.onCompleted()                
+                observer.onCompleted()
             })
             
             dataTask.resume()
