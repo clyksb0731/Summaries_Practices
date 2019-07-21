@@ -24,13 +24,17 @@ class SerialQueue {
     }
     
     func addQueue(_ closure: @escaping () -> Void) {
-        self.queueArray.append(closure)
-        if self.state == .waiting {
-            self.excuteElement()
+        DispatchQueue.main.async {
+            self.queueArray.append(closure)
+            if self.state == .waiting {
+                self.excuteElement()
+            }
         }
     }
     
     func excuteElement() {
+        self.state = .waiting
+        
         if let firstElement = self.queueArray.first {
             self.state = .inProgress
             

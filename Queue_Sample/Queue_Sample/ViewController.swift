@@ -43,6 +43,42 @@ class ViewController: UIViewController {
                 SerialQueue.share.excuteElement()
             })
         }
+        
+        SerialQueue.share.addQueue {
+            self.asynFunction(value: 6, completion: {
+                SerialQueue.share.excuteElement()
+            })
+        }
+        
+        SerialQueue.share.addQueue {
+            self.asynFunction(value: 7, completion: {
+                SerialQueue.share.excuteElement()
+            })
+        }
+        
+        SerialQueue.share.addQueue {
+            self.asynFunction(value: 8, completion: {
+                SerialQueue.share.excuteElement()
+            })
+        }
+        
+        SerialQueue.share.addQueue {
+            self.asynFunction(value: 9, completion: {
+                SerialQueue.share.excuteElement()
+            })
+        }
+        
+        SerialQueue.share.addQueue {
+            self.asynFunction(value: 10, completion: {
+                SerialQueue.share.excuteElement()
+            })
+        }
+        
+        SerialQueue.share.addQueue {
+            self.asynFunction(value: 11, completion: {
+                SerialQueue.share.excuteElement()
+            })
+        }
     }
 
     func asynFunction(value: Int, completion: @escaping () -> Void) {
@@ -53,7 +89,6 @@ class ViewController: UIViewController {
             
             print("Value: ", value)
             
-            SerialQueue.share.state = .waiting
             completion()
         }
     }
