@@ -34,6 +34,8 @@ class DynamicScrollViewController: UIViewController {
     func initializeViews() {
         self.scrollView = {
             let scrollView = UIScrollView()
+            scrollView.bounces = false
+            scrollView.contentInsetAdjustmentBehavior = .never
             scrollView.translatesAutoresizingMaskIntoConstraints = false
             
             return scrollView
@@ -97,29 +99,32 @@ class DynamicScrollViewController: UIViewController {
             self.scrollView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor)
             ])
         
-        let contentHeight: NSLayoutConstraint = self.contentView.widthAnchor.constraint(equalTo: self.scrollView.widthAnchor)
-        contentHeight.priority = UILayoutPriority(1)
+        let contentHeightConstraint: NSLayoutConstraint = self.contentView.heightAnchor.constraint(equalTo: self.scrollView.heightAnchor) // Key point
+        contentHeightConstraint.priority = UILayoutPriority(1) // Key point
         NSLayoutConstraint.activate([
             self.contentView.topAnchor.constraint(equalTo: self.scrollView.topAnchor),
-            self.contentView.heightAnchor.constraint(equalTo: self.scrollView.heightAnchor),
+            self.contentView.bottomAnchor.constraint(equalTo: self.scrollView.bottomAnchor),
             self.contentView.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor),
-            contentHeight
+            self.contentView.trailingAnchor.constraint(equalTo: self.scrollView.trailingAnchor),
+            contentHeightConstraint,
+            self.contentView.widthAnchor.constraint(equalTo: self.scrollView.widthAnchor) // Key point
             ])
         
         NSLayoutConstraint.activate([
-            self.firstLabel.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 100),
-            self.firstLabel.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor)
+            self.firstLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 100),
+            self.firstLabel.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor)
             ])
         
         NSLayoutConstraint.activate([
             self.secondLabel.topAnchor.constraint(equalTo: self.firstLabel.bottomAnchor, constant: 200),
-            self.secondLabel.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor)
+            self.secondLabel.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor)
             ])
         
         NSLayoutConstraint.activate([
             self.firstView.topAnchor.constraint(equalTo: self.secondLabel.bottomAnchor, constant: 200),
-            self.firstView.heightAnchor.constraint(equalToConstant: 10),
-            self.firstView.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
+            self.firstView.heightAnchor.constraint(equalToConstant: 500),
+            self.firstView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor), // Key point for dynamic content size (height) to the position of bottom
+            self.firstView.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
             self.firstView.widthAnchor.constraint(equalToConstant: 250)
             ])
     }
