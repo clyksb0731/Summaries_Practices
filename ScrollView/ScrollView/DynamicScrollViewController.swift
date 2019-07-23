@@ -16,6 +16,8 @@ class DynamicScrollViewController: UIViewController {
     var secondLabel: UILabel!
     var firstView: UIView!
     
+    var checkHeightOfDynamicContentHeight: CGFloat = 1500 // to see dynamic content size.
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
@@ -122,7 +124,7 @@ class DynamicScrollViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             self.firstView.topAnchor.constraint(equalTo: self.secondLabel.bottomAnchor, constant: 200),
-            self.firstView.heightAnchor.constraint(equalToConstant: 500),
+            self.firstView.heightAnchor.constraint(equalToConstant: self.checkHeightOfDynamicContentHeight),
             self.firstView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor), // Key point for dynamic content size (height) to the position of bottom
             self.firstView.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
             self.firstView.widthAnchor.constraint(equalToConstant: 250)
