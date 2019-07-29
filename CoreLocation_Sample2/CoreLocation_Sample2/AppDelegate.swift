@@ -105,8 +105,7 @@ extension AppDelegate: CLLocationManagerDelegate {
         if let lastLocation = locations.last {
             print("RecentLocation: ", lastLocation)
         }
-        
-        UIApplication.shared.applicationIconBadgeNumber = 8
+        UIApplication.shared.keyWindow?.rootViewController?.view.backgroundColor = .yellow
     }
     
     func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
