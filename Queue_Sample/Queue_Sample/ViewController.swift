@@ -79,6 +79,121 @@ class ViewController: UIViewController {
                 SerialQueue.shared.dequeue()
             })
         }
+        
+        SerialQueue.shared.addQueue {
+            self.asynFunction(value: 12, completion: {
+                SerialQueue.shared.dequeue()
+            })
+        }
+        
+        SerialQueue.shared.addQueue {
+            self.asynFunction(value: 13, completion: {
+                SerialQueue.shared.dequeue()
+            })
+        }
+        
+        SerialQueue.shared.addQueue {
+            self.asynFunction(value: 14, completion: {
+                SerialQueue.shared.dequeue()
+            })
+        }
+        
+        SerialQueue.shared.addQueue {
+            self.asynFunction(value: 15, completion: {
+                SerialQueue.shared.dequeue()
+            })
+        }
+        
+        SerialQueue.shared.addQueue {
+            self.asynFunction(value: 16, completion: {
+                SerialQueue.shared.dequeue()
+            })
+        }
+        
+        SerialQueue.shared.addQueue {
+            self.asynFunction(value: 17, completion: {
+                SerialQueue.shared.dequeue()
+            })
+        }
+        
+        SerialQueue.shared.addQueue {
+            self.asynFunction(value: 18, completion: {
+                SerialQueue.shared.dequeue()
+            })
+        }
+        
+        SerialQueue.shared.addQueue {
+            self.asynFunction(value: 19, completion: {
+                SerialQueue.shared.dequeue()
+            })
+        }
+        
+        SerialQueue.shared.addQueue {
+            self.asynFunction(value: 20, completion: {
+                SerialQueue.shared.dequeue()
+            })
+        }
+        
+        SerialQueue.shared.addQueue {
+            self.asynFunction(value: 21, completion: {
+                SerialQueue.shared.dequeue()
+            })
+        }
+        
+        SerialQueue.shared.addQueue {
+            self.asynFunction(value: 22, completion: {
+                SerialQueue.shared.dequeue()
+            })
+        }
+        
+        SerialQueue.shared.addQueue {
+            self.asynFunction(value: 23, completion: {
+                SerialQueue.shared.dequeue()
+            })
+        }
+        
+        SerialQueue.shared.addQueue {
+            self.asynFunction(value: 24, completion: {
+                SerialQueue.shared.dequeue()
+            })
+        }
+        
+        SerialQueue.shared.addQueue {
+            self.asynFunction(value: 25, completion: {
+                SerialQueue.shared.dequeue()
+            })
+        }
+        
+        SerialQueue.shared.addQueue {
+            self.asynFunction(value: 26, completion: {
+                SerialQueue.shared.dequeue()
+            })
+        }
+        
+        SerialQueue.shared.addQueue {
+            self.asynFunction(value: 27, completion: {
+                SerialQueue.shared.dequeue()
+            })
+        }
+        
+        SerialQueue.shared.addQueue {
+            self.asynFunction(value: 28, completion: {
+                SerialQueue.shared.dequeue()
+            })
+        }
+        
+        SerialQueue.shared.addQueue {
+            self.asynFunction(value: 29, completion: {
+                SerialQueue.shared.dequeue()
+            })
+        }
+        
+        SerialQueue.shared.addQueue {
+            self.asynFunction(value: 30, completion: {
+                SerialQueue.shared.dequeue()
+            })
+        }
+        
     }
 
     func asynFunction(value: Int, completion: @escaping () -> Void) {
