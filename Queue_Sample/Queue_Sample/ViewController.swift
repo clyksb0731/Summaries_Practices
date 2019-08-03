@@ -14,69 +14,69 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         
-        SerialQueue.share.addQueue {
+        SerialQueue.shared.addQueue {
             self.asynFunction(value: 1, completion: {
-                SerialQueue.share.excuteElement()
+                SerialQueue.shared.dequeue()
             })
         }
         
-        SerialQueue.share.addQueue {
+        SerialQueue.shared.addQueue {
             self.asynFunction(value: 2, completion: {
-                SerialQueue.share.excuteElement()
+                SerialQueue.shared.dequeue()
             })
         }
         
-        SerialQueue.share.addQueue {
+        SerialQueue.shared.addQueue {
             self.asynFunction(value: 3, completion: {
-                SerialQueue.share.excuteElement()
+                SerialQueue.shared.dequeue()
             })
         }
         
-        SerialQueue.share.addQueue {
+        SerialQueue.shared.addQueue {
             self.asynFunction(value: 4, completion: {
-                SerialQueue.share.excuteElement()
+                SerialQueue.shared.dequeue()
             })
         }
         
-        SerialQueue.share.addQueue {
+        SerialQueue.shared.addQueue {
             self.asynFunction(value: 5, completion: {
-                SerialQueue.share.excuteElement()
+                SerialQueue.shared.dequeue()
             })
         }
         
-        SerialQueue.share.addQueue {
+        SerialQueue.shared.addQueue {
             self.asynFunction(value: 6, completion: {
-                SerialQueue.share.excuteElement()
+                SerialQueue.shared.dequeue()
             })
         }
         
-        SerialQueue.share.addQueue {
+        SerialQueue.shared.addQueue {
             self.asynFunction(value: 7, completion: {
-                SerialQueue.share.excuteElement()
+                SerialQueue.shared.dequeue()
             })
         }
         
-        SerialQueue.share.addQueue {
+        SerialQueue.shared.addQueue {
             self.asynFunction(value: 8, completion: {
-                SerialQueue.share.excuteElement()
+                SerialQueue.shared.dequeue()
             })
         }
         
-        SerialQueue.share.addQueue {
+        SerialQueue.shared.addQueue {
             self.asynFunction(value: 9, completion: {
-                SerialQueue.share.excuteElement()
+                SerialQueue.shared.dequeue()
             })
         }
         
-        SerialQueue.share.addQueue {
+        SerialQueue.shared.addQueue {
             self.asynFunction(value: 10, completion: {
-                SerialQueue.share.excuteElement()
+                SerialQueue.shared.dequeue()
             })
         }
         
-        SerialQueue.share.addQueue {
+        SerialQueue.shared.addQueue {
             self.asynFunction(value: 11, completion: {
-                SerialQueue.share.excuteElement()
+                SerialQueue.shared.dequeue()
             })
         }
     }

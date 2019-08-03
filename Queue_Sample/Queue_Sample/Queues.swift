@@ -8,16 +8,51 @@
 
 import Foundation
 
+enum StateType {
+    case waiting
+    case running
+}
+
 class SerialQueue {
-    enum StateType {
-        case waiting
-        case inProgress
-    }
-    
+    var closureSerialDispatchQueue = DispatchQueue(label: "closureSerial")
     var state: StateType = .waiting
     var queueArray: [() -> ()] = []
     
-    static let share = SerialQueue()
+    static let shared = SerialQueue()
+    
+    private init() {
+        
+    }
+    
+    func addQueue(_ closure: @escaping () -> Void) {
+        self.closureSerialDispatchQueue.async {
+            self.queueArray.append(closure)
+            if self.state == .waiting {
+                self.state = .running
+                self.dequeue()
+            }
+        }
+    }
+    
+    func dequeue() {
+        self.closureSerialDispatchQueue.async {
+            if let firstElement = self.queueArray.first {
+                _ = self.queueArray.removeFirst()
+                
+                firstElement()
+                
+            } else {
+                self.state = .waiting
+            }
+        }
+    }
+}
+
+class SerialQueue2 {
+    var state: StateType = .waiting
+    var queueArray: [() -> ()] = []
+    
+    static let shared = SerialQueue2()
     
     private init() {
         
@@ -36,7 +71,7 @@ class SerialQueue {
         self.state = .waiting
         
         if let firstElement = self.queueArray.first {
-            self.state = .inProgress
+            self.state = .running
             
             _ = self.queueArray.removeFirst()
             
