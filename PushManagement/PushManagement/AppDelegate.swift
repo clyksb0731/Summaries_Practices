@@ -161,6 +161,8 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
          userinfo4 []
          userinfo5 []
         */
+        
+        completionHandler()
     }
 }
 
