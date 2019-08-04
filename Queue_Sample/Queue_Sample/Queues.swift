@@ -13,6 +13,20 @@ enum StateType {
     case running
 }
 
+class PushQueue {
+    var pushSerialDispatchQueue = DispatchQueue(label: "pushSerial")
+    var state: StateType = .waiting
+    var queueArray: [[AnyHashable:Any]] = []
+    
+    func addQueue(userInfo: [AnyHashable:Any]) {
+        
+    }
+    
+    func dequeue() {
+        
+    }
+}
+
 class SerialQueue {
     var closureSerialDispatchQueue = DispatchQueue(label: "closureSerial")
     var state: StateType = .waiting
