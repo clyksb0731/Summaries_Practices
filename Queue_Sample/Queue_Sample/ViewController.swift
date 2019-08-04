@@ -15,8 +15,8 @@ class ViewController: UIViewController {
         
         let managePush = ManagePush()
         
-        self.testSerialQueue(times: 30) // to test closure serial queque
-//        managePush.mangePushNotification() // to test push serial queue
+//        self.testSerialQueue(times: 30) // to test closure serial queque
+        managePush.mangePushNotification() // to test push serial queue
         
     }
     

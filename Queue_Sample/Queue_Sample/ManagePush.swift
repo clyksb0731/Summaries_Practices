@@ -67,7 +67,7 @@ class ManagePush {
     
     func firstHandle(completion: (() -> ())?) {
         DispatchQueue.global().async {
-            for _ in 1...10_000 {
+            for _ in 1...1000_000 {
                 
             }
             
@@ -77,7 +77,7 @@ class ManagePush {
     
     func firtNext(completion: (() -> ())?) {
         DispatchQueue.global().async {
-            for _ in 1...10_000 {
+            for _ in 1...1000_000 {
                 
             }
             
@@ -87,7 +87,7 @@ class ManagePush {
     
     func firstNextNext(completion: (() -> ())?) {
         DispatchQueue.global().async {
-            for _ in 1...10_000 {
+            for _ in 1...1000_000 {
                 
             }
             
@@ -99,7 +99,7 @@ class ManagePush {
     
     func secondHandle(completion: (() -> ())?) {
         DispatchQueue.global().async {
-            for _ in 1...10_000 {
+            for _ in 1...1000_000 {
                 
             }
             
@@ -111,7 +111,7 @@ class ManagePush {
     
     func thirdHandle(completion: (() -> ())?) {
         DispatchQueue.global().async {
-            for _ in 1...10_000 {
+            for _ in 1...1000_000 {
                 
             }
             
@@ -121,7 +121,7 @@ class ManagePush {
     
     func thirdNext(completion: (() -> ())?) {
         DispatchQueue.global().async {
-            for _ in 1...10_000 {
+            for _ in 1...1000_000 {
                 
             }
             
@@ -133,7 +133,7 @@ class ManagePush {
     
     func othersHandle(completion: (() -> ())?) {
         DispatchQueue.global().async {
-            for _ in 1...10_000 {
+            for _ in 1...1000_000 {
                 
             }
             
