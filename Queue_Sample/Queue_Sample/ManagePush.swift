@@ -65,7 +65,7 @@ class ManagePush {
         
     }
     
-    func firstHandle(completion: (() -> ())?) {
+    func firstHandle(completion: @escaping () -> ()) {
         DispatchQueue.global().async {
             for _ in 1...1000_000 {
                 
@@ -75,7 +75,7 @@ class ManagePush {
         }
     }
     
-    func firtNext(completion: (() -> ())?) {
+    func firtNext(completion: @escaping () -> ()) {
         DispatchQueue.global().async {
             for _ in 1...1000_000 {
                 
@@ -85,7 +85,7 @@ class ManagePush {
         }
     }
     
-    func firstNextNext(completion: (() -> ())?) {
+    func firstNextNext(completion: @escaping () -> ()) {
         DispatchQueue.global().async {
             for _ in 1...1000_000 {
                 
@@ -93,11 +93,11 @@ class ManagePush {
             
             print("first")
             
-            completion?()
+            completion()
         }
     }
     
-    func secondHandle(completion: (() -> ())?) {
+    func secondHandle(completion: @escaping () -> ()) {
         DispatchQueue.global().async {
             for _ in 1...1000_000 {
                 
@@ -105,11 +105,11 @@ class ManagePush {
             
             print("second")
             
-            completion?()
+            completion()
         }
     }
     
-    func thirdHandle(completion: (() -> ())?) {
+    func thirdHandle(completion: @escaping () -> ()) {
         DispatchQueue.global().async {
             for _ in 1...1000_000 {
                 
@@ -119,7 +119,7 @@ class ManagePush {
         }
     }
     
-    func thirdNext(completion: (() -> ())?) {
+    func thirdNext(completion: @escaping () -> ()) {
         DispatchQueue.global().async {
             for _ in 1...1000_000 {
                 
@@ -127,11 +127,11 @@ class ManagePush {
             
             print("third")
             
-            completion?()
+            completion()
         }
     }
     
-    func othersHandle(completion: (() -> ())?) {
+    func othersHandle(completion: @escaping () -> ()) {
         DispatchQueue.global().async {
             for _ in 1...1000_000 {
                 
@@ -139,7 +139,7 @@ class ManagePush {
             
             print("others")
             
-            completion?()
+            completion()
         }
     }
 }
