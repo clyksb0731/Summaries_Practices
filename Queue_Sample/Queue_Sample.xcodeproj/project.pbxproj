@@ -13,6 +13,7 @@
 		CA60EA3322E2CE86002BB536 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA60EA3222E2CE86002BB536 /* Assets.xcassets */; };
 		CA60EA3622E2CE86002BB536 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA60EA3422E2CE86002BB536 /* LaunchScreen.storyboard */; };
 		CA60EA3E22E2CE9E002BB536 /* Queues.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA60EA3D22E2CE9E002BB536 /* Queues.swift */; };
+		CADF1A6E22F7145000FFC832 /* ManagePush.swift in Sources */ = {isa = PBXBuildFile; fileRef = CADF1A6D22F7145000FFC832 /* ManagePush.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		CA60EA3522E2CE86002BB536 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CA60EA3722E2CE86002BB536 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CA60EA3D22E2CE9E002BB536 /* Queues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queues.swift; sourceTree = "<group>"; };
+		CADF1A6D22F7145000FFC832 /* ManagePush.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagePush.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 			children = (
 				CA60EA2B22E2CE85002BB536 /* AppDelegate.swift */,
 				CA60EA2D22E2CE85002BB536 /* ViewController.swift */,
+				CADF1A6D22F7145000FFC832 /* ManagePush.swift */,
 				CA60EA3D22E2CE9E002BB536 /* Queues.swift */,
 				CA60EA2F22E2CE85002BB536 /* Main.storyboard */,
 				CA60EA3222E2CE86002BB536 /* Assets.xcassets */,
@@ -138,6 +141,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CADF1A6E22F7145000FFC832 /* ManagePush.swift in Sources */,
 				CA60EA2E22E2CE85002BB536 /* ViewController.swift in Sources */,
 				CA60EA3E22E2CE9E002BB536 /* Queues.swift in Sources */,
 				CA60EA2C22E2CE85002BB536 /* AppDelegate.swift in Sources */,

@@ -13,20 +13,41 @@ enum StateType {
     case running
 }
 
+// MARK: - Push Serial Queue
 class PushQueue {
-    var pushSerialDispatchQueue = DispatchQueue(label: "pushSerial")
+    let pushSerialDispatchQueue: DispatchQueue
     var state: StateType = .waiting
     var queueArray: [[AnyHashable:Any]] = []
     
-    func addQueue(userInfo: [AnyHashable:Any]) {
-        
+    init(serialQueue: DispatchQueue? = nil) {
+        self.pushSerialDispatchQueue = serialQueue ?? DispatchQueue(label: "pushSerial")
     }
     
-    func dequeue() {
-        
+    func addQueue(userInfo: [AnyHashable:Any], classifyUserInfo: @escaping (([AnyHashable:Any]) -> Void)) {
+        self.pushSerialDispatchQueue.async {
+            self.queueArray.append(userInfo)
+            if self.state == .waiting {
+                self.state = .running
+                self.dequeue(classifyUserInfo: classifyUserInfo)
+            }
+        }
+    }
+    
+    func dequeue(classifyUserInfo: @escaping (([AnyHashable:Any]) -> Void)) {
+        self.pushSerialDispatchQueue.async {
+            if let firstElement = self.queueArray.first {
+                _ = self.queueArray.removeFirst()
+                
+                classifyUserInfo(firstElement)
+                
+            } else {
+                self.state = .waiting
+            }
+        }
     }
 }
 
+// MARK: - Closure Serial Queue
 class SerialQueue {
     var closureSerialDispatchQueue = DispatchQueue(label: "closureSerial")
     var state: StateType = .waiting
@@ -51,7 +72,7 @@ class SerialQueue {
     func dequeue() {
         self.closureSerialDispatchQueue.async {
             if let firstElement = self.queueArray.first {
-                _ = self.queueArray.removeFirst()
+                _ = self.queueArray.removeFirst() // not call by reference but call by value
                 
                 firstElement()
                 
@@ -62,6 +83,7 @@ class SerialQueue {
     }
 }
 
+// MARK: - Serial queue made for test initially
 class SerialQueue2 {
     var state: StateType = .waiting
     var queueArray: [() -> ()] = []
