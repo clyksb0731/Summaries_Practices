@@ -18,12 +18,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        self.locationManager.stopMonitoringSignificantLocationChanges()
+//        self.locationManager.stopMonitoringSignificantLocationChanges()
         self.locationManager.requestAlwaysAuthorization()
         self.locationManager.delegate = self
         self.locationManager.allowsBackgroundLocationUpdates = true
-        self.locationManager.pausesLocationUpdatesAutomatically = true
-        self.locationManager.startMonitoringSignificantLocationChanges()
+        self.locationManager.pausesLocationUpdatesAutomatically = false
+//        self.locationManager.startMonitoringSignificantLocationChanges()
         self.locationManager.showsBackgroundLocationIndicator = true
         let center1 = CLLocationCoordinate2D(latitude: 37.362865, longitude: 127.158420)
         let center2 = CLLocationCoordinate2D(latitude: 37.413707, longitude: 127.098777)
@@ -33,6 +33,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         region2.notifyOnEntry = true
         region1.notifyOnExit = true
         region2.notifyOnExit = true
+        
+        UIApplication.shared.applicationIconBadgeNumber = 0
+        
+        self.locationManager.stopMonitoring(for: region1)
+        self.locationManager.stopMonitoring(for: region2)
         
         self.locationManager.startMonitoring(for: region1)
         self.locationManager.startMonitoring(for: region2)
