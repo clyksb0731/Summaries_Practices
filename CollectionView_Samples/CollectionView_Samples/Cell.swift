@@ -11,6 +11,9 @@ import UIKit
 class Cell: UICollectionViewCell {
     var label: UILabel = {
         let label = UILabel()
+        label.layer.borderColor = UIColor.gray.cgColor
+        label.layer.borderWidth = 1
+        label.layer.cornerRadius = 8
         label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         label.textColor = .black
         label.textAlignment = .center
@@ -34,6 +37,7 @@ class Cell: UICollectionViewCell {
 extension Cell {
     func setCell(_ content: String) {
         self.label.text = content
+        self.backgroundColor = .yellow
     }
     
     func setSubview() {
@@ -46,10 +50,17 @@ extension Cell {
         NSLayoutConstraint.activate([
             self.label.centerYAnchor.constraint(equalTo: safeArea.centerYAnchor),
             self.label.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
-            self.label.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 10),
-            self.label.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: -10),
-            self.label.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 10),
-            self.label.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -10)
+            self.label.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 0),
+            self.label.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: 0),
+            self.label.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 3),
+            self.label.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -3)
             ])
+        
+//        NSLayoutConstraint.activate([
+//            self.label.topAnchor.constraint(equalTo: safeArea.topAnchor),
+//            self.label.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor),
+//            self.label.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
+//            self.label.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor)
+//            ])
     }
 }
