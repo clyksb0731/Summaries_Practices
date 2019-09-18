@@ -52,15 +52,8 @@ extension Cell {
             self.label.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
             self.label.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 0),
             self.label.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: 0),
-            self.label.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 3),
-            self.label.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -3)
+            self.label.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 10),
+            self.label.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -10)
             ])
-        
-//        NSLayoutConstraint.activate([
-//            self.label.topAnchor.constraint(equalTo: safeArea.topAnchor),
-//            self.label.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor),
-//            self.label.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
-//            self.label.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor)
-//            ])
     }
 }
