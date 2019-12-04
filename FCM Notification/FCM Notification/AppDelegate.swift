@@ -122,13 +122,13 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 }
 
 extension AppDelegate: MessagingDelegate {
-//    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
-//        print("FCM registraion token: \(fcmToken)")        
-//    }
-//    
-//    func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage) {
-//        print("FCM Messaging: \(messaging)")
-//        print("Received data FCM Message: \(remoteMessage.appData)")
-//    }
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
+        print("FCM registraion token: \(fcmToken)")
+    }
+    
+    func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage) {
+        print("FCM Messaging: \(messaging)")
+        print("Received data FCM Message: \(remoteMessage.appData)")
+    }
 }
 

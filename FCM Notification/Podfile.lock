@@ -66,7 +66,7 @@ DEPENDENCIES:
   - Firebase/Messaging
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - Firebase
     - FirebaseAnalytics
     - FirebaseAnalyticsInterop
@@ -92,4 +92,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 14e646fe113417b058036d7b0e6ac98c4ee20b83
 
-COCOAPODS: 1.6.1
+COCOAPODS: 1.8.4

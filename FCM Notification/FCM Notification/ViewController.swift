@@ -16,7 +16,8 @@ class ViewController: UIViewController {
         
         if let token = Messaging.messaging().fcmToken {
             print("FCM Token: \(token)")
-        }        
+        }
+        
     }
 
 
