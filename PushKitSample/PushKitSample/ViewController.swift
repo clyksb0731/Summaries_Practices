@@ -11,11 +11,17 @@ import CallKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var tokenTextField: UITextField!
+    
     override func viewDidLoad() {
-        self.view.backgroundColor = .white
+        super.viewDidLoad()
         
     }
-
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        self.tokenTextField.text = UserDefaults.standard.string(forKey: "deviceToken")
+    }
 }
 

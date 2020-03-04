@@ -37,6 +37,9 @@ extension AppDelegate: PKPushRegistryDelegate {
         
         let deviceToken = pushCredentials.token.map { String(format: "%02x", $0) }.joined()
         print("pushRegistry -> deviceToken :\(deviceToken)")
+        
+        UserDefaults.standard.setValue(deviceTokenString, forKey: "deviceTokenString")
+        UserDefaults.standard.setValue(deviceToken, forKey: "deviceToken")
     }
     
     func pushRegistry(_ registry: PKPushRegistry, didInvalidatePushTokenFor type: PKPushType) {
