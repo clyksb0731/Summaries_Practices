@@ -9,11 +9,16 @@
 import UIKit
 import PushKit
 import CallKit
+import AVFoundation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var callProvider: CXProvider!
+    var callUpdate: CXCallUpdate!
+//    var callController: CXCallController!
+    var callUUID: UUID!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
@@ -25,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func voipRegistration() {
         let voipRegistry: PKPushRegistry = PKPushRegistry(queue: DispatchQueue.main)
         voipRegistry.delegate = self
-        voipRegistry.desiredPushTypes = [PKPushType.voIP]
+        voipRegistry.desiredPushTypes = [.voIP]
     }
 }
 
@@ -50,18 +55,25 @@ extension AppDelegate: PKPushRegistryDelegate {
         
         print(payload.dictionaryPayload)
         print("Push Type: \(type)")
+        // let callID = payload.dictionaryPayload["callID"] as! String
+        
+        self.callUUID = UUID()
+        print("AppDelegate Call UUID: \(self.callUUID.uuidString)")
         
         let config = CXProviderConfiguration(localizedName: "My App")
         config.iconTemplateImageData = UIImage(named: "Neo")!.pngData()
-//        config.ringtoneSound = "ringtone.caf"
+        // config.ringtoneSound = "ringtone.caf"
         config.includesCallsInRecents = false;
-        config.supportsVideo = true;
-        let provider = CXProvider(configuration: config)
-        provider.setDelegate(self, queue: nil)
-        let update = CXCallUpdate()
-        update.remoteHandle = CXHandle(type: .generic, value: "Pete Za")
-        update.hasVideo = true
-        provider.reportNewIncomingCall(with: UUID(), update: update, completion: { error in })
+        config.supportsVideo = false;
+        self.callProvider = CXProvider(configuration: config)
+        self.callProvider.setDelegate(self, queue: nil)
+        self.callUpdate = CXCallUpdate()
+        self.callUpdate.remoteHandle = CXHandle(type: .generic, value: "Pete Za")
+        self.callUpdate.hasVideo = false
+        
+        self.callProvider.reportNewIncomingCall(with: self.callUUID, update: self.callUpdate, completion: { error in
+            
+        })
         
         completion()
     }
@@ -77,28 +89,38 @@ extension AppDelegate: CXProviderDelegate {
     }
     
     func provider(_ provider: CXProvider, perform action: CXStartCallAction) {
-        action.fulfill()
         print("Start")
+        
+        action.fulfill()
     }
 
     func provider(_ provider: CXProvider, perform action: CXAnswerCallAction) {
-        action.fulfill()
         print("Answer")
+        
+        action.fulfill()
     }
 
     func provider(_ provider: CXProvider, perform action: CXEndCallAction) {
-        action.fulfill()
         print("End")
+        
+        action.fulfill()
     }
     
     func provider(_ provider: CXProvider, perform action: CXSetMutedCallAction) {
-        action.fulfill()
         print("Muted")
+        
+        action.fulfill()
     }
     
     func provider(_ provider: CXProvider, perform action: CXSetHeldCallAction) {
-        action.fulfill()
         print("Held call")
+        
+        action.fulfill()
+    }
+    
+    // Called when the provider’s audio session is activated.
+    func provider(_ provider: CXProvider, didActivate audioSession: AVAudioSession) {
+        // start audio
     }
 }
 

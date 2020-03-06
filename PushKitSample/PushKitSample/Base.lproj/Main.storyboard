@@ -20,11 +20,20 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xaF-2z-vft">
+                                <rect key="frame" x="178" y="778" width="58" height="30"/>
+                                <state key="normal" title="Hang up"/>
+                                <connections>
+                                    <action selector="hangUp:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cku-Jf-f31"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="mmO-lB-LmZ" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="143" id="1zm-af-vcv"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="xaF-2z-vft" secondAttribute="bottom" constant="54" id="GPi-yX-uIg"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="mmO-lB-LmZ" secondAttribute="trailing" constant="20" id="JVV-Hh-ywV"/>
+                            <constraint firstItem="xaF-2z-vft" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="aKA-NC-hJg"/>
                             <constraint firstItem="mmO-lB-LmZ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="z0a-o7-iOL"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
