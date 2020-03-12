@@ -209,7 +209,7 @@ extension ViewController {
                 self.frontCameraButton.widthAnchor.constraint(equalTo: self.buttonsView.widthAnchor, multiplier: 1/2)
             ])
             
-            // Wide camera camera button layout
+            // Wide camera button layout
             NSLayoutConstraint.activate([
                 self.wideCameraButton.topAnchor.constraint(equalTo: self.buttonsView.topAnchor),
                 self.wideCameraButton.bottomAnchor.constraint(equalTo: self.buttonsView.bottomAnchor),
