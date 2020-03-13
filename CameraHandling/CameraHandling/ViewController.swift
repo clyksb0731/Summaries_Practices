@@ -40,10 +40,12 @@ class ViewController: UIViewController {
     
     var frontCameraButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .cyan
+        button.backgroundColor = .brown
         button.setTitle("Front", for: .normal)
         button.setTitleColor(.black, for: .normal)
+        button.setTitleColor(.gray, for: .selected)
         button.titleLabel?.font = .systemFont(ofSize: 15, weight: .bold)
+        button.tag = 1
         button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
@@ -54,7 +56,9 @@ class ViewController: UIViewController {
         button.backgroundColor = .green
         button.setTitle("Wide", for: .normal)
         button.setTitleColor(.black, for: .normal)
+        button.setTitleColor(.gray, for: .selected)
         button.titleLabel?.font = .systemFont(ofSize: 15, weight: .bold)
+        button.tag = 2
         button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
@@ -65,7 +69,9 @@ class ViewController: UIViewController {
         button.backgroundColor = .yellow
         button.setTitle("U-Wide", for: .normal)
         button.setTitleColor(.black, for: .normal)
+        button.setTitleColor(.gray, for: .selected)
         button.titleLabel?.font = .systemFont(ofSize: 15, weight: .bold)
+        button.tag = 3
         button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
@@ -73,10 +79,12 @@ class ViewController: UIViewController {
     
     var telephotoCameraButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .gray
+        button.backgroundColor = .blue
         button.setTitle("Telephoto", for: .normal)
         button.setTitleColor(.black, for: .normal)
+        button.setTitleColor(.gray, for: .selected)
         button.titleLabel?.font = .systemFont(ofSize: 15, weight: .bold)
+        button.tag = 4
         button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
@@ -119,10 +127,10 @@ extension ViewController {
     
     // MARK: Set targets
     func setTargets() {
-        self.frontCameraButton.addTarget(self, action: #selector(frontCameraButton(_:)), for: .touchUpInside)
-        self.wideCameraButton.addTarget(self, action: #selector(wideCameraButton(_:)), for: .touchUpInside)
-        self.ultraWideCameraButton.addTarget(self, action: #selector(ultraWideCameraButton(_:)), for: .touchUpInside)
-        self.telephotoCameraButton.addTarget(self, action: #selector(telephotoCameraButton(_:)), for: .touchUpInside)
+        self.frontCameraButton.addTarget(self, action: #selector(cameraButtons(_:)), for: .touchUpInside)
+        self.wideCameraButton.addTarget(self, action: #selector(cameraButtons(_:)), for: .touchUpInside)
+        self.ultraWideCameraButton.addTarget(self, action: #selector(cameraButtons(_:)), for: .touchUpInside)
+        self.telephotoCameraButton.addTarget(self, action: #selector(cameraButtons(_:)), for: .touchUpInside)
     }
     
     // MARK: Set gestures
@@ -446,18 +454,40 @@ extension ViewController {
 
 // MARK: - Objc methods added
 extension ViewController {
-    @objc func frontCameraButton(_ sender: UIButton) {
-        guard !self.frontCameraButton.isSelected else {
+    @objc func cameraButtons(_ sender: UIButton) {
+        guard !sender.isSelected else {
             return
         }
         
-        self.frontCameraButton.isSelected = true
-        self.wideCameraButton.isSelected = false
-        self.ultraWideCameraButton.isSelected = false
-        self.telephotoCameraButton.isSelected = false
+        var camera: AVCaptureDevice!
         
-        guard let camera = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front) else {
-            return
+        if sender.tag == 1 {
+            guard let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front) else {
+                return
+            }
+            
+            camera = device
+            
+        } else if sender.tag == 2 {
+            guard let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) else {
+                return
+            }
+            
+            camera = device
+            
+        } else if sender.tag == 3 {
+            guard let device = AVCaptureDevice.default(.builtInUltraWideCamera, for: .video, position: .back) else {
+                return
+            }
+            
+            camera = device
+            
+        } else if sender.tag == 4 {
+            guard let device = AVCaptureDevice.default(.builtInTelephotoCamera, for: .video, position: .back) else {
+                return
+            }
+            
+            camera = device
         }
         
         self.captureSession.beginConfiguration()
@@ -486,132 +516,11 @@ extension ViewController {
         }
         
         self.captureSession.commitConfiguration()
-    }
-    
-    @objc func wideCameraButton(_ sender: UIButton) {
-        guard !self.wideCameraButton.isSelected else {
-            return
-        }
         
-        self.frontCameraButton.isSelected = false
-        self.wideCameraButton.isSelected = true
-        self.ultraWideCameraButton.isSelected = false
-        self.telephotoCameraButton.isSelected = false
-        
-        guard let camera = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) else {
-            return
-        }
-        
-        self.captureSession.beginConfiguration()
-        
-        do {
-            if let currentInput = self.captureSession.inputs.first {
-                self.captureSession.removeInput(currentInput)
-                
-            } else {
-                return
-            }
-            
-            let input = try AVCaptureDeviceInput(device: camera)
-            
-            if self.captureSession.canAddInput(input) {
-                self.captureSession.addInput(input)
-                
-            } else {
-                print("Not supported")
-                
-                return
-            }
-            
-        } catch let error {
-            print(error.localizedDescription)
-        }
-        
-        self.captureSession.commitConfiguration()
-    }
-    
-    @objc func ultraWideCameraButton(_ sender: UIButton) {
-        guard !self.ultraWideCameraButton.isSelected else {
-            return
-        }
-        
-        self.frontCameraButton.isSelected = false
-        self.wideCameraButton.isSelected = false
-        self.ultraWideCameraButton.isSelected = true
-        self.telephotoCameraButton.isSelected = false
-        
-        guard let camera = AVCaptureDevice.default(.builtInUltraWideCamera, for: .video, position: .back) else {
-            return
-        }
-        
-        self.captureSession.beginConfiguration()
-        
-        do {
-            if let currentInput = self.captureSession.inputs.first {
-                self.captureSession.removeInput(currentInput)
-                
-            } else {
-                return
-            }
-            
-            let input = try AVCaptureDeviceInput(device: camera)
-            
-            if self.captureSession.canAddInput(input) {
-                self.captureSession.addInput(input)
-                
-            } else {
-                print("Not supported")
-                
-                return
-            }
-            
-        } catch let error {
-            print(error.localizedDescription)
-        }
-        
-        self.captureSession.commitConfiguration()
-    }
-    
-    @objc func telephotoCameraButton(_ sender: UIButton) {
-        guard !self.telephotoCameraButton.isSelected else {
-            return
-        }
-        
-        self.frontCameraButton.isSelected = false
-        self.wideCameraButton.isSelected = false
-        self.ultraWideCameraButton.isSelected = false
-        self.telephotoCameraButton.isSelected = true
-        
-        guard let camera = AVCaptureDevice.default(.builtInTelephotoCamera, for: .video, position: .back) else {
-            return
-        }
-        
-        self.captureSession.beginConfiguration()
-        
-        do {
-            if let currentInput = self.captureSession.inputs.first {
-                self.captureSession.removeInput(currentInput)
-                
-            } else {
-                return
-            }
-            
-            let input = try AVCaptureDeviceInput(device: camera)
-            
-            if self.captureSession.canAddInput(input) {
-                self.captureSession.addInput(input)
-                
-            } else {
-                print("Not supported")
-                
-                return
-            }
-            
-        } catch let error {
-            print(error.localizedDescription)
-        }
-        
-        self.captureSession.commitConfiguration()
+        self.frontCameraButton.isSelected = sender === self.frontCameraButton
+        self.wideCameraButton.isSelected = sender === self.wideCameraButton
+        self.ultraWideCameraButton.isSelected = sender === self.ultraWideCameraButton
+        self.telephotoCameraButton.isSelected = sender === self.telephotoCameraButton
     }
     
     @objc func didEnterBackground(_ notification: Notification) {
