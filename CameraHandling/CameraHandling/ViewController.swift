@@ -18,7 +18,7 @@ class ViewController: UIViewController {
         return captureSession
     }()
     
-    var previewLayer: AVCaptureVideoPreviewLayer!
+    var previewLayer: AVCaptureVideoPreviewLayer?
     
     var cameraView: UIView = {
         let view = UIView()
@@ -94,6 +94,12 @@ class ViewController: UIViewController {
         self.setNotificationCenters()
         self.setSubviews()
         self.setLayouts()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        self.determineOrientation()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -365,15 +371,76 @@ extension ViewController {
         }
 
         self.previewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession)
-        self.previewLayer.videoGravity = .resizeAspectFill
-        self.previewLayer.connection?.videoOrientation = .portrait
+        self.previewLayer!.videoGravity = .resizeAspectFill
+        self.previewLayer!.connection?.videoOrientation = .portrait
 
-        self.previewLayer.frame = self.cameraView.bounds
-        self.cameraView.layer.addSublayer(self.previewLayer)
+        self.previewLayer!.frame = self.cameraView.bounds
+        self.cameraView.layer.addSublayer(self.previewLayer!)
 
         DispatchQueue.global().async {
             self.captureSession.startRunning()
         }
+        
+        self.determineOrientation()
+    }
+    
+    // Camera output orientation determination
+    func determineOrientation() {
+        if let connection = self.previewLayer?.connection {
+            if let currentOrientation = UIApplication.shared.windows.first?.windowScene?.interfaceOrientation {
+                switch currentOrientation {
+                case .landscapeLeft:
+                    connection.videoOrientation = .landscapeLeft
+                    
+                case .landscapeRight:
+                    connection.videoOrientation = .landscapeRight
+                    
+                case .portrait:
+                    connection.videoOrientation = .portrait
+                    
+                case .portraitUpsideDown:
+                    connection.videoOrientation = .portraitUpsideDown
+                
+                case .unknown:
+                    connection.videoOrientation = .portrait
+                    
+                @unknown default:
+                    fatalError()
+                }
+            }
+        }
+        
+        self.previewLayer?.frame = self.cameraView.bounds
+        
+        // FIXME: Need to search about outputs from AVCaptuerSession.
+//        let outputs = self.captureSession.outputs
+//        print("Outputs::: \(outputs)")
+//
+//        for output in outputs {
+//            if let connection = output.connection(with: .video) {
+//                if let currentOrientation = UIApplication.shared.windows.first?.windowScene?.interfaceOrientation {
+//                    switch currentOrientation {
+//                    case .landscapeLeft:
+//                        connection.videoOrientation = .landscapeLeft
+//
+//                    case .landscapeRight:
+//                        connection.videoOrientation = .landscapeRight
+//
+//                    case .portrait:
+//                        connection.videoOrientation = .portrait
+//
+//                    case .portraitUpsideDown:
+//                        connection.videoOrientation = .portraitUpsideDown
+//
+//                    case .unknown:
+//                        connection.videoOrientation = .portrait
+//
+//                    @unknown default:
+//                        fatalError()
+//                    }
+//                }
+//            }
+//        }
     }
 }
 
@@ -393,6 +460,8 @@ extension ViewController {
             return
         }
         
+        self.captureSession.beginConfiguration()
+        
         do {
             if let currentInput = self.captureSession.inputs.first {
                 self.captureSession.removeInput(currentInput)
@@ -415,6 +484,8 @@ extension ViewController {
         } catch let error {
             print(error.localizedDescription)
         }
+        
+        self.captureSession.commitConfiguration()
     }
     
     @objc func wideCameraButton(_ sender: UIButton) {
@@ -431,6 +502,8 @@ extension ViewController {
             return
         }
         
+        self.captureSession.beginConfiguration()
+        
         do {
             if let currentInput = self.captureSession.inputs.first {
                 self.captureSession.removeInput(currentInput)
@@ -453,6 +526,8 @@ extension ViewController {
         } catch let error {
             print(error.localizedDescription)
         }
+        
+        self.captureSession.commitConfiguration()
     }
     
     @objc func ultraWideCameraButton(_ sender: UIButton) {
@@ -469,6 +544,8 @@ extension ViewController {
             return
         }
         
+        self.captureSession.beginConfiguration()
+        
         do {
             if let currentInput = self.captureSession.inputs.first {
                 self.captureSession.removeInput(currentInput)
@@ -491,6 +568,8 @@ extension ViewController {
         } catch let error {
             print(error.localizedDescription)
         }
+        
+        self.captureSession.commitConfiguration()
     }
     
     @objc func telephotoCameraButton(_ sender: UIButton) {
@@ -507,6 +586,8 @@ extension ViewController {
             return
         }
         
+        self.captureSession.beginConfiguration()
+        
         do {
             if let currentInput = self.captureSession.inputs.first {
                 self.captureSession.removeInput(currentInput)
@@ -529,6 +610,8 @@ extension ViewController {
         } catch let error {
             print(error.localizedDescription)
         }
+        
+        self.captureSession.commitConfiguration()
     }
     
     @objc func didEnterBackground(_ notification: Notification) {
