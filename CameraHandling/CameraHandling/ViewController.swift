@@ -54,7 +54,7 @@ class ViewController: UIViewController {
     var wideCameraButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .green
-        button.setTitle("Wide", for: .normal)
+        button.setTitle("Wide [1x]", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.setTitleColor(.gray, for: .selected)
         button.titleLabel?.font = .systemFont(ofSize: 15, weight: .bold)
@@ -67,7 +67,7 @@ class ViewController: UIViewController {
     var ultraWideCameraButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .yellow
-        button.setTitle("U-Wide", for: .normal)
+        button.setTitle("U-Wide [0.5x]", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.setTitleColor(.gray, for: .selected)
         button.titleLabel?.font = .systemFont(ofSize: 15, weight: .bold)
@@ -80,7 +80,7 @@ class ViewController: UIViewController {
     var telephotoCameraButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .blue
-        button.setTitle("Telephoto", for: .normal)
+        button.setTitle("Telephoto [2x]", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.setTitleColor(.gray, for: .selected)
         button.titleLabel?.font = .systemFont(ofSize: 15, weight: .bold)
@@ -279,7 +279,7 @@ extension ViewController {
                 NSLayoutConstraint.activate([
                     self.telephotoCameraButton.topAnchor.constraint(equalTo: self.buttonsView.topAnchor),
                     self.telephotoCameraButton.bottomAnchor.constraint(equalTo: self.buttonsView.bottomAnchor),
-                    self.telephotoCameraButton.leadingAnchor.constraint(equalTo: self.ultraWideCameraButton.trailingAnchor),
+                    self.telephotoCameraButton.leadingAnchor.constraint(equalTo: self.wideCameraButton.trailingAnchor),
                     self.telephotoCameraButton.widthAnchor.constraint(equalTo: self.buttonsView.widthAnchor, multiplier: 1/3)
                 ])
             }
