@@ -330,7 +330,7 @@ extension ViewController {
     
     // Determine camera type
     func determineCameraType() -> CameraType {
-        let discoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInDualCamera, .builtInDualWideCamera, .builtInTelephotoCamera, .builtInTelephotoCamera, .builtInTripleCamera, .builtInTrueDepthCamera, .builtInUltraWideCamera, .builtInWideAngleCamera], mediaType: .video, position: .unspecified)
+        let discoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInDualCamera, .builtInDualWideCamera, .builtInTelephotoCamera, .builtInTripleCamera, .builtInTrueDepthCamera, .builtInUltraWideCamera, .builtInWideAngleCamera], mediaType: .video, position: .unspecified)
         
         let supportedDevices = discoverySession.devices
         
@@ -343,13 +343,11 @@ extension ViewController {
         if self.captureDeviceTypes.contains(.builtInTripleCamera) {
             return .triple
             
+        } else if self.captureDeviceTypes.contains(.builtInDualWideCamera) {
+            return .dual(eleven: true)
+            
         } else if self.captureDeviceTypes.contains(.builtInDualCamera) {
-            if self.captureDeviceTypes.contains(.builtInUltraWideCamera) {
-                return .dual(eleven: true)
-                
-            } else {
-                return .dual(eleven: false)
-            }
+            return .dual(eleven: false)
             
         } else {
             return .single
