@@ -55,6 +55,9 @@ class ViewController: UIViewController {
 //        print(self.blueViewBottomAnchor)
 //
 //        self.blueViewBottomAnchor.isActive = true;
+        
+        // MARK: Another test case - view reference count
+//        self.yellowView.removeFromSuperview()
     }
     
 }

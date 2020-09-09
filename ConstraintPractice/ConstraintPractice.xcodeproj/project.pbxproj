@@ -13,6 +13,7 @@
 		CA6F78142508964700588633 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA6F78122508964700588633 /* Main.storyboard */; };
 		CA6F78162508964800588633 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA6F78152508964800588633 /* Assets.xcassets */; };
 		CA6F78192508964800588633 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA6F78172508964800588633 /* LaunchScreen.storyboard */; };
+		CA6F78212508C68400588633 /* YellowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6F78202508C68400588633 /* YellowView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		CA6F78152508964800588633 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CA6F78182508964800588633 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CA6F781A2508964800588633 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CA6F78202508C68400588633 /* YellowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YellowView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 				CA6F780C2508964700588633 /* AppDelegate.swift */,
 				CA6F780E2508964700588633 /* SceneDelegate.swift */,
 				CA6F78102508964700588633 /* ViewController.swift */,
+				CA6F78202508C68400588633 /* YellowView.swift */,
 				CA6F78122508964700588633 /* Main.storyboard */,
 				CA6F78152508964800588633 /* Assets.xcassets */,
 				CA6F78172508964800588633 /* LaunchScreen.storyboard */,
@@ -140,6 +143,7 @@
 			files = (
 				CA6F78112508964700588633 /* ViewController.swift in Sources */,
 				CA6F780D2508964700588633 /* AppDelegate.swift in Sources */,
+				CA6F78212508C68400588633 /* YellowView.swift in Sources */,
 				CA6F780F2508964700588633 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
