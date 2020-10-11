@@ -16,6 +16,9 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.callController = CXCallController()
+        print("CallController:::::::::;")
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -29,21 +32,22 @@ class ViewController: UIViewController {
 // MARK: - Objc Methods added
 extension ViewController {
     @IBAction func hangUp(_ sender: UIButton) {
-        self.callController = CXCallController()
-        
         if let delegate = UIApplication.shared.delegate as? AppDelegate {
             
-            delegate.callProvider.reportCall(with: delegate.callUUID, endedAt: Date(), reason: .remoteEnded)
+            //delegate.callProvider.reportCall(with: delegate.callUUID, endedAt: Date(), reason: .remoteEnded)
             
-//            print("ViewController Call UUID: " + delegate.callUUID.uuidString)
-//            let endCall = CXEndCallAction(call: delegate.callUUID)
-//            let endTransaction = CXTransaction(action: endCall)
-//
-//            self.callController.request(endTransaction) { (error) in
-//                if let error = error {
-//                    print("Error: " + error.localizedDescription)
-//                }
-//            }
+            print("ViewController Call UUID: " + delegate.callUUID.uuidString)
+            let endCall = CXEndCallAction(call: delegate.callUUID)
+            let endTransaction = CXTransaction(action: endCall)
+            
+            self.callController.request(endTransaction) { (error) in
+                if let error = error {
+                    print("Error: " + error.localizedDescription)
+                    
+                } else {
+                    print("Succeeded in ending call")
+                }
+            }
         }
     }
 }
