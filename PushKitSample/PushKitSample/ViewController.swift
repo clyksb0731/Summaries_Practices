@@ -8,6 +8,7 @@
 
 import UIKit
 import CallKit
+import AVFoundation
 
 class ViewController: UIViewController {
     
@@ -17,6 +18,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(speakerChanged(_:)), name: AVAudioSession.routeChangeNotification, object: nil)
+        
         self.callController = CXCallController()
         print("CallController:::::::::;")
     }
@@ -25,6 +28,8 @@ class ViewController: UIViewController {
         super.viewDidAppear(animated)
         
         self.tokenTextField.text = UserDefaults.standard.string(forKey: "deviceToken")
+        
+        self.callController.callObserver.setDelegate(self, queue: nil)
     }
     
 }
@@ -50,10 +55,14 @@ extension ViewController {
             }
         }
     }
+    
+    @objc func speakerChanged(_ notification: Notification) {
+        print("Notification for speaker")
+    }
 }
 
-//extension ViewController:CXCallObserverDelegate {
-//    func callObserver(_ callObserver: CXCallObserver, callChanged call: CXCall) {
-//        <#code#>
-//    }
-//}
+extension ViewController:CXCallObserverDelegate {
+    func callObserver(_ callObserver: CXCallObserver, callChanged call: CXCall) {
+        print("Call Changed")
+    }
+}
