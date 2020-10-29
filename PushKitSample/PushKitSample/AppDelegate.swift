@@ -72,6 +72,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         config.includesCallsInRecents = false;
         config.maximumCallGroups = 1
         config.maximumCallsPerCallGroup = 1
+        config.supportedHandleTypes = [.generic]
         config.supportsVideo = true;
         
         self.callProvider = CXProvider(configuration: config)
@@ -88,9 +89,11 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 extension AppDelegate: PKPushRegistryDelegate {
     func pushRegistry(_ registry: PKPushRegistry, didUpdate pushCredentials: PKPushCredentials, for type: PKPushType) {
         let deviceTokenString = pushCredentials.token.reduce("", {$0 + String(format: "%02X", $1)})
-        print("pushRegistry -> deviceToken :\(deviceTokenString)")
+        print("VoIP push deviceToken :\(deviceTokenString)")
+        
         let deviceToken = pushCredentials.token.map { String(format: "%02x", $0) }.joined()
-        print("pushRegistry -> deviceToken :\(deviceToken)")
+        print("VoIP push deviceToken :\(deviceToken)")
+        
         UserDefaults.standard.setValue(deviceTokenString, forKey: "deviceTokenString")
         UserDefaults.standard.setValue(deviceToken, forKey: "deviceToken")
         NotificationCenter.default.post(name: NSNotification.Name("showToken"), object: nil)
@@ -109,12 +112,12 @@ extension AppDelegate: PKPushRegistryDelegate {
         print("AppDelegate Call UUID: \(self.callUUID.uuidString)")
         
         self.callUpdate = CXCallUpdate()
-        //self.callUpdate.supportsDTMF = false
+        self.callUpdate.supportsDTMF = false
         self.callUpdate.supportsHolding = false
         self.callUpdate.supportsGrouping = false
         self.callUpdate.supportsUngrouping = false
-        //self.callUpdate.localizedCallerName = "test"
-        self.callUpdate.remoteHandle = CXHandle(type: .phoneNumber, value: "010-1111-2222")
+        self.callUpdate.localizedCallerName = "Test App"
+        self.callUpdate.remoteHandle = CXHandle(type: .generic, value: "테스트 이용자")
         self.callUpdate.hasVideo = false
         self.callProvider.reportNewIncomingCall(with: self.callUUID, update: self.callUpdate, completion: { error in
         })
