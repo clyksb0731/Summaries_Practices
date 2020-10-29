@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UserNotifications
 import PushKit
 import CallKit
 import AVFoundation
@@ -21,7 +22,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var tempUUID: UUID!
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
         self.voipRegistration()
+        
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options: [.alert, .sound, .criticalAlert, .badge]) { (granted, error) in
+            // Error handling
+        }
+        
+        center.delegate = self
+        
+        application.registerForRemoteNotifications()
+        
         return true
     }
     
@@ -38,6 +50,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didUpdate userActivity: NSUserActivity) {
         print("Activity Updated")
+    }
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        print("Push DeviceToken Token: ", deviceToken.reduce("", {$0 + String(format: "%02X", $1)}))
+    }
+    
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print(error.localizedDescription)
     }
     
     func voipRegistration() {
@@ -58,6 +78,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.callProvider.setDelegate(self, queue: nil)
     }
 }
+
+// MARK: UserNotifications
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    
+}
+
 // MARK: PushKit Delegate
 extension AppDelegate: PKPushRegistryDelegate {
     func pushRegistry(_ registry: PKPushRegistry, didUpdate pushCredentials: PKPushCredentials, for type: PKPushType) {
