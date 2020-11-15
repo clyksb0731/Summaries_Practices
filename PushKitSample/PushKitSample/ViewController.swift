@@ -70,12 +70,15 @@ extension ViewController {
         if let userInfo = notification.userInfo, let color = userInfo["color"] as? String {
             if color == "before" {
                 self.checkingView.backgroundColor = .green
+                self.viewLabel.textColor = .white
                 
             } else if color == "after" {
                 self.checkingView.backgroundColor = .yellow
+                self.viewLabel.textColor = .black
                 
             } else {
                 self.checkingView.backgroundColor = .blue
+                self.viewLabel.textColor = .white
             }
         }
     }
