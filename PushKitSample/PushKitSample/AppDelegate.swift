@@ -15,6 +15,8 @@ import AVFoundation
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
+    var bgTask: UIBackgroundTaskIdentifier = .invalid
+    
     var callProvider: CXProvider!
     var callUpdate: CXCallUpdate!
 //    var callController: CXCallController!
@@ -60,6 +62,46 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print(error.localizedDescription)
     }
     
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        if self.bgTask != .invalid {
+            UIApplication.shared.endBackgroundTask(self.bgTask)
+        }
+        self.bgTask = .invalid
+    }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        print("background remote push")
+        
+//        self.callProvider.reportCall(with: UUID(), endedAt: nil, reason: .remoteEnded)
+        self.callProvider.reportCall(with: self.callUUID ?? UUID(), endedAt: nil, reason: .remoteEnded)
+        
+        self.bgTask = UIApplication.shared.beginBackgroundTask(expirationHandler: {
+            UIApplication.shared.endBackgroundTask(self.bgTask)
+            self.bgTask = .invalid
+        })
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            let colorUserInfo = ["color":"after"]
+            let numberUserInfo = ["number":"3"]
+            NotificationCenter.default.post(name: Notification.Name("changeViewColor"), object: nil, userInfo: colorUserInfo)
+            NotificationCenter.default.post(name: Notification.Name("changeViewLabel"), object: nil, userInfo: numberUserInfo)
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            let numberUserInfo = ["number":"5"]
+            let colorUserInfo = ["color":"finally"]
+            NotificationCenter.default.post(name: Notification.Name("changeViewColor"), object: nil, userInfo: colorUserInfo)
+            NotificationCenter.default.post(name: Notification.Name("changeViewLabel"), object: nil, userInfo: numberUserInfo)
+            
+            if self.bgTask != .invalid {
+                UIApplication.shared.endBackgroundTask(self.bgTask)
+            }
+            self.bgTask = .invalid
+        }
+        
+        completionHandler(.noData)
+    }
+    
     func voipRegistration() {
         let voipRegistry: PKPushRegistry = PKPushRegistry(queue: DispatchQueue.main)
         voipRegistry.delegate = self
@@ -82,7 +124,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 // MARK: UserNotifications
 extension AppDelegate: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        print("will Present")
+        completionHandler([])
+    }
     
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        print("did Receive")
+        completionHandler()
+    }
 }
 
 // MARK: PushKit Delegate
@@ -102,25 +152,57 @@ extension AppDelegate: PKPushRegistryDelegate {
         print("Push registry failed")
     }
     func pushRegistry(_ registry: PKPushRegistry, didReceiveIncomingPushWith payload: PKPushPayload, for type: PKPushType, completion: @escaping () -> Void) {
+        
+        let userInfo = payload.dictionaryPayload
+        
         print(payload.dictionaryPayload)
         print("Push Type: \(type)")
         // let callID = payload.dictionaryPayload["callID"] as! String
-        self.callUUID = UUID()
-        if self.tempUUID == nil {
-            self.tempUUID = callUUID
-        }
-        print("AppDelegate Call UUID: \(self.callUUID.uuidString)")
         
-        self.callUpdate = CXCallUpdate()
-        self.callUpdate.supportsDTMF = false
-        self.callUpdate.supportsHolding = false
-        self.callUpdate.supportsGrouping = false
-        self.callUpdate.supportsUngrouping = false
-        self.callUpdate.localizedCallerName = "Test App"
-        self.callUpdate.remoteHandle = CXHandle(type: .generic, value: "테스트 이용자")
-        self.callUpdate.hasVideo = false
-        self.callProvider.reportNewIncomingCall(with: self.callUUID, update: self.callUpdate, completion: { error in
-        })
+        let colorUserInfo = ["color":"before"]
+        let numberUserInfo = ["number":"2"]
+        NotificationCenter.default.post(name: Notification.Name("changeViewColor"), object: nil, userInfo: colorUserInfo)
+        NotificationCenter.default.post(name: Notification.Name("changeViewLabel"), object: nil, userInfo: numberUserInfo)
+        
+        if let type = userInfo["key"] as? String, type == "start" {
+            self.callUUID = UUID()
+            if self.tempUUID == nil {
+                self.tempUUID = callUUID
+            }
+            print("AppDelegate Call UUID: \(self.callUUID.uuidString)")
+            
+            self.callUpdate = CXCallUpdate()
+            self.callUpdate.supportsDTMF = false
+            self.callUpdate.supportsHolding = false
+            self.callUpdate.supportsGrouping = false
+            self.callUpdate.supportsUngrouping = false
+            self.callUpdate.localizedCallerName = "Test App"
+            self.callUpdate.remoteHandle = CXHandle(type: .generic, value: "테스트 이용자")
+            self.callUpdate.hasVideo = false
+            self.callProvider.reportNewIncomingCall(with: self.callUUID, update: self.callUpdate, completion: { error in
+            })
+            
+        } else {
+//            self.callProvider.reportNewIncomingCall(with: self.callUUID, update: self.callUpdate, completion: { error in
+//            })
+//            self.callProvider.reportCall(with: UUID(), updated: self.callUpdate)
+            self.callProvider.reportCall(with: self.callUUID, endedAt: nil, reason: .remoteEnded)
+            print("Report Call to End")
+            
+//            self.bgTask = UIApplication.shared.beginBackgroundTask(expirationHandler: {
+//                UIApplication.shared.endBackgroundTask(self.bgTask)
+//                self.bgTask = .invalid
+//            })
+//
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+//                if self.bgTask != .invalid {
+//                    UIApplication.shared.endBackgroundTask(self.bgTask)
+//                }
+//                self.bgTask = .invalid
+//            }
+        }
+        
+        
         completion()
     }
 }

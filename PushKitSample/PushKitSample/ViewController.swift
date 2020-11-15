@@ -14,11 +14,17 @@ class ViewController: UIViewController {
     
     var callController: CXCallController!
     @IBOutlet weak var tokenTextField: UITextField!
+    @IBOutlet weak var checkingView: UIView!
+    @IBOutlet weak var viewLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.checkingView.backgroundColor = .cyan
+        
         NotificationCenter.default.addObserver(self, selector: #selector(speakerChanged(_:)), name: AVAudioSession.routeChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(changeViewColor(_:)), name: Notification.Name("changeViewColor"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(changeViewLabel(_:)), name: Notification.Name("changeViewLabel"), object: nil)
         
         self.callController = CXCallController()
         print("CallController:::::::::;")
@@ -58,6 +64,26 @@ extension ViewController {
     
     @objc func speakerChanged(_ notification: Notification) {
         print("Notification for speaker")
+    }
+    
+    @objc func changeViewColor(_ notification: Notification) {
+        if let userInfo = notification.userInfo, let color = userInfo["color"] as? String {
+            if color == "before" {
+                self.checkingView.backgroundColor = .green
+                
+            } else if color == "after" {
+                self.checkingView.backgroundColor = .yellow
+                
+            } else {
+                self.checkingView.backgroundColor = .blue
+            }
+        }
+    }
+    
+    @objc func changeViewLabel(_ notification: Notification) {
+        if let userInfo = notification.userInfo, let number = userInfo["number"] as? String {
+            self.viewLabel.text = number;
+        }
     }
 }
 

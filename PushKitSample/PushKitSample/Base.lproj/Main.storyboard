@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -20,26 +22,48 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xaF-2z-vft">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xaF-2z-vft">
                                 <rect key="frame" x="178" y="778" width="58" height="30"/>
                                 <state key="normal" title="Hang up"/>
                                 <connections>
                                     <action selector="hangUp:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cku-Jf-f31"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jGx-9c-aEU">
+                                <rect key="frame" x="87" y="275" width="240" height="128"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B1n-xl-4Wi">
+                                        <rect key="frame" x="113" y="46" width="14" height="36"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemGrayColor"/>
+                                <constraints>
+                                    <constraint firstItem="B1n-xl-4Wi" firstAttribute="centerX" secondItem="jGx-9c-aEU" secondAttribute="centerX" id="eHi-63-9z2"/>
+                                    <constraint firstItem="B1n-xl-4Wi" firstAttribute="centerY" secondItem="jGx-9c-aEU" secondAttribute="centerY" id="m2l-ys-4Tj"/>
+                                </constraints>
+                            </view>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="mmO-lB-LmZ" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="143" id="1zm-af-vcv"/>
+                            <constraint firstItem="jGx-9c-aEU" firstAttribute="height" secondItem="mmO-lB-LmZ" secondAttribute="height" multiplier="3.76471" id="BLC-bX-XIO"/>
+                            <constraint firstItem="jGx-9c-aEU" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="EnQ-9p-hdb"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="xaF-2z-vft" secondAttribute="bottom" constant="54" id="GPi-yX-uIg"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="mmO-lB-LmZ" secondAttribute="trailing" constant="20" id="JVV-Hh-ywV"/>
                             <constraint firstItem="xaF-2z-vft" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="aKA-NC-hJg"/>
+                            <constraint firstItem="jGx-9c-aEU" firstAttribute="top" secondItem="mmO-lB-LmZ" secondAttribute="bottom" constant="54" id="jQb-X6-w8V"/>
+                            <constraint firstItem="jGx-9c-aEU" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.57971" id="sKR-3Z-EZg"/>
                             <constraint firstItem="mmO-lB-LmZ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="z0a-o7-iOL"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="checkingView" destination="jGx-9c-aEU" id="mH2-uU-YIP"/>
                         <outlet property="tokenTextField" destination="mmO-lB-LmZ" id="hE9-FN-gWn"/>
+                        <outlet property="viewLabel" destination="B1n-xl-4Wi" id="OOJ-o0-7kq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -47,4 +71,12 @@
             <point key="canvasLocation" x="137.68115942028987" y="95.758928571428569"/>
         </scene>
     </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGrayColor">
+            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
 </document>
