@@ -534,6 +534,9 @@ extension ViewController {
         
         self.captureSession.commitConfiguration()
         
+        self.flashButton.isSelected = false
+        self.flashButton.isEnabled = camera.hasTorch
+        
         self.frontCameraButton.isSelected = sender === self.frontCameraButton
         self.wideCameraButton.isSelected = sender === self.wideCameraButton
         self.ultraWideCameraButton.isSelected = sender === self.ultraWideCameraButton
@@ -542,15 +545,17 @@ extension ViewController {
     
     @objc func flashButton(_ sender: UIButton) {
         if let input = self.captureSession.inputs.first as? AVCaptureDeviceInput {
-            do {
-                try input.device.lockForConfiguration()
-                input.device.torchMode = sender.isSelected ? .off : .on
-                input.device.unlockForConfiguration()
-                
-                self.flashButton.isSelected = !sender.isSelected
-                
-            } catch {
-                print("Failed to configure flash")
+            if input.device.hasTorch {
+                do {
+                    try input.device.lockForConfiguration()
+                    input.device.torchMode = sender.isSelected ? .off : .on
+                    input.device.unlockForConfiguration()
+                    
+                    self.flashButton.isSelected = !sender.isSelected
+                    
+                } catch {
+                    print("Failed to configure flash")
+                }
             }
         }
     }
