@@ -29,6 +29,15 @@ class ViewController: UIViewController {
         return view
     }()
     
+    var flashButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "lightOnButtonImage"), for: .normal)
+        button.setImage(UIImage(named: "lightOffButtonImage"), for: .selected)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        return button
+    }()
+    
     var buttonsView: UIView = {
         let view = UIView()
         view.layer.borderColor = UIColor.black.cgColor
@@ -128,6 +137,7 @@ extension ViewController {
     // MARK: Set targets
     func setTargets() {
         self.frontCameraButton.addTarget(self, action: #selector(cameraButtons(_:)), for: .touchUpInside)
+        self.flashButton.addTarget(self, action: #selector(flashButton(_:)), for: .touchUpInside)
         self.wideCameraButton.addTarget(self, action: #selector(cameraButtons(_:)), for: .touchUpInside)
         self.ultraWideCameraButton.addTarget(self, action: #selector(cameraButtons(_:)), for: .touchUpInside)
         self.telephotoCameraButton.addTarget(self, action: #selector(cameraButtons(_:)), for: .touchUpInside)
@@ -156,6 +166,7 @@ extension ViewController {
     func setSubviews() {
         self.addSubviews([
             self.cameraView,
+            self.flashButton,
             self.buttonsView
         ], to: self.view)
         
@@ -203,6 +214,14 @@ extension ViewController {
             self.cameraView.heightAnchor.constraint(equalTo: safeArea.heightAnchor, multiplier: 0.8),
             self.cameraView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
             self.cameraView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor)
+        ])
+        
+        // Flash button layout
+        NSLayoutConstraint.activate([
+            self.flashButton.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 20),
+            self.flashButton.heightAnchor.constraint(equalToConstant: 48),
+            self.flashButton.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -16),
+            self.flashButton.widthAnchor.constraint(equalToConstant: 48)
         ])
         
         // Buttons view layout
@@ -519,6 +538,21 @@ extension ViewController {
         self.wideCameraButton.isSelected = sender === self.wideCameraButton
         self.ultraWideCameraButton.isSelected = sender === self.ultraWideCameraButton
         self.telephotoCameraButton.isSelected = sender === self.telephotoCameraButton
+    }
+    
+    @objc func flashButton(_ sender: UIButton) {
+        if let input = self.captureSession.inputs.first as? AVCaptureDeviceInput {
+            do {
+                try input.device.lockForConfiguration()
+                input.device.torchMode = sender.isSelected ? .off : .on
+                input.device.unlockForConfiguration()
+                
+                self.flashButton.isSelected = !sender.isSelected
+                
+            } catch {
+                print("Failed to configure flash")
+            }
+        }
     }
     
     @objc func didEnterBackground(_ notification: Notification) {
