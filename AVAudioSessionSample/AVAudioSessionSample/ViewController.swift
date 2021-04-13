@@ -17,15 +17,16 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let audioSession = AVAudioSession.sharedInstance()
+        try? audioSession.setCategory(<#T##category: AVAudioSession.Category##AVAudioSession.Category#>, mode: <#T##AVAudioSession.Mode#>, policy: <#T##AVAudioSession.RouteSharingPolicy#>, options: <#T##AVAudioSession.CategoryOptions#>)
+        try? audioSession.setActive(true, options: [])
+        
         self.getCurrentAudioPortType()
         
         NotificationCenter.default.addObserver(self, selector: #selector(setCurrentAudioPortType(_:)), name: AVAudioSession.routeChangeNotification, object: nil)
     }
     
     func getCurrentAudioPortType() {
-        let audioSession = AVAudioSession.sharedInstance()
-        try? audioSession.setCategory(.playAndRecord)
-        
         let currentRoute = AVAudioSession.sharedInstance().currentRoute
         if let currentOutputPort = currentRoute.outputs.first {
             if currentOutputPort.portType == .airPlay {
@@ -73,9 +74,6 @@ class ViewController: UIViewController {
     }
     
     @objc func setCurrentAudioPortType(_ notification: Notification) {
-        let audioSession = AVAudioSession.sharedInstance()
-        try? audioSession.setCategory(.playAndRecord)
-        
         let currentRoute = AVAudioSession.sharedInstance().currentRoute
         if let currentOutputPort = currentRoute.outputs.first {
             if currentOutputPort.portType == .airPlay {
