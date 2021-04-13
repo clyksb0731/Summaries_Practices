@@ -18,3 +18,12 @@ class Table: Object {
     dynamic var mass: Double = 0.0
     dynamic var tmp: String = ""
 }
+
+class TempObject: Object {
+    @objc dynamic var aValue: String = ""
+    @objc dynamic var bValue: String?
+    
+    override static func primaryKey() -> String? {
+        return "aValue"
+    }
+}
