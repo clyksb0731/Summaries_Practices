@@ -78,7 +78,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-        self.getNotifications()
+        //self.getNotifications()
+        print("Did Become Active, Date: \(Date().timeIntervalSince1970)")
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
@@ -128,28 +129,63 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         
-        let userInfo = notification.request.content.userInfo
-        
-        print("willPresent Notification: \(userInfo)")
-        
-        var topVC = self.getTopVC(self.window?.rootViewController)
-        let tmpVC = UIViewController()
-        tmpVC.view.backgroundColor = .yellow
-        
-        topVC?.present(tmpVC, animated: true)
+//        let userInfo = notification.request.content.userInfo
+//
+//        print("willPresent Notification: \(userInfo)")
+//
+//        var topVC = self.getTopVC(self.window?.rootViewController)
+//        let tmpVC = UIViewController()
+//        tmpVC.view.backgroundColor = .yellow
+//
+//        topVC?.present(tmpVC, animated: true)
         
         completionHandler([.alert, .sound])
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         
-        print("Before getNotification(_:)")
+        print("Did Receive Push, Date: \(Date().timeIntervalSince1970)")
+        print(response.notification.request.content.userInfo)
+        print(response.notification.request.content.userInfo)
+        print(response.notification.request.content.userInfo)
+        print(response.notification.request.content.userInfo)
+        print(response.notification.request.content.userInfo)
+        print(response.notification.request.content.userInfo)
+        print(response.notification.request.content.userInfo)
+        print(response.notification.request.content.userInfo)
+        print(response.notification.request.content.userInfo)
+        print(response.notification.request.content.userInfo)
+        print(response.notification.request.content.userInfo)
+        print(response.notification.request.content.userInfo)
+        print(response.notification.request.content.userInfo)
+        print(response.notification.request.content.userInfo)
+        print(response.notification.request.content.userInfo)
+        print(response.notification.request.content.userInfo)
+        print(response.notification.request.content.userInfo)
+        print(response.notification.request.content.userInfo)
+        print(response.notification.request.content.userInfo)
+        print(response.notification.request.content.userInfo)
+        print(response.notification.request.content.userInfo)
+        print(response.notification.request.content.userInfo)
+        print(response.notification.request.content.userInfo)
+        print(response.notification.request.content.userInfo)
+        print(response.notification.request.content.userInfo)
+        print(response.notification.request.content.userInfo)
+        print(response.notification.request.content.userInfo)
+        print(response.notification.request.content.userInfo)
+        print(response.notification.request.content.userInfo)
+        print(response.notification.request.content.userInfo)
+        print(response.notification.request.content.userInfo)
+        print(response.notification.request.content.userInfo)
+        print(response.notification.request.content.userInfo)
+        print(response.notification.request.content.userInfo)
+        print(response.notification.request.content.userInfo)
         print(response.notification.request.content.userInfo)
         
-        self.getNotifications(delete: [response.notification.request.identifier])
+        //self.getNotifications(delete: [response.notification.request.identifier])
         
-        print("After getNotification(_:)")
-        print(response.notification.request.content.userInfo)
+//        print("After getNotification(_:)")
+//        print(response.notification.request.content.userInfo)
         
 //        let userInfo = response.notification.request.content.userInfo
 //
