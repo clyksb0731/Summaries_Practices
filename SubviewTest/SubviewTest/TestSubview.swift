@@ -28,7 +28,7 @@ class TestSubview: UIView {
         
         self.backgroundColor = .black
         
-        removeButton.addTarget(self, action: #selector(removeButton(_:)), for: .touchUpInside)
+        self.removeButton.addTarget(self, action: #selector(removeButton(_:)), for: .touchUpInside)
         
         self.addSubview(self.removeButton)
         
@@ -45,8 +45,12 @@ class TestSubview: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        print("======================== TestSubview is disposed ========================")
+    }
     
     @objc func removeButton(_ sender: UIButton) {
+        self.removeButton.removeFromSuperview() // arc 관점에서 필요?
         self.removeFromSuperview()
     }
 }
