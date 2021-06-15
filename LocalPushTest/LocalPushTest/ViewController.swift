@@ -22,7 +22,7 @@ class ViewController: UIViewController {
     func setLocalPush() -> Date {
         let content = UNMutableNotificationContent()
         content.title = "테스트 타이틀"
-        //content.sound = .default
+        content.sound = .default
         content.body = "테스트 바디"
         
         let now = Date()
