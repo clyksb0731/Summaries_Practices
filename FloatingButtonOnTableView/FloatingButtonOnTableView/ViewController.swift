@@ -86,7 +86,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 //    }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if let cell = self.tableView.cellForRow(at: IndexPath(row: 29, section: 0)) {
+        if let _ = self.tableView.cellForRow(at: IndexPath(row: 29, section: 0)) {
 //            if self.tableView.visibleCells.contains(cell) {
 //                self.button.isHidden = true
 //            } else {
