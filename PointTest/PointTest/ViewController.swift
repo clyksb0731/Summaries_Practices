@@ -17,9 +17,9 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         let tapGestureForSecondView = UITapGestureRecognizer(target: self, action: #selector(tapGesture(_:)))
-        //let tapGestureForThirdView = UITapGestureRecognizer(target: self, action: #selector(tapGesture(_:)))
+        let tapGestureForThirdView = UITapGestureRecognizer(target: self, action: #selector(anotherTapGesture(_:)))
         self.secondLevelView.addGestureRecognizer(tapGestureForSecondView)
-        //self.thirdLevelView.addGestureRecognizer(tapGestureForThirdView) // If this is active, the second gesture can't affect on the third view.
+        self.thirdLevelView.addGestureRecognizer(tapGestureForThirdView) // If this is active, the second gesture can't affect on the third view.
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -47,6 +47,12 @@ class ViewController: UIViewController {
         let point = gesture.location(in: gesture.view)
         
         print("From Gesture - X point: \(point.x) Y point: \(point.y)")
+    }
+    
+    @objc func anotherTapGesture(_ gesture: UITapGestureRecognizer) {
+        let point = gesture.location(in: gesture.view)
+        
+        print("From Another Gesture - X point: \(point.x) Y point: \(point.y)")
     }
 }
 
