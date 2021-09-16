@@ -9,11 +9,26 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var connectionStateView: UIView!
+    @IBOutlet weak var synchronizingSwitch: UISwitch!
+    @IBOutlet weak var sendingTextField: UITextField!
+    @IBOutlet weak var receivedMessageLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        self.connectionStateView.layer.cornerRadius = 25/2
+        
     }
 
-
+    @IBAction func synchronizingSwitch(_ sender: UISwitch) {
+    }
+    
+    @IBAction func sendingMessageButton(_ sender: Any) {
+    }
+    
+    @IBAction func openVCToConnectBT(_ sender: UIButton) {
+    }
 }
+
 
